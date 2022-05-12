@@ -34,8 +34,8 @@
  * </table>
  */
 
-#ifndef _DRIVER_SX1268_REGISTER_TEST_H_
-#define _DRIVER_SX1268_REGISTER_TEST_H_
+#ifndef DRIVER_SX1268_REGISTER_TEST_H
+#define DRIVER_SX1268_REGISTER_TEST_H
 
 #include "driver_sx1268_interface.h"
 

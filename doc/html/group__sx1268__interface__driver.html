@@ -126,12 +126,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga8fa147e1e7cd587c1cc4a95cc2e85b45"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1268__interface__driver.html#ga8fa147e1e7cd587c1cc4a95cc2e85b45">sx1268_interface_delay_ms</a> (uint32_t ms)</td></tr>
 <tr class="memdesc:ga8fa147e1e7cd587c1cc4a95cc2e85b45"><td class="mdescLeft">&#160;</td><td class="mdescRight">interface delay ms  <a href="group__sx1268__interface__driver.html#ga8fa147e1e7cd587c1cc4a95cc2e85b45">More...</a><br /></td></tr>
 <tr class="separator:ga8fa147e1e7cd587c1cc4a95cc2e85b45"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3b69cc838f5b031413d8568d14621e8b"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1268__interface__driver.html#ga3b69cc838f5b031413d8568d14621e8b">sx1268_interface_debug_print</a> (char *fmt,...)</td></tr>
-<tr class="memdesc:ga3b69cc838f5b031413d8568d14621e8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">interface print format data  <a href="group__sx1268__interface__driver.html#ga3b69cc838f5b031413d8568d14621e8b">More...</a><br /></td></tr>
-<tr class="separator:ga3b69cc838f5b031413d8568d14621e8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab5d47e45f098564cb955fd64aa1f9798"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1268__interface__driver.html#gab5d47e45f098564cb955fd64aa1f9798">sx1268_interface_receive_callback</a> (uint16_t type, uint8_t *buf, uint16_t len)</td></tr>
-<tr class="memdesc:gab5d47e45f098564cb955fd64aa1f9798"><td class="mdescLeft">&#160;</td><td class="mdescRight">interface receive callback  <a href="group__sx1268__interface__driver.html#gab5d47e45f098564cb955fd64aa1f9798">More...</a><br /></td></tr>
-<tr class="separator:gab5d47e45f098564cb955fd64aa1f9798"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga53c0bc1e2394216aac11ce729bdabfdc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1268__interface__driver.html#ga53c0bc1e2394216aac11ce729bdabfdc">sx1268_interface_debug_print</a> (const char *const fmt,...)</td></tr>
+<tr class="memdesc:ga53c0bc1e2394216aac11ce729bdabfdc"><td class="mdescLeft">&#160;</td><td class="mdescRight">interface print format data  <a href="group__sx1268__interface__driver.html#ga53c0bc1e2394216aac11ce729bdabfdc">More...</a><br /></td></tr>
+<tr class="separator:ga53c0bc1e2394216aac11ce729bdabfdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5fead2ee87c85af241b62654d087de41"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1268__interface__driver.html#ga5fead2ee87c85af241b62654d087de41">sx1268_interface_receive_callback</a> (uint16_t type, uint8_t *buf, uint16_t len)</td></tr>
+<tr class="memdesc:ga5fead2ee87c85af241b62654d087de41"><td class="mdescLeft">&#160;</td><td class="mdescRight">interface receive callback  <a href="group__sx1268__interface__driver.html#ga5fead2ee87c85af241b62654d087de41">More...</a><br /></td></tr>
+<tr class="separator:ga5fead2ee87c85af241b62654d087de41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>sx1268 interface driver modules </p>
@@ -226,16 +226,16 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ga3b69cc838f5b031413d8568d14621e8b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga3b69cc838f5b031413d8568d14621e8b">&#9670;&nbsp;</a></span>sx1268_interface_debug_print()</h2>
+<a id="ga53c0bc1e2394216aac11ce729bdabfdc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga53c0bc1e2394216aac11ce729bdabfdc">&#9670;&nbsp;</a></span>sx1268_interface_debug_print()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t sx1268_interface_debug_print </td>
+          <td class="memname">void sx1268_interface_debug_print </td>
           <td>(</td>
-          <td class="paramtype">char *&#160;</td>
+          <td class="paramtype">const char *const&#160;</td>
           <td class="paramname"><em>fmt</em>, </td>
         </tr>
         <tr>
@@ -259,10 +259,9 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>length of the send data </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>none </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="driver__sx1268__interface__template_8c_source.html#l00170">170</a> of file <a class="el" href="driver__sx1268__interface__template_8c_source.html">driver_sx1268_interface_template.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="driver__sx1268__interface__template_8c_source.html#l00169">169</a> of file <a class="el" href="driver__sx1268__interface__template_8c_source.html">driver_sx1268_interface_template.c</a>.</p>
 
 </div>
 </div>
@@ -295,14 +294,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="gab5d47e45f098564cb955fd64aa1f9798"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gab5d47e45f098564cb955fd64aa1f9798">&#9670;&nbsp;</a></span>sx1268_interface_receive_callback()</h2>
+<a id="ga5fead2ee87c85af241b62654d087de41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5fead2ee87c85af241b62654d087de41">&#9670;&nbsp;</a></span>sx1268_interface_receive_callback()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t sx1268_interface_receive_callback </td>
+          <td class="memname">void sx1268_interface_receive_callback </td>
           <td>(</td>
           <td class="paramtype">uint16_t&#160;</td>
           <td class="paramname"><em>type</em>, </td>
@@ -336,14 +335,9 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>status code<ul>
-<li>0 success</li>
-<li>1 run failed </li>
-</ul>
-</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>none </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="driver__sx1268__interface__template_8c_source.html#l00185">185</a> of file <a class="el" href="driver__sx1268__interface__template_8c_source.html">driver_sx1268_interface_template.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="driver__sx1268__interface__template_8c_source.html#l00181">181</a> of file <a class="el" href="driver__sx1268__interface__template_8c_source.html">driver_sx1268_interface_template.c</a>.</p>
 
 </div>
 </div>

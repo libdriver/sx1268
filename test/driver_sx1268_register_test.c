@@ -48,26 +48,26 @@ static sx1268_handle_t gs_handle;        /**< sx1268 handle */
  */
 uint8_t sx1268_register_test(void)
 {
-    volatile uint8_t res;
-    volatile uint8_t addr, addr_check;
-    volatile uint8_t i;
-    volatile uint16_t value, value_check;
-    volatile uint8_t sync_word[8];
-    volatile uint8_t sync_word_check[8];
-    volatile uint8_t setup, setup_check;
-    volatile uint32_t rand_number;
-    volatile uint8_t modulation, modulation_check;
-    volatile uint8_t gain, gain_check;
-    volatile uint8_t config, config_check;
-    volatile uint8_t ocp, ocp_check;
-    volatile uint8_t control, control_check;
-    volatile uint8_t trim, trim_check;
-    volatile uint8_t mask, mask_check;
-    volatile uint8_t enable, enable_check;
-    volatile double us, us_check;
-    volatile uint32_t freq, freq_check;
-    volatile uint32_t br, br_check;
-    volatile uint32_t reg;
+    uint8_t res;
+    uint8_t addr, addr_check;
+    uint8_t i;
+    uint16_t value, value_check;
+    uint8_t sync_word[8];
+    uint8_t sync_word_check[8];
+    uint8_t setup, setup_check;
+    uint32_t rand_number;
+    uint8_t modulation, modulation_check;
+    uint8_t gain, gain_check;
+    uint8_t config, config_check;
+    uint8_t ocp, ocp_check;
+    uint8_t control, control_check;
+    uint8_t trim, trim_check;
+    uint8_t mask, mask_check;
+    uint8_t enable, enable_check;
+    double us, us_check;
+    uint32_t freq, freq_check;
+    uint32_t br, br_check;
+    uint32_t reg;
     sx1268_packet_type_t type;
     sx1268_info_t info;
     
@@ -88,7 +88,7 @@ uint8_t sx1268_register_test(void)
     
     /* get information */
     res = sx1268_info(&info);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: get info failed.\n");
        
@@ -113,7 +113,7 @@ uint8_t sx1268_register_test(void)
     
     /* init the sx1268 */
     res = sx1268_init(&gs_handle);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: init failed.\n");
        
@@ -122,10 +122,10 @@ uint8_t sx1268_register_test(void)
     
     /* set standby mode */
     res = sx1268_set_standby(&gs_handle, SX1268_CLOCK_SOURCE_XTAL_32MHZ);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set standby failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
        
         return 1;
     }
@@ -135,19 +135,19 @@ uint8_t sx1268_register_test(void)
     
     control = rand() % 256;
     res = sx1268_write_register(&gs_handle, 0x06BC, (uint8_t *)&control, 1);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: write register failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     sx1268_interface_debug_print("sx1268: set register 0x%02X.\n", control);
     res = sx1268_read_register(&gs_handle, 0x06BC, (uint8_t *)&control_check, 1);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: read register failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -158,19 +158,19 @@ uint8_t sx1268_register_test(void)
     
     control = rand() % 256;
     res = sx1268_write_buffer(&gs_handle , 0, (uint8_t *)&control, 1);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: write buffer failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     sx1268_interface_debug_print("sx1268: set buffer 0x%02X.\n", control);
     res = sx1268_read_buffer(&gs_handle, 0, (uint8_t *)&control_check, 1);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: read buffer failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -181,19 +181,19 @@ uint8_t sx1268_register_test(void)
     
     us = (rand() % 10000) / 10.0;
     res = sx1268_timeout_convert_to_register(&gs_handle, us, (uint32_t *)&reg);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: timeout convert to register failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     sx1268_interface_debug_print("sx1268: set timeout %f us.\n", us);
     res = sx1268_timeout_convert_to_data(&gs_handle, reg, (double *)&us_check);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: timeout convert to data failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -204,19 +204,19 @@ uint8_t sx1268_register_test(void)
     
     freq = 47000000;
     res = sx1268_frequency_convert_to_register(&gs_handle, freq, (uint32_t *)&reg);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: frequency convert to register failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     sx1268_interface_debug_print("sx1268: set frequency %d Hz.\n", freq);
     res = sx1268_frequency_convert_to_data(&gs_handle, reg, (uint32_t *)&freq_check);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: frequency convert to data failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -227,19 +227,19 @@ uint8_t sx1268_register_test(void)
     
     br = 470000;
     res = sx1268_gfsk_bit_rate_convert_to_register(&gs_handle, br, (uint32_t *)&reg);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: gfsk bit rate convert to register failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     sx1268_interface_debug_print("sx1268: set bit rate %d Hz.\n", br);
     res = sx1268_gfsk_bit_rate_convert_to_data(&gs_handle, reg, (uint32_t *)&br_check);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: gfsk bit rate convert to data failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -250,19 +250,19 @@ uint8_t sx1268_register_test(void)
     
     freq = 10000;
     res = sx1268_gfsk_frequency_deviation_convert_to_register(&gs_handle, freq, (uint32_t *)&reg);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: gfsk frequency deviation convert to register failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     sx1268_interface_debug_print("sx1268: gfsk frequency deviation %d Hz.\n", freq);
     res = sx1268_gfsk_frequency_deviation_convert_to_data(&gs_handle, reg, (uint32_t *)&freq_check);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: gfsk frequency deviation convert to data failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -273,19 +273,19 @@ uint8_t sx1268_register_test(void)
     
     /* set gfsk type */
     res = sx1268_set_packet_type(&gs_handle, SX1268_PACKET_TYPE_GFSK);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set packet type failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     sx1268_interface_debug_print("sx1268: set gfsk type.\n");
     res = sx1268_get_packet_type(&gs_handle, &type);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: get packet type failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -293,19 +293,19 @@ uint8_t sx1268_register_test(void)
     
     /* set lora type */
     res = sx1268_set_packet_type(&gs_handle, SX1268_PACKET_TYPE_LORA);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set packet type failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     sx1268_interface_debug_print("sx1268: set lora type.\n");
     res = sx1268_get_packet_type(&gs_handle, &type);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: get packet type failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -316,19 +316,19 @@ uint8_t sx1268_register_test(void)
     
     value = 0x0100;
     res = sx1268_set_fsk_whitening_initial_value(&gs_handle, value);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set fsk whitening initial value failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     sx1268_interface_debug_print("sx1268: set fsk whitening initial value 0x%04X.\n", value);
     res = sx1268_get_fsk_whitening_initial_value(&gs_handle, (uint16_t *)&value_check);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: get fsk whitening initial value failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -339,19 +339,19 @@ uint8_t sx1268_register_test(void)
     
     value = rand() % 65536;
     res = sx1268_set_fsk_crc_initical_value(&gs_handle, value);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set fsk crc initical value failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     sx1268_interface_debug_print("sx1268: set fsk crc initical value 0x%04X.\n", value);
     res = sx1268_get_fsk_crc_initical_value(&gs_handle, (uint16_t *)&value_check);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: get fsk crc initical value failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -362,19 +362,19 @@ uint8_t sx1268_register_test(void)
     
     value = rand() % 65536;
     res = sx1268_set_fsk_crc_polynomial_value(&gs_handle, value);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set fsk crc polynomial value failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     sx1268_interface_debug_print("sx1268: set fsk crc polynomial value 0x%04X.\n", value);
     res = sx1268_get_fsk_crc_polynomial_value(&gs_handle, (uint16_t *)&value_check);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: get fsk crc polynomial value failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -388,10 +388,10 @@ uint8_t sx1268_register_test(void)
         sync_word[i] = rand() %256;
     }
     res = sx1268_set_fsk_sync_word(&gs_handle, (uint8_t *)sync_word);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set fsk sync word failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -399,10 +399,10 @@ uint8_t sx1268_register_test(void)
                                  sync_word[0], sync_word[1], sync_word[2], sync_word[3],
                                  sync_word[4], sync_word[5], sync_word[6], sync_word[7]);
     res = sx1268_get_fsk_sync_word(&gs_handle, (uint8_t *)sync_word_check);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: get fsk sync word failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -413,19 +413,19 @@ uint8_t sx1268_register_test(void)
     
     addr = rand() %256;
     res = sx1268_set_fsk_node_address(&gs_handle, addr);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set fsk node address failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     sx1268_interface_debug_print("sx1268: set fsk node address 0x%02X.\n", addr);
     res = sx1268_get_fsk_node_address(&gs_handle, (uint8_t *)&addr_check);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: get fsk node address failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -436,19 +436,19 @@ uint8_t sx1268_register_test(void)
     
     addr = rand() %256;
     res = sx1268_set_fsk_broadcast_address(&gs_handle, addr);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set fsk broadcast address failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     sx1268_interface_debug_print("sx1268: set fsk broadcast address 0x%02X.\n", addr);
     res = sx1268_get_fsk_broadcast_address(&gs_handle, (uint8_t *)&addr_check);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: get fsk broadcast address failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -459,19 +459,19 @@ uint8_t sx1268_register_test(void)
     
     setup = rand() %256;
     res = sx1268_set_iq_polarity(&gs_handle, setup);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set iq polarity failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     sx1268_interface_debug_print("sx1268: set iq polarity 0x%02X.\n", setup);
     res = sx1268_get_iq_polarity(&gs_handle, (uint8_t *)&setup_check);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: get iq polarity failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -482,19 +482,19 @@ uint8_t sx1268_register_test(void)
     
     value = rand() % 65536;
     res = sx1268_set_lora_sync_word(&gs_handle, value);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set lora sync word failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     sx1268_interface_debug_print("sx1268: set lora sync word 0x%04X.\n", value);
     res = sx1268_get_lora_sync_word(&gs_handle, (uint16_t *)&value_check);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: get lora sync word failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -504,10 +504,10 @@ uint8_t sx1268_register_test(void)
     sx1268_interface_debug_print("sx1268: sx1268_get_random_number test.\n");
     
     res = sx1268_get_random_number(&gs_handle, (uint32_t *)&rand_number);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: get random number failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -517,28 +517,29 @@ uint8_t sx1268_register_test(void)
     sx1268_interface_debug_print("sx1268: sx1268_set_tx_modulation/sx1268_get_tx_modulation test.\n");
     
     res = sx1268_get_tx_modulation(&gs_handle, (uint8_t *)&modulation_check);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: get tx modulation failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
+    modulation = 0;
     modulation |= 0x04;
     res = sx1268_set_tx_modulation(&gs_handle, modulation);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set tx modulation failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     sx1268_interface_debug_print("sx1268: set tx modulation 0x%02X.\n", modulation);
     res = sx1268_get_tx_modulation(&gs_handle, (uint8_t *)&modulation_check);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: get tx modulation failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -549,19 +550,19 @@ uint8_t sx1268_register_test(void)
     
     gain = rand() % 256;
     res = sx1268_set_rx_gain(&gs_handle, gain);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set rx gain failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     sx1268_interface_debug_print("sx1268: set rx gain 0x%02X.\n", gain);
     res = sx1268_get_rx_gain(&gs_handle, (uint8_t *)&gain_check);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: get rx gain failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -572,19 +573,19 @@ uint8_t sx1268_register_test(void)
     
     config = rand() % 256;
     res = sx1268_set_tx_clamp_config(&gs_handle, config);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set tx clamp config failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     sx1268_interface_debug_print("sx1268: set tx clamp config 0x%02X.\n", config);
     res = sx1268_get_tx_clamp_config(&gs_handle, (uint8_t *)&config_check);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: get tx clamp config failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -595,19 +596,19 @@ uint8_t sx1268_register_test(void)
     
     ocp = rand() % 0x20;
     res = sx1268_set_ocp(&gs_handle, ocp);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set ocp failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     sx1268_interface_debug_print("sx1268: set ocp 0x%02X.\n", ocp);
     res = sx1268_get_ocp(&gs_handle, (uint8_t *)&ocp_check);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: get ocp failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -619,19 +620,19 @@ uint8_t sx1268_register_test(void)
     /* disable */
     control = 0;
     res = sx1268_set_rtc_control(&gs_handle, control);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set rtc control failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     sx1268_interface_debug_print("sx1268: disable rtc control.\n");
     res = sx1268_get_rtc_control(&gs_handle, (uint8_t *)&control_check);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: get rtc control failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -642,19 +643,19 @@ uint8_t sx1268_register_test(void)
     
     trim = 0x05;
     res = sx1268_set_xta_trim(&gs_handle, trim);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set xta trim failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     sx1268_interface_debug_print("sx1268: set xta trim 0x%02X.\n", trim);
     res = sx1268_get_xta_trim(&gs_handle, (uint8_t *)&trim_check);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: get xta trim failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -665,19 +666,19 @@ uint8_t sx1268_register_test(void)
     
     trim = 0x05;
     res = sx1268_set_xtb_trim(&gs_handle, trim);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set xtb trim failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     sx1268_interface_debug_print("sx1268: set xtb trim 0x%02X.\n", trim);
     res = sx1268_get_xtb_trim(&gs_handle, (uint8_t *)&trim_check);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: get xtb trim failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -688,19 +689,19 @@ uint8_t sx1268_register_test(void)
     
     control = 0x01;
     res = sx1268_set_dio3_output_control(&gs_handle, control);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set dio3 output control failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     sx1268_interface_debug_print("sx1268: set dio3 output control 0x%02X.\n", control);
     res = sx1268_get_dio3_output_control(&gs_handle, (uint8_t *)&control_check);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: get dio3 output control failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -711,19 +712,19 @@ uint8_t sx1268_register_test(void)
     
     mask = 0;
     res = sx1268_set_event_mask(&gs_handle, mask);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set event mask failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     sx1268_interface_debug_print("sx1268: set event mask 0x%02X.\n", mask);
     res = sx1268_get_event_mask(&gs_handle, (uint8_t *)&mask_check);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: get event mask failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -734,19 +735,19 @@ uint8_t sx1268_register_test(void)
     
     enable = rand() % 0xF;
     res = sx1268_set_dio_output_enable(&gs_handle, enable);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set dio output enable failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     sx1268_interface_debug_print("sx1268: set dio output enable 0x%02X.\n", enable);
     res = sx1268_get_dio_output_enable(&gs_handle, (uint8_t *)&enable_check);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: get dio output enable failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -756,28 +757,28 @@ uint8_t sx1268_register_test(void)
     sx1268_interface_debug_print("sx1268: sx1268_set_dio_input_enable/sx1268_get_dio_input_enable test.\n");
     
     res = sx1268_set_dio_output_enable(&gs_handle, 0x00);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set dio output enable failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     enable = rand() % 0xF;
     res = sx1268_set_dio_input_enable(&gs_handle, enable);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set dio input enable failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     sx1268_interface_debug_print("sx1268: set dio input enable 0x%02X.\n", enable);
     res = sx1268_get_dio_input_enable(&gs_handle, (uint8_t *)&enable_check);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: get dio input enable failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -788,19 +789,19 @@ uint8_t sx1268_register_test(void)
     
     control = rand() % 0x0F;
     res = sx1268_set_pull_up_control(&gs_handle, control);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set pull up control failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     sx1268_interface_debug_print("sx1268: set pull up control 0x%02X.\n", control);
     res = sx1268_get_pull_up_control(&gs_handle, (uint8_t *)&control_check);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: get pull up control failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -810,28 +811,28 @@ uint8_t sx1268_register_test(void)
     sx1268_interface_debug_print("sx1268: sx1268_set_pull_down_control/sx1268_get_pull_down_control test.\n");
     
     res = sx1268_set_pull_up_control(&gs_handle, 0x00);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set pull up control failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     control = rand() % 0x0F;
     res = sx1268_set_pull_down_control(&gs_handle, control);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set pull down control failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     sx1268_interface_debug_print("sx1268: set pull down control 0x%02X.\n", control);
     res = sx1268_get_pull_down_control(&gs_handle, (uint8_t *)&control_check);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: get pull down control failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -839,7 +840,7 @@ uint8_t sx1268_register_test(void)
     
     /* finish register test */
     sx1268_interface_debug_print("sx1268: finish register test.\n");
-    sx1268_deinit(&gs_handle);
+    (void)sx1268_deinit(&gs_handle);
     
     return 0;
 }

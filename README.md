@@ -1,4 +1,4 @@
-[English](/README.md) | [ 简体中文](/README_zh-Hans.md) | [繁體中文](/README_zh-Hant.md)
+[English](/README.md) | [ 简体中文](/README_zh-Hans.md) | [繁體中文](/README_zh-Hant.md) | [日本語](/README_ja.md) | [Deutsch](/README_de.md) | [한국어](/README_ko.md)
 
 <div align=center>
 <img src="/doc/image/logo.png"/>
@@ -6,11 +6,11 @@
 
 ## LibDriver SX1268
 
-[![API](https://img.shields.io/badge/api-reference-blue)](https://www.libdriver.com/docs/sx1268/index.html) [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](/LICENSE)
+[![MISRA](https://img.shields.io/badge/misra-compliant-brightgreen.svg)](/misra/README.md) [![API](https://img.shields.io/badge/api-reference-blue.svg)](https://www.libdriver.com/docs/sx1268/index.html) [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](/LICENSE)
 
 The SX1268 sub-GHz radio transceiver is the ideal device for long range wireless applications. It is designed for long battery life with just 4.2 mA of active receive current consumption. The SX1268 can transmit up to +22 dBm at 490 MHz with highly efficient integrated power amplifiers.At 780 MHz, the SX1268 consumes less than 20 mA to transmit a +10 dBm signal at its antenna port.SX1268 supports LoRa modulation for LPWAN use cases and (G)FSK modulation for legacy use cases. It is highly configurable to meet different application requirements utilizing the LoRaWANTM standard or proprietary protocols.The device is designed to comply with the physical layer requirements of the LoRaWANTM specification released by the LoRa AllianceTM.The radio is suitable for systems targeting compliance with radio regulations including but not limited to China regulatory requirements and ETSI EN 300 220 (434 MHz).Continuous frequency coverage from 410 MHz to 810 MHz allows the support of the 490 and 780 MHz Chinese low-power short-range device bands.SX1268 can be used in smart meters, supply chain and logistics, building automation and so on.
 
-LibDriver SX1268 is the full function driver of SX1268 launched by LibDriver.It provides functions of wireless senting, wireless receiving, cad, etc.
+LibDriver SX1268 is the full function driver of SX1268 launched by LibDriver.It provides functions of wireless senting, wireless receiving, cad, etc. LibDriver is MISRA compliant.
 
 ### Table of Contents
 
@@ -52,10 +52,10 @@ Add /src, /interface and /example to your project.
 
 ```C
 uint8_t (*g_gpio_irq)(void) = NULL;
-volatile uint8_t res;
+uint8_t res;
 static uint8_t gs_rx_done;
 
-static uint8_t _callback(uint16_t type, uint8_t *buf, uint16_t len)
+static void a_callback(uint16_t type, uint8_t *buf, uint16_t len)
 {
     switch (type)
     {
@@ -63,11 +63,11 @@ static uint8_t _callback(uint16_t type, uint8_t *buf, uint16_t len)
         {
             sx1268_interface_debug_print("sx1268: irq tx done.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_RX_DONE :
         {
-            volatile uint16_t i;
+            uint16_t i;
             sx1268_bool_t enable;
             float rssi;
             float snr;
@@ -75,17 +75,17 @@ static uint8_t _callback(uint16_t type, uint8_t *buf, uint16_t len)
             sx1268_interface_debug_print("sx1268: irq rx done.\n");
             
             /* get the status */
-            if (sx1268_lora_get_status((float *)&rssi, (float *)&snr))
+            if (sx1268_lora_get_status((float *)&rssi, (float *)&snr) != 0)
             {
-                return 1;
+                return;
             }
             sx1268_interface_debug_print("sx1268: rssi is %0.1f.\n", rssi);
             sx1268_interface_debug_print("sx1268: snr is %0.2f.\n", snr);
             
             /* check the error */
-            if (sx1268_lora_check_packet_error(&enable))
+            if (sx1268_lora_check_packet_error(&enable) != 0)
             {
-                return 1;
+                return;
             }
             if ((enable == SX1268_BOOL_FALSE) && len)
             {
@@ -97,76 +97,76 @@ static uint8_t _callback(uint16_t type, uint8_t *buf, uint16_t len)
                 gs_rx_done = 1;
             }
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_PREAMBLE_DETECTED :
         {
             sx1268_interface_debug_print("sx1268: irq preamble detected.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_SYNC_WORD_VALID :
         {
             sx1268_interface_debug_print("sx1268: irq valid sync word detected.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_HEADER_VALID :
         {
             sx1268_interface_debug_print("sx1268: irq valid header.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_HEADER_ERR :
         {
             sx1268_interface_debug_print("sx1268: irq header error.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_CRC_ERR :
         {
             sx1268_interface_debug_print("sx1268: irq crc error.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_CAD_DONE :
         {
             sx1268_interface_debug_print("sx1268: irq cad done.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_CAD_DETECTED :
         {
             sx1268_interface_debug_print("sx1268: irq cad detected.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_TIMEOUT :
         {
             sx1268_interface_debug_print("sx1268: irq timeout.\n");
             
-            return 0;
+            break;
         }
         default :
         {
-            return 1;
+            break;
         }
     }
 }
 
 /* gpio init */
 res = gpio_interrupt_init();
-if (res)
+if (res != 0)
 {
     return 1;
 }
 g_gpio_irq = sx1268_lora_irq_handler;
 
 /* lora init */
-res = sx1268_lora_init(_callback);
-if (res)
+res = sx1268_lora_init(a_callback);
+if (res != 0)
 {
-    gpio_interrupt_deinit();
+    (void)gpio_interrupt_deinit();
     g_gpio_irq = NULL;
 
     return 1;
@@ -174,10 +174,10 @@ if (res)
 
 /* set sent mode */
 res = sx1268_lora_set_sent_mode();
-if (res)
+if (res != 0)
 {
-    sx1268_lora_deinit();
-    gpio_interrupt_deinit();
+    (void)sx1268_lora_deinit();
+    (void)gpio_interrupt_deinit();
     g_gpio_irq = NULL;
 
     return 1;
@@ -186,11 +186,11 @@ if (res)
 sx1268_interface_debug_print("sx1268: sent %s.\n", "123");
 
 /* sent data */
-res = sx1268_lora_sent_data((uint8_t *)"123", strlen("123"));
-if (res)
+res = sx1268_lora_sent((uint8_t *)"123", strlen("123"));
+if (res != 0)
 {
-    sx1268_lora_deinit();
-    gpio_interrupt_deinit();
+    (void)sx1268_lora_deinit();
+    (void)gpio_interrupt_deinit();
     g_gpio_irq = NULL;
 
     return 1;
@@ -198,14 +198,14 @@ if (res)
 
 /* deinit */
 res = sx1268_lora_deinit();
-if (res)
+if (res != 0)
 {
-    gpio_interrupt_deinit();
+    (void)gpio_interrupt_deinit();
     g_gpio_irq = NULL;
 
     return 1;
 }
-gpio_interrupt_deinit();
+(void)gpio_interrupt_deinit();
 g_gpio_irq = NULL;
 
 return 0;
@@ -214,11 +214,11 @@ return 0;
 
 ```c
 uint8_t (*g_gpio_irq)(void) = NULL;
-volatile uint8_t res;
-volatile uint32_t timeout;
+uint8_t res;
+uint32_t timeout;
 static uint8_t gs_rx_done;
 
-static uint8_t _callback(uint16_t type, uint8_t *buf, uint16_t len)
+static void a_callback(uint16_t type, uint8_t *buf, uint16_t len)
 {
     switch (type)
     {
@@ -226,11 +226,11 @@ static uint8_t _callback(uint16_t type, uint8_t *buf, uint16_t len)
         {
             sx1268_interface_debug_print("sx1268: irq tx done.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_RX_DONE :
         {
-            volatile uint16_t i;
+            uint16_t i;
             sx1268_bool_t enable;
             float rssi;
             float snr;
@@ -238,7 +238,7 @@ static uint8_t _callback(uint16_t type, uint8_t *buf, uint16_t len)
             sx1268_interface_debug_print("sx1268: irq rx done.\n");
             
             /* get the status */
-            if (sx1268_lora_get_status((float *)&rssi, (float *)&snr))
+            if (sx1268_lora_get_status((float *)&rssi, (float *)&snr) != 0)
             {
                 return 1;
             }
@@ -246,7 +246,7 @@ static uint8_t _callback(uint16_t type, uint8_t *buf, uint16_t len)
             sx1268_interface_debug_print("sx1268: snr is %0.2f.\n", snr);
             
             /* check the error */
-            if (sx1268_lora_check_packet_error(&enable))
+            if (sx1268_lora_check_packet_error(&enable) != 0)
             {
                 return 1;
             }
@@ -260,76 +260,76 @@ static uint8_t _callback(uint16_t type, uint8_t *buf, uint16_t len)
                 gs_rx_done = 1;
             }
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_PREAMBLE_DETECTED :
         {
             sx1268_interface_debug_print("sx1268: irq preamble detected.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_SYNC_WORD_VALID :
         {
             sx1268_interface_debug_print("sx1268: irq valid sync word detected.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_HEADER_VALID :
         {
             sx1268_interface_debug_print("sx1268: irq valid header.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_HEADER_ERR :
         {
             sx1268_interface_debug_print("sx1268: irq header error.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_CRC_ERR :
         {
             sx1268_interface_debug_print("sx1268: irq crc error.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_CAD_DONE :
         {
             sx1268_interface_debug_print("sx1268: irq cad done.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_CAD_DETECTED :
         {
             sx1268_interface_debug_print("sx1268: irq cad detected.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_TIMEOUT :
         {
             sx1268_interface_debug_print("sx1268: irq timeout.\n");
             
-            return 0;
+            break;
         }
         default :
         {
-            return 1;
+            break;
         }
     }
 }
 
 /* gpio init */
 res = gpio_interrupt_init();
-if (res)
+if (res != 0)
 {
     return 1;
 }
 g_gpio_irq = sx1268_lora_irq_handler;
 
 /* lora init */
-res = sx1268_lora_init(_callback);
-if (res)
+res = sx1268_lora_init(a_callback);
+if (res != 0)
 {
-    gpio_interrupt_deinit();
+    (void)gpio_interrupt_deinit();
     g_gpio_irq = NULL;
 
     return 1;
@@ -342,16 +342,16 @@ timeout = 3000;
 
 /* start receive */
 res = sx1268_lora_set_continuous_receive_mode();
-if (res)
+if (res != 0)
 {
-    sx1268_lora_deinit();
-    gpio_interrupt_deinit();
+    (void)sx1268_lora_deinit();
+    (void)gpio_interrupt_deinit();
     g_gpio_irq = NULL;
 
     return 1;
 }
 
-while (timeout && (gs_rx_done == 0))
+while ((timeout != 0) && (gs_rx_done == 0))
 {
     timeout--;
     sx1268_interface_delay_ms(1000);
@@ -360,8 +360,8 @@ if (gs_rx_done == 0)
 {
     /* receive timeout */
     sx1268_interface_debug_print("sx1268: receive timeout.\n");
-    sx1268_lora_deinit();
-    gpio_interrupt_deinit();
+    (void)sx1268_lora_deinit();
+    (void)gpio_interrupt_deinit();
     g_gpio_irq = NULL;
 
     return 1;
@@ -369,14 +369,14 @@ if (gs_rx_done == 0)
 
 /* deinit */
 res = sx1268_lora_deinit();
-if (res)
+if (res != 0)
 {
-    gpio_interrupt_deinit();
+    (void)gpio_interrupt_deinit();
     g_gpio_irq = NULL;
 
     return 1;
 }
-gpio_interrupt_deinit();
+(void)gpio_interrupt_deinit();
 g_gpio_irq = NULL;
 
 return 0;

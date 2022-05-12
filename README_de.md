@@ -6,47 +6,47 @@
 
 ## LibDriver SX1268
 
-[![MISRA](https://img.shields.io/badge/misra-compliant-brightgreen.svg)](/misra/README.md) [![API](https://img.shields.io/badge/api-reference-blue.svg)](https://www.libdriver.com/docs/sx1268/index.html) [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](/LICENSE)
+[![MISRA](https://img.shields.io/badge/misra-compliant-brightgreen.svg)](/misra/README.md) [![API](https://img.shields.io/badge/api-reference-blue.svg)](https://www.libdriver.com/docs/sx1268/index.html) [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](/LICENSE) 
 
-SX1268 sub-GHz 無線電收發器是遠程無線應用的理想器件。它專為延長電池壽命而設計，有效接收電流消耗僅為 4.2 mA。 SX1268 可以通過高效集成功率放大器在 490 MHz 時傳輸高達 +22 dBm。在 780 MHz 時，SX1268 在其天線端口傳輸 +10 dBm 信號的功耗不到 20 mA。 SX1268 支持用於 LPWAN 用例的 LoRa 調製(G)FSK 調製用於傳統用例。它具有高度可配置性，可利用 LoRaWANTM 標准或專有協議滿足不同的應用要求。該設備旨在符合 LoRa AllianceTM 發布的 LoRaWANTM 規範的物理層要求。該無線電適用於以符合無線電法規為目標的系統，包括但不限於中國監管要求和 ETSI EN 300 220 (434 MHz)。從 410 MHz 到 810 MHz 的連續頻率覆蓋允許支持 490 和 780 MHz 中國低功耗短距離設備頻段。 SX1268 可用於智能電錶、供應鏈與物流、樓宇自動化等。
+Der Sub-GHz-Funk-Transceiver SX1268 ist das ideale Gerät für drahtlose Anwendungen mit großer Reichweite. Es ist für eine lange Batterielebensdauer mit nur 4,2 mA aktivem Empfangsstromverbrauch ausgelegt. Der SX1268 kann mit hocheffizienten integrierten Leistungsverstärkern bis zu +22 dBm bei 490 MHz übertragen. Bei 780 MHz verbraucht der SX1268 weniger als 20 mA, um ein Signal von +10 dBm an seinem Antennenanschluss zu übertragen. Der SX1268 unterstützt LoRa-Modulation für LPWAN-Anwendungsfälle und (G)FSK-Modulation für ältere Anwendungsfälle. Es ist hochgradig konfigurierbar, um verschiedene Anwendungsanforderungen zu erfüllen, die den LoRaWANTM-Standard oder proprietäre Protokolle verwenden. Das Gerät ist so konzipiert, dass es die Anforderungen der physikalischen Schicht der LoRaWANTM-Spezifikation erfüllt, die von der LoRa AllianceTM veröffentlicht wurde. Das Funkgerät eignet sich für Systeme, die auf die Einhaltung von Funkvorschriften abzielen, einschließlich aber nicht beschränkt auf die gesetzlichen Anforderungen Chinas und ETSI EN 300 220 (434 MHz). Die kontinuierliche Frequenzabdeckung von 410 MHz bis 810 MHz ermöglicht die Unterstützung der 490- und 780-MHz-Bänder chinesischer Geräte mit geringer Leistung und geringer Reichweite. SX1268 kann verwendet werden Smart Meter, Lieferkette und Logistik, Gebäudeautomation und so weiter.
 
-LibDriver SX1268是LibDriver推出的SX1268全功能驅動，提供無線發送、無線接收、cad等功能並且它符合MISRA標準。
+LibDriver SX1268 ist der voll funktionsfähige Treiber von SX1268, der von LibDriver gestartet wurde. Er bietet Funktionen für drahtloses Senden, drahtloses Empfangen, CAD usw. LibDriver ist MISRA-konform.
 
-### 目錄
+### Inhaltsverzeichnis
 
-  - [說明](#說明)
-  - [安裝](#安裝)
-  - [使用](#使用)
+  - [Anweisung](#Anweisung)
+  - [Installieren](#Installieren)
+  - [Nutzung](#Nutzung)
     - [example basic sent](#example-basic-sent)
     - [example basic receive](#example-basic-receive)
-  - [文檔](#文檔)
-  - [貢獻](#貢獻)
-  - [版權](#版權)
-  - [聯繫我們](#聯繫我們)
+  - [Dokument](#Dokument)
+  - [Beitrag](#Beitrag)
+  - [Lizenz](#Lizenz)
+  - [Kontaktieren Sie uns](#Kontaktieren-Sie-uns)
 
-### 說明
+### Anweisung
 
-/src目錄包含了LibDriver SX1268的源文件。
+/src enthält LibDriver SX1268-Quelldateien.
 
-/interface目錄包含了LibDriver SX1268與平台無關的SPI總線模板。
+/interface enthält die plattformunabhängige Vorlage LibDriver SX1268 SPI.
 
-/test目錄包含了LibDriver SX1268驅動測試程序，該程序可以簡單的測試芯片必要功能。
+/test enthält den Testcode des LibDriver SX1268-Treibers und dieser Code kann die erforderliche Funktion des Chips einfach testen.
 
-/example目錄包含了LibDriver SX1268編程範例。
+/example enthält LibDriver SX1268-Beispielcode.
 
-/doc目錄包含了LibDriver SX1268離線文檔。
+/doc enthält das LibDriver SX1268-Offlinedokument.
 
-/datasheet目錄包含了SX1268數據手冊。
+/Datenblatt enthält SX1268-Datenblatt.
 
-/project目錄包含了常用Linux與單片機開發板的工程樣例。所有工程均採用shell腳本作為調試方法，詳細內容可參考每個工程裡面的README.md。
+/project enthält den allgemeinen Beispielcode für Linux- und MCU-Entwicklungsboards. Alle Projekte verwenden das Shell-Skript, um den Treiber zu debuggen, und die detaillierten Anweisungen finden Sie in der README.md jedes Projekts.
 
-### 安裝
+### Installieren
 
-參考/interface目錄下與平台無關的SPI總線模板，完成指定平台的SPI總線驅動。
+Verweisen Sie auf eine plattformunabhängige SPI-Schnittstellenvorlage und stellen Sie Ihren Plattform-SPI-Treiber fertig.
 
-將/src目錄，/interface目錄和/example目錄加入工程。
+Fügen Sie /src, /interface und /example zu Ihrem Projekt hinzu.
 
-### 使用
+### Nutzung
 
 #### example basic sent
 
@@ -213,7 +213,7 @@ return 0;
 
 #### example basic receive
 
-```C
+```c
 uint8_t (*g_gpio_irq)(void) = NULL;
 uint8_t res;
 uint32_t timeout;
@@ -383,28 +383,60 @@ g_gpio_irq = NULL;
 return 0;
 ```
 
-### 文檔
+### Dokument
 
-在線文檔: https://www.libdriver.com/docs/sx1268/index.html
+Online-Dokumente: https://www.libdriver.com/docs/sx1268/index.html
 
-離線文檔: /doc/html/index.html
+Offline-Dokumente: /doc/html/index.html
 
-### 貢獻
+### Beitrag
 
-請聯繫lishifenging@outlook.com
+Bitte senden Sie eine E-Mail an lishifenging@outlook.com
 
-### 版權
+### Lizenz
 
-版權 (c) 2015 - 現在 LibDriver 版權所有
+Urheberrechte © (c) 2015 - Gegenwart LibDriver Alle Rechte vorbehalten
 
-MIT 許可證（MIT）
 
-特此免費授予任何獲得本軟件副本和相關文檔文件（下稱“軟件”）的人不受限制地處置該軟件的權利，包括不受限制地使用、複製、修改、合併、發布、分發、轉授許可和/或出售該軟件副本，以及再授權被配發了本軟件的人如上的權利，須在下列條件下：
 
-上述版權聲明和本許可聲明應包含在該軟件的所有副本或實質成分中。
+Die MIT-Lizenz (MIT)
 
-本軟件是“如此”提供的，沒有任何形式的明示或暗示的保證，包括但不限於對適銷性、特定用途的適用性和不侵權的保證。在任何情況下，作者或版權持有人都不對任何索賠、損害或其他責任負責，無論這些追責來自合同、侵權或其它行為中，還是產生於、源於或有關於本軟件以及本軟件的使用或其它處置。
 
-### 聯繫我們
 
-請聯繫lishifenging@outlook.com
+Hiermit wird jeder Person kostenlos die Erlaubnis erteilt, eine Kopie zu erhalten
+
+dieser Software und zugehörigen Dokumentationsdateien (die „Software“) zu behandeln
+
+in der Software ohne Einschränkung, einschließlich, aber nicht beschränkt auf die Rechte
+
+zu verwenden, zu kopieren, zu modifizieren, zusammenzuführen, zu veröffentlichen, zu verteilen, unterzulizenzieren und/oder zu verkaufen
+
+Kopien der Software und Personen, denen die Software gehört, zu gestatten
+
+dazu eingerichtet werden, unter folgenden Bedingungen:
+
+
+
+Der obige Urheberrechtshinweis und dieser Genehmigungshinweis müssen in allen enthalten sein
+
+Kopien oder wesentliche Teile der Software.
+
+
+
+DIE SOFTWARE WIRD "WIE BESEHEN" BEREITGESTELLT, OHNE JEGLICHE GEWÄHRLEISTUNG, AUSDRÜCKLICH ODER
+
+STILLSCHWEIGEND, EINSCHLIESSLICH, ABER NICHT BESCHRÄNKT AUF DIE GEWÄHRLEISTUNG DER MARKTGÄNGIGKEIT,
+
+EIGNUNG FÜR EINEN BESTIMMTEN ZWECK UND NICHTVERLETZUNG VON RECHTEN DRITTER. IN KEINEM FALL DARF DAS
+
+AUTOREN ODER URHEBERRECHTSINHABER HAFTEN FÜR JEGLICHE ANSPRÜCHE, SCHÄDEN ODER ANDERE
+
+HAFTUNG, OB AUS VERTRAG, DELIKT ODER ANDERWEITIG, ENTSTEHEND AUS,
+
+AUS ODER IM ZUSAMMENHANG MIT DER SOFTWARE ODER DER VERWENDUNG ODER ANDEREN HANDLUNGEN MIT DER
+
+SOFTWARE.
+
+### Kontaktieren Sie uns
+
+Bitte senden Sie eine E-Mail an lishifenging@outlook.com

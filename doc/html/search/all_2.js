@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['debug_5fprint_9',['debug_print',['../structsx1268__handle__s.html#a75f9f50c23e87e9407f9ec4e34bb42f2',1,'sx1268_handle_s']]],
+  ['debug_5fprint_9',['debug_print',['../structsx1268__handle__s.html#a769d5b3a6c14790a0e126e8fe70b384b',1,'sx1268_handle_s']]],
   ['delay_5fms_10',['delay_ms',['../structsx1268__handle__s.html#a406c9433252b7366de417b7a60915c81',1,'sx1268_handle_s']]],
   ['driver_5fsx1268_2ec_11',['driver_sx1268.c',['../driver__sx1268_8c.html',1,'']]],
   ['driver_5fsx1268_2eh_12',['driver_sx1268.h',['../driver__sx1268_8h.html',1,'']]],

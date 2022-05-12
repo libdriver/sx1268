@@ -34,8 +34,8 @@
  * </table>
  */
 
-#ifndef _DRIVER_SX1268_INTERFACE_H_
-#define _DRIVER_SX1268_INTERFACE_H_
+#ifndef DRIVER_SX1268_INTERFACE_H
+#define DRIVER_SX1268_INTERFACE_H
 
 #include "driver_sx1268.h"
 
@@ -148,22 +148,18 @@ void sx1268_interface_delay_ms(uint32_t ms);
 /**
  * @brief     interface print format data
  * @param[in] fmt is the format data
- * @return    length of the send data
  * @note      none
  */
-uint16_t sx1268_interface_debug_print(char *fmt, ...);
+void sx1268_interface_debug_print(const char *const fmt, ...);
 
 /**
  * @brief     interface receive callback
  * @param[in] type is the receive callback type
  * @param[in] *buf points to a buffer address
  * @param[in] len is the buffer length
- * @return    status code
- *            - 0 success
- *            - 1 run failed
  * @note      none
  */
-uint8_t sx1268_interface_receive_callback(uint16_t type, uint8_t *buf, uint16_t len);
+void sx1268_interface_receive_callback(uint16_t type, uint8_t *buf, uint16_t len);
 
 /**
  * @}

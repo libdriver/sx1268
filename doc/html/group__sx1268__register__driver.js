@@ -15,7 +15,7 @@ var group__sx1268__register__driver =
     [ "sx1268_get_ocp", "group__sx1268__register__driver.html#ga15f1cd40ab2bf2dc0f8a7ab2a0ce0127", null ],
     [ "sx1268_get_pull_down_control", "group__sx1268__register__driver.html#ga1dcbe82ba27ece1c324f9bcb12a65d24", null ],
     [ "sx1268_get_pull_up_control", "group__sx1268__register__driver.html#ga5dbf5f4275642e390360e7ffaad19973", null ],
-    [ "sx1268_get_random_number", "group__sx1268__register__driver.html#gaf3777c9a2742b8f21101b7be10f7269d", null ],
+    [ "sx1268_get_random_number", "group__sx1268__register__driver.html#ga7e9973da8ed4af9716316ead796eb692", null ],
     [ "sx1268_get_rtc_control", "group__sx1268__register__driver.html#gaf481eee4306fab92b822ccf92cb5a8c8", null ],
     [ "sx1268_get_rx_gain", "group__sx1268__register__driver.html#ga9d0463faa2c840092ec35b3dddc0ca44", null ],
     [ "sx1268_get_tx_clamp_config", "group__sx1268__register__driver.html#gaafff119d15ce3fe5d9b0a7f10227aee3", null ],
