@@ -34,8 +34,8 @@
  * </table>
  */
 
-#ifndef _DRIVER_SX1268_LORA_H_
-#define _DRIVER_SX1268_LORA_H_
+#ifndef DRIVER_SX1268_LORA_H
+#define DRIVER_SX1268_LORA_H
 
 #include "driver_sx1268_interface.h"
 
@@ -63,9 +63,9 @@ extern "C"{
 #define SX1268_LORA_DEFAULT_BANDWIDTH                   SX1268_LORA_BANDWIDTH_125_KHZ     /**< 125khz */
 #define SX1268_LORA_DEFAULT_CR                          SX1268_LORA_CR_4_5                /**< cr4/5 */
 #define SX1268_LORA_DEFAULT_LOW_DATA_RATE_OPTIMIZE      SX1268_BOOL_FALSE                 /**< disable low data rate optimize */
-#define SX1268_LORA_DEFAULT_RF_FREQUENCY                480000000                         /**< 480000000Hz */
+#define SX1268_LORA_DEFAULT_RF_FREQUENCY                480000000U                        /**< 480000000Hz */
 #define SX1268_LORA_DEFAULT_SYMB_NUM_TIMEOUT            0                                 /**< 0 */
-#define SX1268_LORA_DEFAULT_SYNC_WORD                   0x3444                            /**< public network */
+#define SX1268_LORA_DEFAULT_SYNC_WORD                   0x3444U                           /**< public network */
 #define SX1268_LORA_DEFAULT_RX_GAIN                     0x94                              /**< common rx gain */
 #define SX1268_LORA_DEFAULT_OCP                         0x38                              /**< 140 mA */
 #define SX1268_LORA_DEFAULT_PREAMBLE_LENGTH             12                                /**< 12 */
@@ -96,7 +96,7 @@ uint8_t sx1268_lora_irq_handler(void);
  *            - 1 init failed
  * @note      none
  */
-uint8_t sx1268_lora_init(uint8_t (*callback)(uint16_t type, uint8_t *buf, uint16_t len));
+uint8_t sx1268_lora_init(void (*callback)(uint16_t type, uint8_t *buf, uint16_t len));
 
 /**
  * @brief  lora example deinit
@@ -143,7 +143,7 @@ uint8_t sx1268_lora_set_sent_mode(void);
  *            - 1 sent failed
  * @note      none
  */
-uint8_t sx1268_lora_sent_data(uint8_t *buf, uint16_t len);
+uint8_t sx1268_lora_sent(uint8_t *buf, uint16_t len);
 
 /**
  * @brief      lora example run the cad

@@ -50,12 +50,9 @@ static uint8_t gs_rx_done;                 /**< rx done */
  * @param[in] type is the receive callback type
  * @param[in] *buf points to a buffer address
  * @param[in] len is the buffer length
- * @return    status code
- *            - 0 success
- *            - 1 run failed
  * @note      none
  */
-static uint8_t _callback(uint16_t type, uint8_t *buf, uint16_t len)
+static void a_callback(uint16_t type, uint8_t *buf, uint16_t len)
 {
     switch (type)
     {
@@ -63,11 +60,11 @@ static uint8_t _callback(uint16_t type, uint8_t *buf, uint16_t len)
         {
             sx1268_interface_debug_print("sx1268: irq tx done.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_RX_DONE :
         {
-            volatile uint16_t i;
+            uint16_t i;
             sx1268_bool_t enable;
             float rssi;
             float snr;
@@ -75,17 +72,17 @@ static uint8_t _callback(uint16_t type, uint8_t *buf, uint16_t len)
             sx1268_interface_debug_print("sx1268: irq rx done.\n");
             
             /* get the status */
-            if (sx1268_lora_get_status((float *)&rssi, (float *)&snr))
+            if (sx1268_lora_get_status((float *)&rssi, (float *)&snr) != 0)
             {
-                return 1;
+                return;
             }
             sx1268_interface_debug_print("sx1268: rssi is %0.1f.\n", rssi);
             sx1268_interface_debug_print("sx1268: snr is %0.2f.\n", snr);
             
             /* check the error */
-            if (sx1268_lora_check_packet_error(&enable))
+            if (sx1268_lora_check_packet_error(&enable) != 0)
             {
-                return 1;
+                return;
             }
             if ((enable == SX1268_BOOL_FALSE) && len)
             {
@@ -94,62 +91,64 @@ static uint8_t _callback(uint16_t type, uint8_t *buf, uint16_t len)
                     sx1268_interface_debug_print("%c", buf[i]);
                 }
                 sx1268_interface_debug_print("\n");
-                g_flag = 1;
+                gs_rx_done = 1;
             }
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_PREAMBLE_DETECTED :
         {
             sx1268_interface_debug_print("sx1268: irq preamble detected.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_SYNC_WORD_VALID :
         {
             sx1268_interface_debug_print("sx1268: irq valid sync word detected.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_HEADER_VALID :
         {
             sx1268_interface_debug_print("sx1268: irq valid header.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_HEADER_ERR :
         {
             sx1268_interface_debug_print("sx1268: irq header error.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_CRC_ERR :
         {
             sx1268_interface_debug_print("sx1268: irq crc error.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_CAD_DONE :
         {
             sx1268_interface_debug_print("sx1268: irq cad done.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_CAD_DETECTED :
         {
             sx1268_interface_debug_print("sx1268: irq cad detected.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_TIMEOUT :
         {
             sx1268_interface_debug_print("sx1268: irq timeout.\n");
             
-            return 0;
+            break;
         }
         default :
         {
-            return 1;
+            sx1268_interface_debug_print("sx1268: unknown code.\n");
+            
+            break;
         }
     }
 }
@@ -193,13 +192,13 @@ uint8_t sx1268(uint8_t argc, char **argv)
         else if (strcmp("-p", argv[1]) == 0)
         {
             /* print pin connection */
-            sx1268_interface_debug_print("sx1268: SCK connected to GPIO11.\n");
-            sx1268_interface_debug_print("sx1268: MISO connected to GPIO9.\n");
-            sx1268_interface_debug_print("sx1268: MOSI connected to GPIO10.\n");
-            sx1268_interface_debug_print("sx1268: CS connected to GPIO8.\n");
-            sx1268_interface_debug_print("sx1268: RST connected to GPIO27.\n");
-            sx1268_interface_debug_print("sx1268: DIO1 connected to GPIO22.\n");
-            sx1268_interface_debug_print("sx1268: BUSY connected to GPIO17.\n");
+            sx1268_interface_debug_print("sx1268: SCK connected to GPIO11(BCM).\n");
+            sx1268_interface_debug_print("sx1268: MISO connected to GPIO9(BCM).\n");
+            sx1268_interface_debug_print("sx1268: MOSI connected to GPIO10(BCM).\n");
+            sx1268_interface_debug_print("sx1268: CS connected to GPIO8(BCM).\n");
+            sx1268_interface_debug_print("sx1268: RST connected to GPIO27(BCM).\n");
+            sx1268_interface_debug_print("sx1268: DIO1 connected to GPIO22(BCM).\n");
+            sx1268_interface_debug_print("sx1268: BUSY connected to GPIO17(BCM).\n");
             
             return 0;
         }
@@ -238,10 +237,10 @@ uint8_t sx1268(uint8_t argc, char **argv)
             /* reg test */
             if (strcmp("reg", argv[2]) == 0)
             {
-                volatile uint8_t res;
+                uint8_t res;
                 
                 res = sx1268_register_test();
-                if (res)
+                if (res != 0)
                 {
                     return 1;
                 }
@@ -272,23 +271,23 @@ uint8_t sx1268(uint8_t argc, char **argv)
                 /* lora type */
                 if (strcmp("-lora", argv[3]) == 0)
                 {
-                    volatile uint8_t res;
+                    uint8_t res;
                     
                     res = gpio_interrupt_init();
-                    if (res)
+                    if (res != 0)
                     {
                         return 1;
                     }
                     g_gpio_irq = sx1268_interrupt_test_irq_handler;
                     res = sx1268_sent_test();
-                    if (res)
+                    if (res != 0)
                     {
-                        gpio_interrupt_deinit();
+                        (void)gpio_interrupt_deinit();
                         g_gpio_irq = NULL;
                         
                         return 1;
                     }
-                    gpio_interrupt_deinit();
+                    (void)gpio_interrupt_deinit();
                     g_gpio_irq = NULL;
                     
                     return 0;
@@ -305,23 +304,23 @@ uint8_t sx1268(uint8_t argc, char **argv)
                 /* lora type */
                 if (strcmp("-lora", argv[3]) == 0)
                 {
-                    volatile uint8_t res;
+                    uint8_t res;
                     
                     res = gpio_interrupt_init();
-                    if (res)
+                    if (res != 0)
                     {
                         return 1;
                     }
                     g_gpio_irq = sx1268_cad_test_irq_handler;
                     res = sx1268_cad_test();
-                    if (res)
+                    if (res != 0)
                     {
-                        gpio_interrupt_deinit();
+                        (void)gpio_interrupt_deinit();
                         g_gpio_irq = NULL;
                         
                         return 1;
                     }
-                    gpio_interrupt_deinit();
+                    (void)gpio_interrupt_deinit();
                     g_gpio_irq = NULL;
                     
                     return 0;
@@ -347,22 +346,22 @@ uint8_t sx1268(uint8_t argc, char **argv)
                 /* lora type */
                 if (strcmp("-lora", argv[3]) == 0)
                 {
-                    volatile uint8_t res;
+                    uint8_t res;
                     sx1268_bool_t enable;
                     
                     /* gpio init */
                     res = gpio_interrupt_init();
-                    if (res)
+                    if (res != 0)
                     {
                         return 1;
                     }
                     g_gpio_irq = sx1268_lora_irq_handler;
                     
                     /* lora init */
-                    res = sx1268_lora_init(_callback);
-                    if (res)
+                    res = sx1268_lora_init(a_callback);
+                    if (res != 0)
                     {
-                        gpio_interrupt_deinit();
+                        (void)gpio_interrupt_deinit();
                         g_gpio_irq = NULL;
                         
                         return 1;
@@ -370,10 +369,10 @@ uint8_t sx1268(uint8_t argc, char **argv)
                     
                     /* run cad */
                     res = sx1268_lora_run_cad(&enable);
-                    if (res)
+                    if (res != 0)
                     {
-                        sx1268_lora_deinit();
-                        gpio_interrupt_deinit();
+                        (void)sx1268_lora_deinit();
+                        (void)gpio_interrupt_deinit();
                         g_gpio_irq = NULL;
                         
                         return 1;
@@ -391,14 +390,14 @@ uint8_t sx1268(uint8_t argc, char **argv)
                     
                     /* deinit */
                     res = sx1268_lora_deinit();
-                    if (res)
+                    if (res != 0)
                     {
-                        gpio_interrupt_deinit();
+                        (void)gpio_interrupt_deinit();
                         g_gpio_irq = NULL;
                         
                         return 1;
                     }
-                    gpio_interrupt_deinit();
+                    (void)gpio_interrupt_deinit();
                     g_gpio_irq = NULL;
                     
                     return 0;
@@ -415,17 +414,17 @@ uint8_t sx1268(uint8_t argc, char **argv)
                 /* lora type */
                 if (strcmp("-lora", argv[3]) == 0)
                 {
-                    volatile uint8_t res;
+                    uint8_t res;
                     
                     /* lora init */
-                    res = sx1268_lora_init(_callback);
-                    if (res)
+                    res = sx1268_lora_init(a_callback);
+                    if (res != 0)
                     {
                         return 1;
                     }
                     
                     /* sleep */
-                    if (sx1268_lora_sleep())
+                    if (sx1268_lora_sleep() != 0)
                     {
                         return 1;
                     }
@@ -446,17 +445,17 @@ uint8_t sx1268(uint8_t argc, char **argv)
                 /* lora type */
                 if (strcmp("-lora", argv[3]) == 0)
                 {
-                    volatile uint8_t res;
+                    uint8_t res;
                     
                     /* lora init */
-                    res = sx1268_lora_init(_callback);
-                    if (res)
+                    res = sx1268_lora_init(a_callback);
+                    if (res != 0)
                     {
                         return 1;
                     }
                     
                     /* wake up */
-                    if (sx1268_lora_wake_up())
+                    if (sx1268_lora_wake_up() != 0)
                     {
                         return 1;
                     }
@@ -465,7 +464,7 @@ uint8_t sx1268(uint8_t argc, char **argv)
                     
                     /* deinit */
                     res = sx1268_lora_deinit();
-                    if (res)
+                    if (res != 0)
                     {
                         return 1;
                     }
@@ -501,23 +500,23 @@ uint8_t sx1268(uint8_t argc, char **argv)
                 /* lora type */
                 if (strcmp("-lora", argv[3]) == 0)
                 {
-                    volatile uint8_t res;
+                    uint8_t res;
                     
                     res = gpio_interrupt_init();
-                    if (res)
+                    if (res != 0)
                     {
                         return 1;
                     }
                     g_gpio_irq = sx1268_interrupt_test_irq_handler;
                     res = sx1268_receive_test(atoi(argv[4]));
-                    if (res)
+                    if (res != 0)
                     {
-                        gpio_interrupt_deinit();
+                        (void)gpio_interrupt_deinit();
                         g_gpio_irq = NULL;
                         
                         return 1;
                     }
-                    gpio_interrupt_deinit();
+                    (void)gpio_interrupt_deinit();
                     g_gpio_irq = NULL;
                     
                     return 0;
@@ -543,21 +542,21 @@ uint8_t sx1268(uint8_t argc, char **argv)
                 /* lora type */
                 if (strcmp("-lora", argv[3]) == 0)
                 {
-                    volatile uint8_t res;
+                    uint8_t res;
                     
                     /* gpio init */
                     res = gpio_interrupt_init();
-                    if (res)
+                    if (res != 0)
                     {
                         return 1;
                     }
                     g_gpio_irq = sx1268_lora_irq_handler;
                     
                     /* lora init */
-                    res = sx1268_lora_init(_callback);
-                    if (res)
+                    res = sx1268_lora_init(a_callback);
+                    if (res != 0)
                     {
-                        gpio_interrupt_deinit();
+                        (void)gpio_interrupt_deinit();
                         g_gpio_irq = NULL;
                         
                         return 1;
@@ -565,10 +564,10 @@ uint8_t sx1268(uint8_t argc, char **argv)
                     
                     /* set sent mode */
                     res = sx1268_lora_set_sent_mode();
-                    if (res)
+                    if (res != 0)
                     {
-                        sx1268_lora_deinit();
-                        gpio_interrupt_deinit();
+                        (void)sx1268_lora_deinit();
+                        (void)gpio_interrupt_deinit();
                         g_gpio_irq = NULL;
                         
                         return 1;
@@ -577,11 +576,11 @@ uint8_t sx1268(uint8_t argc, char **argv)
                     sx1268_interface_debug_print("sx1268: sent %s.\n", argv[4]);
                     
                     /* sent data */
-                    res = sx1268_lora_sent_data((uint8_t *)argv[4], strlen(argv[4]));
-                    if (res)
+                    res = sx1268_lora_sent((uint8_t *)argv[4], (uint16_t)strlen(argv[4]));
+                    if (res != 0)
                     {
-                        sx1268_lora_deinit();
-                        gpio_interrupt_deinit();
+                        (void)sx1268_lora_deinit();
+                        (void)gpio_interrupt_deinit();
                         g_gpio_irq = NULL;
                         
                         return 1;
@@ -589,14 +588,14 @@ uint8_t sx1268(uint8_t argc, char **argv)
                     
                     /* deinit */
                     res = sx1268_lora_deinit();
-                    if (res)
+                    if (res != 0)
                     {
-                        gpio_interrupt_deinit();
+                        (void)gpio_interrupt_deinit();
                         g_gpio_irq = NULL;
                         
                         return 1;
                     }
-                    gpio_interrupt_deinit();
+                    (void)gpio_interrupt_deinit();
                     g_gpio_irq = NULL;
                     
                     return 0;
@@ -613,22 +612,22 @@ uint8_t sx1268(uint8_t argc, char **argv)
                 /* lora type */
                 if (strcmp("-lora", argv[3]) == 0)
                 {
-                    volatile uint8_t res;
-                    volatile uint32_t timeout;
+                    uint8_t res;
+                    uint32_t timeout;
                     
                     /* gpio init */
                     res = gpio_interrupt_init();
-                    if (res)
+                    if (res != 0)
                     {
                         return 1;
                     }
                     g_gpio_irq = sx1268_lora_irq_handler;
                     
                     /* lora init */
-                    res = sx1268_lora_init(_callback);
-                    if (res)
+                    res = sx1268_lora_init(a_callback);
+                    if (res != 0)
                     {
-                        gpio_interrupt_deinit();
+                        (void)gpio_interrupt_deinit();
                         g_gpio_irq = NULL;
                         
                         return 1;
@@ -641,16 +640,16 @@ uint8_t sx1268(uint8_t argc, char **argv)
                     
                     /* start receive */
                     res = sx1268_lora_set_continuous_receive_mode();
-                    if (res)
+                    if (res != 0)
                     {
-                        sx1268_lora_deinit();
-                        gpio_interrupt_deinit();
+                        (void)sx1268_lora_deinit();
+                        (void)gpio_interrupt_deinit();
                         g_gpio_irq = NULL;
                         
                         return 1;
                     }
                     
-                    while (timeout && (gs_rx_done == 0))
+                    while ((timeout != 0) && (gs_rx_done == 0))
                     {
                         timeout--;
                         sx1268_interface_delay_ms(1000);
@@ -659,8 +658,8 @@ uint8_t sx1268(uint8_t argc, char **argv)
                     {
                         /* receive timeout */
                         sx1268_interface_debug_print("sx1268: receive timeout.\n");
-                        sx1268_lora_deinit();
-                        gpio_interrupt_deinit();
+                        (void)sx1268_lora_deinit();
+                        (void)gpio_interrupt_deinit();
                         g_gpio_irq = NULL;
                         
                         return 1;
@@ -668,14 +667,14 @@ uint8_t sx1268(uint8_t argc, char **argv)
                     
                     /* deinit */
                     res = sx1268_lora_deinit();
-                    if (res)
+                    if (res != 0)
                     {
-                        gpio_interrupt_deinit();
+                        (void)gpio_interrupt_deinit();
                         g_gpio_irq = NULL;
                         
                         return 1;
                     }
-                    gpio_interrupt_deinit();
+                    (void)gpio_interrupt_deinit();
                     g_gpio_irq = NULL;
                     
                     return 0;

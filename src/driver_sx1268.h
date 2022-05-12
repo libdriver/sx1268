@@ -34,8 +34,8 @@
  * </table>
  */
 
-#ifndef _DRIVER_SX1268_H_
-#define _DRIVER_SX1268_H_
+#ifndef DRIVER_SX1268_H
+#define DRIVER_SX1268_H
 
 #include <stdio.h>
 #include <stdint.h>
@@ -388,9 +388,9 @@ typedef struct sx1268_handle_s
     uint8_t (*spi_write_read)(uint8_t *in_buf, uint32_t in_len,
                               uint8_t *out_buf, uint32_t out_len);        /**< point to a spi_write_read function address */
     void (*delay_ms)(uint32_t ms);                                        /**< point to a delay_ms function address */
-    uint16_t (*debug_print)(char *fmt, ...);                              /**< point to a debug_print function address */
-    uint8_t (*receive_callback)(uint16_t type,
-                                uint8_t *buf, uint16_t len);              /**< point to a receive_callback function address */
+    void (*debug_print)(const char *const fmt, ...);                      /**< point to a debug_print function address */
+    void (*receive_callback)(uint16_t type,
+                             uint8_t *buf, uint16_t len);                 /**< point to a receive_callback function address */
     uint8_t inited;                                                       /**< inited flag */
     uint8_t tx_done;                                                      /**< tx done flag */
     uint8_t cad_done;                                                     /**< cad done flag */
@@ -618,10 +618,10 @@ uint8_t sx1268_deinit(sx1268_handle_t *handle);
  *            - 7 unknown result
  * @note      none
  */
-uint8_t sx1268_lora_sent(sx1268_handle_t *handle, sx1268_clock_source_t standby_src,
-                         uint16_t preamble_length, sx1268_lora_header_t header_type,
-                         sx1268_lora_crc_type_t crc_type, sx1268_bool_t invert_iq_enable,
-                         uint8_t *buf, uint16_t len, uint32_t us);
+uint8_t sx1268_lora_transmit(sx1268_handle_t *handle, sx1268_clock_source_t standby_src,
+                             uint16_t preamble_length, sx1268_lora_header_t header_type,
+                             sx1268_lora_crc_type_t crc_type, sx1268_bool_t invert_iq_enable,
+                             uint8_t *buf, uint16_t len, uint32_t us);
 
 /**
  * @brief      run the cad
@@ -1125,7 +1125,7 @@ uint8_t sx1268_get_packet_type(sx1268_handle_t *handle, sx1268_packet_type_t *ty
  * @brief     set the tx params
  * @param[in] *handle points to a sx1268 handle structure
  * @param[in] dbm is the rf power 
- * @param[in] time is the ramp time
+ * @param[in] t is the ramp time
  * @return    status code
  *            - 0 success
  *            - 1 set tx params failed
@@ -1134,7 +1134,7 @@ uint8_t sx1268_get_packet_type(sx1268_handle_t *handle, sx1268_packet_type_t *ty
  *            - 4 chip is busy
  * @note      none
  */
-uint8_t sx1268_set_tx_params(sx1268_handle_t *handle, int8_t dbm, sx1268_ramp_time_t time);
+uint8_t sx1268_set_tx_params(sx1268_handle_t *handle, int8_t dbm, sx1268_ramp_time_t t);
 
 /**
  * @brief     set the modulation params in GFSK mode
@@ -1699,7 +1699,7 @@ uint8_t sx1268_get_lora_sync_word(sx1268_handle_t *handle, uint16_t *sync_word);
 /**
  * @brief      get the random number
  * @param[in]  *handle points to a sx1268 handle structure
- * @param[out] *rand points to a random number buffer
+ * @param[out] *r points to a random number buffer
  * @return     status code
  *             - 0 success
  *             - 1 get random number failed
@@ -1708,7 +1708,7 @@ uint8_t sx1268_get_lora_sync_word(sx1268_handle_t *handle, uint16_t *sync_word);
  *             - 4 chip is busy
  * @note       none
  */
-uint8_t sx1268_get_random_number(sx1268_handle_t *handle, uint32_t *rand);
+uint8_t sx1268_get_random_number(sx1268_handle_t *handle, uint32_t *r);
 
 /**
  * @brief     set the tx modulation

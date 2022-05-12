@@ -47,7 +47,7 @@ static sx1268_handle_t gs_handle;        /**< sx1268 handle */
  */
 uint8_t sx1268_lora_irq_handler(void)
 {
-    if (sx1268_irq_handler(&gs_handle))
+    if (sx1268_irq_handler(&gs_handle) != 0)
     {
         return 1;
     }
@@ -65,14 +65,12 @@ uint8_t sx1268_lora_irq_handler(void)
  *            - 1 init failed
  * @note      none
  */
-uint8_t sx1268_lora_init(uint8_t (*callback)(uint16_t type, uint8_t *buf, uint16_t len))
+uint8_t sx1268_lora_init(void (*callback)(uint16_t type, uint8_t *buf, uint16_t len))
 {
-    volatile uint8_t res;
-    volatile uint32_t reg;
-    volatile uint8_t r;
-    volatile uint8_t modulation;
-    volatile uint8_t config;
-    volatile uint8_t mask;
+    uint8_t res;
+    uint32_t reg;
+    uint8_t modulation;
+    uint8_t config;
     
     /* link interface function */
     DRIVER_SX1268_LINK_INIT(&gs_handle, sx1268_handle_t);
@@ -91,7 +89,7 @@ uint8_t sx1268_lora_init(uint8_t (*callback)(uint16_t type, uint8_t *buf, uint16
     
     /* init the sx1268 */
     res = sx1268_init(&gs_handle);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: init failed.\n");
        
@@ -100,90 +98,90 @@ uint8_t sx1268_lora_init(uint8_t (*callback)(uint16_t type, uint8_t *buf, uint16
     
     /* enter standby */
     res = sx1268_set_standby(&gs_handle, SX1268_CLOCK_SOURCE_RC_13M);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set standby failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     
     /* set stop timer on preamble */
     res = sx1268_set_stop_timer_on_preamble(&gs_handle, SX1268_LORA_DEFAULT_STOP_TIMER_ON_PREAMBLE);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: stop timer on preamble failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     
     /* set regulator mode */
     res = sx1268_set_regulator_mode(&gs_handle, SX1268_LORA_DEFAULT_REGULATOR_MODE);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set regulator mode failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     
     /* set pa config */
     res = sx1268_set_pa_config(&gs_handle, SX1268_LORA_DEFAULT_PA_CONFIG_DUTY_CYCLE, SX1268_LORA_DEFAULT_PA_CONFIG_HP_MAX);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set pa config failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     
     /* enter to stdby rc mode */
     res = sx1268_set_rx_tx_fallback_mode(&gs_handle, SX1268_RX_TX_FALLBACK_MODE_STDBY_RC);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set rx tx fallback mode failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     
     /* set dio irq */
     res = sx1268_set_dio_irq_params(&gs_handle, 0x03FF, 0x03FF, 0x0000, 0x0000);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set dio irq params failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     
     /* clear irq status */
     res = sx1268_clear_irq_status(&gs_handle, 0x03FF);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: clear irq status failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     
     /* set lora mode */
     res = sx1268_set_packet_type(&gs_handle, SX1268_PACKET_TYPE_LORA);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set packet type failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     
     /* set tx params */
     res = sx1268_set_tx_params(&gs_handle, SX1268_LORA_DEFAULT_TX_DBM, SX1268_LORA_DEFAULT_RAMP_TIME);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set tx params failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -191,90 +189,90 @@ uint8_t sx1268_lora_init(uint8_t (*callback)(uint16_t type, uint8_t *buf, uint16
     /* set lora modulation params */
     res = sx1268_set_lora_modulation_params(&gs_handle, SX1268_LORA_DEFAULT_SF, SX1268_LORA_DEFAULT_BANDWIDTH, 
                                             SX1268_LORA_DEFAULT_CR, SX1268_LORA_DEFAULT_LOW_DATA_RATE_OPTIMIZE);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set lora modulation params failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     
     /* convert the frequency */
     res = sx1268_frequency_convert_to_register(&gs_handle, SX1268_LORA_DEFAULT_RF_FREQUENCY, (uint32_t *)&reg);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: convert to register failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     
     /* set the frequency */
     res = sx1268_set_rf_frequency(&gs_handle, reg);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set rf frequency failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     
     /* set base address */
     res = sx1268_set_buffer_base_address(&gs_handle, 0x00, 0x00);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set buffer base address failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     
     /* set lora symb num */
     res = sx1268_set_lora_symb_num_timeout(&gs_handle, SX1268_LORA_DEFAULT_SYMB_NUM_TIMEOUT);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set lora symb num timeout failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     
     /* reset stats */
     res = sx1268_reset_stats(&gs_handle, 0x0000, 0x0000, 0x0000);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: reset stats failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     
     /* clear device errors */
     res = sx1268_clear_device_errors(&gs_handle);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: clear device errors failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     
     /* set the lora sync word */
     res = sx1268_set_lora_sync_word(&gs_handle, SX1268_LORA_DEFAULT_SYNC_WORD);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set lora sync word failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     
     /* get tx modulation */
     res = sx1268_get_tx_modulation(&gs_handle, (uint8_t *)&modulation);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: get tx modulation failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -282,40 +280,40 @@ uint8_t sx1268_lora_init(uint8_t (*callback)(uint16_t type, uint8_t *buf, uint16
     
     /* set the tx modulation */
     res = sx1268_set_tx_modulation(&gs_handle, modulation);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set tx modulation failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     
     /* set the rx gain */
     res = sx1268_set_rx_gain(&gs_handle, SX1268_LORA_DEFAULT_RX_GAIN);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set rx gain failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     
     /* set the ocp */
     res = sx1268_set_ocp(&gs_handle, SX1268_LORA_DEFAULT_OCP);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set ocp failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
     
     /* get the tx clamp config */
     res = sx1268_get_tx_clamp_config(&gs_handle, (uint8_t *)&config);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: get tx clamp config failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -323,10 +321,10 @@ uint8_t sx1268_lora_init(uint8_t (*callback)(uint16_t type, uint8_t *buf, uint16
     
     /* set the tx clamp config */
     res = sx1268_set_tx_clamp_config(&gs_handle, config);
-    if (res)
+    if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set tx clamp config failed.\n");
-        sx1268_deinit(&gs_handle);
+        (void)sx1268_deinit(&gs_handle);
         
         return 1;
     }
@@ -343,7 +341,7 @@ uint8_t sx1268_lora_init(uint8_t (*callback)(uint16_t type, uint8_t *buf, uint16
  */
 uint8_t sx1268_lora_deinit(void)
 {
-    if (sx1268_deinit(&gs_handle))
+    if (sx1268_deinit(&gs_handle) != 0)
     {
         return 1;
     }
@@ -362,7 +360,7 @@ uint8_t sx1268_lora_deinit(void)
  */
 uint8_t sx1268_lora_sleep(void)
 {
-    if (sx1268_set_sleep(&gs_handle, SX1268_LORA_DEFAULT_START_MODE, SX1268_LORA_DEFAULT_RTC_WAKE_UP))
+    if (sx1268_set_sleep(&gs_handle, SX1268_LORA_DEFAULT_START_MODE, SX1268_LORA_DEFAULT_RTC_WAKE_UP) != 0)
     {
         return 1;
     }
@@ -381,9 +379,9 @@ uint8_t sx1268_lora_sleep(void)
  */
 uint8_t sx1268_lora_wake_up(void)
 {
-    volatile uint8_t status;
+    uint8_t status;
     
-    if (sx1268_get_status(&gs_handle, (uint8_t *)&status))
+    if (sx1268_get_status(&gs_handle, (uint8_t *)&status) != 0)
     {
         return 1;
     }
@@ -402,68 +400,51 @@ uint8_t sx1268_lora_wake_up(void)
  */
 uint8_t sx1268_lora_set_continuous_receive_mode(void)
 {
-    volatile uint8_t setup;
+    uint8_t setup;
     
     /* set dio irq */
     if (sx1268_set_dio_irq_params(&gs_handle, SX1268_IRQ_RX_DONE | SX1268_IRQ_TIMEOUT | SX1268_IRQ_CRC_ERR | SX1268_IRQ_CAD_DONE | SX1268_IRQ_CAD_DETECTED,
                                   SX1268_IRQ_RX_DONE | SX1268_IRQ_TIMEOUT | SX1268_IRQ_CRC_ERR | SX1268_IRQ_CAD_DONE | SX1268_IRQ_CAD_DETECTED,
-                                  0x0000, 0x0000))
+                                  0x0000, 0x0000) != 0)
     {
-        sx1268_interface_debug_print("sx1268: set dio irq params failed.\n");
-        sx1268_deinit(&gs_handle);
-        
         return 1;
     }
     
     /* clear irq status */
-    if (sx1268_clear_irq_status(&gs_handle, 0x03FF))
+    if (sx1268_clear_irq_status(&gs_handle, 0x03FFU) != 0)
     {
-        sx1268_interface_debug_print("sx1268: clear irq status failed.\n");
-        sx1268_deinit(&gs_handle);
-        
         return 1;
     }
     
     /* set lora packet params */
     if (sx1268_set_lora_packet_params(&gs_handle, SX1268_LORA_DEFAULT_PREAMBLE_LENGTH,
                                       SX1268_LORA_DEFAULT_HEADER, SX1268_LORA_DEFAULT_BUFFER_SIZE,
-                                      SX1268_LORA_DEFAULT_CRC_TYPE, SX1268_LORA_DEFAULT_INVERT_IQ))
+                                      SX1268_LORA_DEFAULT_CRC_TYPE, SX1268_LORA_DEFAULT_INVERT_IQ) != 0)
     {
-        sx1268_interface_debug_print("sx1268: set lora packet params failed.\n");
-        sx1268_deinit(&gs_handle);
-        
         return 1;
     }
     
     /* get iq polarity */
-    if (sx1268_get_iq_polarity(&gs_handle, (uint8_t *)&setup))
+    if (sx1268_get_iq_polarity(&gs_handle, (uint8_t *)&setup) != 0)
     {
-        sx1268_interface_debug_print("sx1268: get iq polarity failed.\n");
-        sx1268_deinit(&gs_handle);
-        
         return 1;
     }
-    #if SX1268_LORA_DEFAULT_INVERT_IQ == SX1268_BOOL_FALSE
-        setup |= 1 << 2;
-    #else
-        setup &= ~(1 << 2);
-    #endif
+    
+#if SX1268_LORA_DEFAULT_INVERT_IQ == SX1268_BOOL_FALSE
+    setup |= 1 << 2;
+#else
+    setup &= ~(1 << 2);
+#endif
     
     /* set the iq polarity */
-    if (sx1268_set_iq_polarity(&gs_handle, setup))
+    if (sx1268_set_iq_polarity(&gs_handle, setup) != 0)
     {
-        sx1268_interface_debug_print("sx1268: set iq polarity failed.\n");
-        sx1268_deinit(&gs_handle);
-        
         return 1;
     }
     
     /* start receive */
-    if (sx1268_continuous_receive(&gs_handle))
+    if (sx1268_continuous_receive(&gs_handle) != 0)
     {
-        sx1268_interface_debug_print("sx1268: lora continuous receive failed.\n");
-        sx1268_deinit(&gs_handle);
-        
         return 1;
     }
     
@@ -479,68 +460,51 @@ uint8_t sx1268_lora_set_continuous_receive_mode(void)
  */
 uint8_t sx1268_lora_set_shot_receive_mode(double us)
 {
-    volatile uint8_t setup;
+    uint8_t setup;
     
     /* set dio irq */
     if (sx1268_set_dio_irq_params(&gs_handle, SX1268_IRQ_RX_DONE | SX1268_IRQ_TIMEOUT | SX1268_IRQ_CRC_ERR | SX1268_IRQ_CAD_DONE | SX1268_IRQ_CAD_DETECTED,
                                   SX1268_IRQ_RX_DONE | SX1268_IRQ_TIMEOUT | SX1268_IRQ_CRC_ERR | SX1268_IRQ_CAD_DONE | SX1268_IRQ_CAD_DETECTED,
-                                  0x0000, 0x0000))
+                                  0x0000, 0x0000) != 0)
     {
-        sx1268_interface_debug_print("sx1268: set dio irq params failed.\n");
-        sx1268_deinit(&gs_handle);
-        
         return 1;
     }
     
     /* clear irq status */
-    if (sx1268_clear_irq_status(&gs_handle, 0x03FF))
+    if (sx1268_clear_irq_status(&gs_handle, 0x03FFU) != 0)
     {
-        sx1268_interface_debug_print("sx1268: clear irq status failed.\n");
-        sx1268_deinit(&gs_handle);
-        
         return 1;
     }
     
     /* set lora packet params */
     if (sx1268_set_lora_packet_params(&gs_handle, SX1268_LORA_DEFAULT_PREAMBLE_LENGTH,
                                       SX1268_LORA_DEFAULT_HEADER, SX1268_LORA_DEFAULT_BUFFER_SIZE,
-                                      SX1268_LORA_DEFAULT_CRC_TYPE, SX1268_LORA_DEFAULT_INVERT_IQ))
+                                      SX1268_LORA_DEFAULT_CRC_TYPE, SX1268_LORA_DEFAULT_INVERT_IQ) != 0)
     {
-        sx1268_interface_debug_print("sx1268: set lora packet params failed.\n");
-        sx1268_deinit(&gs_handle);
-        
         return 1;
     }
     
     /* get iq polarity */
-    if (sx1268_get_iq_polarity(&gs_handle, (uint8_t *)&setup))
+    if (sx1268_get_iq_polarity(&gs_handle, (uint8_t *)&setup) != 0)
     {
-        sx1268_interface_debug_print("sx1268: get iq polarity failed.\n");
-        sx1268_deinit(&gs_handle);
-        
         return 1;
     }
-    #if SX1268_LORA_DEFAULT_INVERT_IQ == SX1268_BOOL_FALSE
-        setup |= 1 << 2;
-    #else
-        setup &= ~(1 << 2);
-    #endif
+    
+#if SX1268_LORA_DEFAULT_INVERT_IQ == SX1268_BOOL_FALSE
+    setup |= 1 << 2;
+#else
+    setup &= ~(1 << 2);
+#endif
     
     /* set the iq polarity */
-    if (sx1268_set_iq_polarity(&gs_handle, setup))
+    if (sx1268_set_iq_polarity(&gs_handle, setup) != 0)
     {
-        sx1268_interface_debug_print("sx1268: set iq polarity failed.\n");
-        sx1268_deinit(&gs_handle);
-        
         return 1;
     }
     
     /* start receive */
-    if (sx1268_single_receive(&gs_handle, us))
+    if (sx1268_single_receive(&gs_handle, us) != 0)
     {
-        sx1268_interface_debug_print("sx1268: lora single receive failed.\n");
-        sx1268_deinit(&gs_handle);
-        
         return 1;
     }
     
@@ -556,25 +520,17 @@ uint8_t sx1268_lora_set_shot_receive_mode(double us)
  */
 uint8_t sx1268_lora_set_sent_mode(void)
 {
-    volatile uint8_t setup;
-    
     /* set dio irq */
     if (sx1268_set_dio_irq_params(&gs_handle, SX1268_IRQ_TX_DONE | SX1268_IRQ_TIMEOUT | SX1268_IRQ_CAD_DONE | SX1268_IRQ_CAD_DETECTED,
                                   SX1268_IRQ_TX_DONE | SX1268_IRQ_TIMEOUT | SX1268_IRQ_CAD_DONE | SX1268_IRQ_CAD_DETECTED,
-                                  0x0000, 0x0000))
+                                  0x0000, 0x0000) != 0)
     {
-        sx1268_interface_debug_print("sx1268: set dio irq params failed.\n");
-        sx1268_deinit(&gs_handle);
-        
         return 1;
     }
     
     /* clear irq status */
-    if (sx1268_clear_irq_status(&gs_handle, 0x03FF))
+    if (sx1268_clear_irq_status(&gs_handle, 0x03FFU) != 0)
     {
-        sx1268_interface_debug_print("sx1268: clear irq status failed.\n");
-        sx1268_deinit(&gs_handle);
-        
         return 1;
     }
     
@@ -590,17 +546,14 @@ uint8_t sx1268_lora_set_sent_mode(void)
  *            - 1 sent failed
  * @note      none
  */
-uint8_t sx1268_lora_sent_data(uint8_t *buf, uint16_t len)
+uint8_t sx1268_lora_sent(uint8_t *buf, uint16_t len)
 {
     /* sent the data */
-    if (sx1268_lora_sent(&gs_handle, SX1268_CLOCK_SOURCE_RC_13M,
-                         SX1268_LORA_DEFAULT_PREAMBLE_LENGTH, SX1268_LORA_DEFAULT_HEADER,
-                         SX1268_LORA_DEFAULT_CRC_TYPE, SX1268_LORA_DEFAULT_INVERT_IQ,
-                         (uint8_t *)buf, len, 0))
+    if (sx1268_lora_transmit(&gs_handle, SX1268_CLOCK_SOURCE_RC_13M,
+                             SX1268_LORA_DEFAULT_PREAMBLE_LENGTH, SX1268_LORA_DEFAULT_HEADER,
+                             SX1268_LORA_DEFAULT_CRC_TYPE, SX1268_LORA_DEFAULT_INVERT_IQ,
+                            (uint8_t *)buf, len, 0) != 0)
     {
-        sx1268_interface_debug_print("sx1268: lora sent failed.\n");
-        sx1268_deinit(&gs_handle);
-        
         return 1;
     }
     
@@ -620,21 +573,14 @@ uint8_t sx1268_lora_run_cad(sx1268_bool_t *enable)
     /* set cad params */
     if (sx1268_set_cad_params(&gs_handle, SX1268_LORA_DEFAULT_CAD_SYMBOL_NUM,
                               SX1268_LORA_DEFAULT_CAD_DET_PEAK, SX1268_LORA_DEFAULT_CAD_DET_MIN,
-                              SX1268_LORA_CAD_EXIT_MODE_ONLY,
-                              0))
+                              SX1268_LORA_CAD_EXIT_MODE_ONLY, 0) != 0)
     {
-        sx1268_interface_debug_print("sx1268: set cad params failed.\n");
-        sx1268_deinit(&gs_handle);
-        
         return 1;
     }
     
     /* run the cad */
-    if (sx1268_lora_cad(&gs_handle, enable))
+    if (sx1268_lora_cad(&gs_handle, enable) != 0)
     {
-        sx1268_interface_debug_print("sx1268: lora cad failed.\n");
-        sx1268_deinit(&gs_handle);
-        
         return 1;
     }
     
@@ -659,7 +605,7 @@ uint8_t sx1268_lora_get_status(float *rssi, float *snr)
     
     /* get the status */
     if (sx1268_get_lora_packet_status(&gs_handle, (uint8_t *)&rssi_pkt_raw, (uint8_t *)&snr_pkt_raw,
-                                     (uint8_t *)&signal_rssi_pkt_raw, (float *)rssi, (float *)snr, (float *)&signal_rssi_pkt))
+                                     (uint8_t *)&signal_rssi_pkt_raw, (float *)rssi, (float *)snr, (float *)&signal_rssi_pkt) != 0)
     {
         return 1;
     }
@@ -678,7 +624,7 @@ uint8_t sx1268_lora_get_status(float *rssi, float *snr)
 uint8_t sx1268_lora_check_packet_error(sx1268_bool_t *enable)
 {
     /* check the error */
-    if (sx1268_check_packet_error(&gs_handle, enable))
+    if (sx1268_check_packet_error(&gs_handle, enable) != 0)
     {
         return 1;
     }

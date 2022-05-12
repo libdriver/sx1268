@@ -145,9 +145,9 @@
  *             - 1 spi read failed
  * @note       none
  */
-static uint8_t _sx1268_spi_read(sx1268_handle_t *handle, uint8_t reg, uint8_t *buf, uint16_t len)
+static uint8_t a_sx1268_spi_read(sx1268_handle_t *handle, uint8_t reg, uint8_t *buf, uint16_t len)
 {
-    if (handle->spi_write_read(&reg, 1, buf, len))        /* spi read */
+    if (handle->spi_write_read(&reg, 1, buf, len) != 0)   /* spi read */
     {
         return 1;                                         /* return error */
     }
@@ -169,7 +169,7 @@ static uint8_t _sx1268_spi_read(sx1268_handle_t *handle, uint8_t reg, uint8_t *b
  *            - 2 len is over 383
  * @note      none
  */
-static uint8_t _sx1268_spi_write(sx1268_handle_t *handle, uint8_t reg, uint8_t *buf, uint16_t len)
+static uint8_t a_sx1268_spi_write(sx1268_handle_t *handle, uint8_t reg, uint8_t *buf, uint16_t len)
 {
     if (len > (384 - 1))                                              /* check the length */
     {
@@ -181,7 +181,7 @@ static uint8_t _sx1268_spi_write(sx1268_handle_t *handle, uint8_t reg, uint8_t *
     memset(handle->buf, 0, sizeof(uint8_t) * 384);                    /* clear the buffer */
     handle->buf[0] = reg;                                             /* set the reg */
     memcpy(&handle->buf[1], buf, len);                                /* copy the buffer */
-    if (handle->spi_write_read(handle->buf, len + 1, NULL, 0))        /* spi write */
+    if (handle->spi_write_read(handle->buf, len + 1, NULL, 0) != 0)   /* spi write */
     {
         return 1;                                                     /* return error */
     }
@@ -203,9 +203,9 @@ static uint8_t _sx1268_spi_write(sx1268_handle_t *handle, uint8_t reg, uint8_t *
  *             - 2 len is over 383
  * @note       none
  */
-static uint8_t _sx1268_spi_read_register(sx1268_handle_t *handle, uint16_t reg, uint8_t *buf, uint16_t len)
+static uint8_t a_sx1268_spi_read_register(sx1268_handle_t *handle, uint16_t reg, uint8_t *buf, uint16_t len)
 {
-    volatile uint8_t reg_buf[3];
+    uint8_t reg_buf[3];
     
     if (len > (384 - 1))                                                            /* check the length */
     {
@@ -218,7 +218,7 @@ static uint8_t _sx1268_spi_read_register(sx1268_handle_t *handle, uint16_t reg, 
     reg_buf[0] = SX1268_COMMAND_READ_REGISTER;                                      /* set the command */
     reg_buf[1] = (reg >> 8) & 0xFF;                                                 /* set msb */
     reg_buf[2] = (reg >> 0) & 0xFF;                                                 /* set lsb */
-    if (handle->spi_write_read((uint8_t *)reg_buf, 3, handle->buf, len + 1))        /* spi read */
+    if (handle->spi_write_read((uint8_t *)reg_buf, 3, handle->buf, len + 1) != 0)   /* spi read */
     {
         return 1;                                                                   /* return error */
     }
@@ -242,7 +242,7 @@ static uint8_t _sx1268_spi_read_register(sx1268_handle_t *handle, uint16_t reg, 
  *            - 2 len is over 381
  * @note      none
  */
-static uint8_t _sx1268_spi_write_register(sx1268_handle_t *handle, uint16_t reg, uint8_t *buf, uint16_t len)
+static uint8_t a_sx1268_spi_write_register(sx1268_handle_t *handle, uint16_t reg, uint8_t *buf, uint16_t len)
 {
     if (len > (384 - 3))                                              /* check the length */
     {
@@ -256,7 +256,7 @@ static uint8_t _sx1268_spi_write_register(sx1268_handle_t *handle, uint16_t reg,
     handle->buf[1] = (reg >> 8) & 0xFF;                               /* set reg msb */
     handle->buf[2] = (reg >> 0) & 0xFF;                               /* set reg lsb */
     memcpy(&handle->buf[3], buf, len);                                /* copy the buffer */
-    if (handle->spi_write_read(handle->buf, len + 3, NULL, 0))        /* spi write */
+    if (handle->spi_write_read(handle->buf, len + 3, NULL, 0) != 0)   /* spi write */
     {
         return 1;                                                     /* return error */
     }
@@ -278,7 +278,7 @@ static uint8_t _sx1268_spi_write_register(sx1268_handle_t *handle, uint16_t reg,
  *            - 2 len is over 382
  * @note      none
  */
-static uint8_t _sx1268_spi_write_buffer(sx1268_handle_t *handle, uint8_t offset, uint8_t *buf, uint16_t len)
+static uint8_t a_sx1268_spi_write_buffer(sx1268_handle_t *handle, uint8_t offset, uint8_t *buf, uint16_t len)
 {
     if (len > (384 - 2))                                              /* check the length */
     {
@@ -291,7 +291,7 @@ static uint8_t _sx1268_spi_write_buffer(sx1268_handle_t *handle, uint8_t offset,
     handle->buf[0] = SX1268_COMMAND_WRITE_BUFFER;                     /* set the commmand */
     handle->buf[1] = offset;                                          /* set reg msb */
     memcpy(&handle->buf[2], buf, len);                                /* copy the buffer */
-    if (handle->spi_write_read(handle->buf, len + 2, NULL, 0))        /* spi write */
+    if (handle->spi_write_read(handle->buf, len + 2, NULL, 0) != 0)   /* spi write */
     {
         return 1;                                                     /* return error */
     }
@@ -313,9 +313,9 @@ static uint8_t _sx1268_spi_write_buffer(sx1268_handle_t *handle, uint8_t offset,
  *             - 2 len is over 383
  * @note      none
  */
-static uint8_t _sx1268_spi_read_buffer(sx1268_handle_t *handle, uint8_t offset, uint8_t *buf, uint16_t len)
+static uint8_t a_sx1268_spi_read_buffer(sx1268_handle_t *handle, uint8_t offset, uint8_t *buf, uint16_t len)
 {
-    volatile uint8_t reg_buf[2];
+    uint8_t reg_buf[2];
     
     if (len > (384 - 1))                                                            /* check the length */
     {
@@ -327,7 +327,7 @@ static uint8_t _sx1268_spi_read_buffer(sx1268_handle_t *handle, uint8_t offset, 
     memset(handle->buf, 0, sizeof(uint8_t) * 384);                                  /* clear the buffer */
     reg_buf[0] = SX1268_COMMAND_READ_BUFFER ;                                       /* set the command */
     reg_buf[1] = offset;                                                            /* set msb */
-    if (handle->spi_write_read((uint8_t *)reg_buf, 2, handle->buf, len + 1))        /* spi write */
+    if (handle->spi_write_read((uint8_t *)reg_buf, 2, handle->buf, len + 1) != 0)   /* spi write */
     {
         return 1;                                                                   /* return error */
     }
@@ -347,40 +347,42 @@ static uint8_t _sx1268_spi_read_buffer(sx1268_handle_t *handle, uint8_t offset, 
  *            - 1 busy or error
  * @note      none
  */
-static uint8_t _sx1268_check_busy(sx1268_handle_t *handle)
+static uint8_t a_sx1268_check_busy(sx1268_handle_t *handle)
 {
-    volatile uint8_t level;
-    volatile uint8_t timeout;
+    uint8_t level;
+    uint8_t timeout;
     
-    timeout = 100;                                        /* set max 100 */
+    timeout = 100;                                            /* set max 100 */
     
-    start:
-    if (handle->busy_gpio_read((uint8_t *)&level))        /* read busy gpio */
+    while (1)                                                 /* loop */
     {
-         return 1;                                        /* return error */
-    }
-    else
-    {
-        if (level == 0)                                   /* check level */
+        if (handle->busy_gpio_read((uint8_t *)&level) != 0)   /* read busy gpio */
         {
-            return 0;                                     /* success return 0 */
-        }
-        else if ((level == 1) && (timeout))               /* check level and timeout */
-        {
-            handle->delay_ms(10);                         /* delay 10 ms */
-            timeout--;                                    /* timeout-- */
-            if (timeout)                                  /* check timeout */
-            {
-                goto start;                               /* goto start */
-            }
-            else
-            {
-                return 1;                                 /* return error */
-            }
+             return 1;                                        /* return error */
         }
         else
         {
-            return 1;                                     /* return error */
+            if (level == 0)                                   /* check level */
+            {
+                return 0;                                     /* success return 0 */
+            }
+            else if ((level == 1) && (timeout != 0))          /* check level and timeout */
+            {
+                handle->delay_ms(10);                         /* delay 10 ms */
+                timeout--;                                    /* timeout-- */
+                if (timeout != 0)                             /* check timeout */
+                {
+                    continue;                                 /* continue */
+                }
+                else
+                {
+                    return 1;                                 /* return error */
+                }
+            }
+            else
+            {
+                return 1;                                     /* return error */
+            }
         }
     }
 }
@@ -397,9 +399,9 @@ static uint8_t _sx1268_check_busy(sx1268_handle_t *handle)
  */
 uint8_t sx1268_irq_handler(sx1268_handle_t *handle)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[3]; 
-    volatile uint16_t status;
+    uint8_t res;
+    uint8_t buf[3]; 
+    uint16_t status;
     
     if (handle == NULL)                                                                                        /* check handle */
     {
@@ -410,16 +412,17 @@ uint8_t sx1268_irq_handler(sx1268_handle_t *handle)
         return 3;                                                                                              /* return error */
     }
     
-    res = _sx1268_spi_read(handle, SX1268_COMMAND_GET_IRQ_STATUS, (uint8_t *)buf, 3);                          /* read command */
-    if (res)                                                                                                   /* check result */
+    memset(buf, 0, sizeof(uint8_t) * 3);                                                                       /* clear the buffer */
+    res = a_sx1268_spi_read(handle, SX1268_COMMAND_GET_IRQ_STATUS, (uint8_t *)buf, 3);                         /* read command */
+    if (res != 0)                                                                                              /* check result */
     {
         handle->debug_print("sx1268: get irq status failed.\n");                                               /* get irq status failed */
        
         return 1;                                                                                              /* return error */
     }
     status = ((uint16_t)buf[1] << 8) | buf[2];                                                                 /* set status */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_CLEAR_IRQ_STATUS, (uint8_t *)&buf[1], 2);                   /* write command */
-    if (res)                                                                                                   /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_CLEAR_IRQ_STATUS, (uint8_t *)&buf[1], 2);                  /* write command */
+    if (res != 0)                                                                                              /* check result */
     {
         handle->debug_print("sx1268: clear irq status failed.\n");                                             /* clear irq status failed */
        
@@ -427,66 +430,66 @@ uint8_t sx1268_irq_handler(sx1268_handle_t *handle)
     }
     
     handle->crc_error = 0;                                                                                     /* clear crc error */
-    if (status & SX1268_IRQ_PREAMBLE_DETECTED)                                                                 /* if preamble detected */
+    if ((status & SX1268_IRQ_PREAMBLE_DETECTED) != 0)                                                          /* if preamble detected */
     {
-        if (handle->receive_callback)                                                                          /* if receive callback */
+        if (handle->receive_callback != NULL)                                                                  /* if receive callback */
         {
             handle->receive_callback(SX1268_IRQ_PREAMBLE_DETECTED, NULL, 0);                                   /* run callback */
         }
     }
-    if (status & SX1268_IRQ_SYNC_WORD_VALID)                                                                   /* if valid sync word detected */
+    if ((status & SX1268_IRQ_SYNC_WORD_VALID) != 0)                                                            /* if valid sync word detected */
     {
-        if (handle->receive_callback)                                                                          /* if receive callback */
+        if (handle->receive_callback != NULL)                                                                  /* if receive callback */
         {
             handle->receive_callback(SX1268_IRQ_SYNC_WORD_VALID, NULL, 0);                                     /* run callback */
         }
     }
-    if (status & SX1268_IRQ_HEADER_VALID)                                                                      /* if valid header */
+    if ((status & SX1268_IRQ_HEADER_VALID) != 0)                                                               /* if valid header */
     {
-        if (handle->receive_callback)                                                                          /* if receive callback */
+        if (handle->receive_callback != NULL)                                                                  /* if receive callback */
         {
             handle->receive_callback(SX1268_IRQ_HEADER_VALID, NULL, 0);                                        /* run callback */
         }
     }
-    if (status & SX1268_IRQ_HEADER_ERR)                                                                        /* if header error */
+    if ((status & SX1268_IRQ_HEADER_ERR) != 0)                                                                 /* if header error */
     {
-        if (handle->receive_callback)                                                                          /* if receive callback */
+        if (handle->receive_callback != NULL)                                                                  /* if receive callback */
         {
             handle->receive_callback(SX1268_IRQ_HEADER_ERR, NULL, 0);                                          /* run callback */
         }
     }
-    if (status & SX1268_IRQ_CRC_ERR)                                                                           /* if crc error */
+    if ((status & SX1268_IRQ_CRC_ERR) != 0)                                                                    /* if crc error */
     {
-        if (handle->receive_callback)                                                                          /* if receive callback */
+        if (handle->receive_callback != NULL)                                                                  /* if receive callback */
         {
             handle->receive_callback(SX1268_IRQ_CRC_ERR, NULL, 0);                                             /* run callback */
         }
         handle->crc_error = 1;                                                                                 /* set crc error */
     }
-    if (status & SX1268_IRQ_CAD_DONE)                                                                          /* if cad done */
+    if ((status & SX1268_IRQ_CAD_DONE) != 0)                                                                   /* if cad done */
     {
-        if (handle->receive_callback)                                                                          /* if receive callback */
+        if (handle->receive_callback != NULL)                                                                  /* if receive callback */
         {
             handle->receive_callback(SX1268_IRQ_CAD_DONE, NULL, 0);                                            /* run callback */
         }
         handle->cad_done = 1;                                                                                  /* set cad done */
     }
-    if (status & SX1268_IRQ_CAD_DETECTED)                                                                      /* if cad detected */
+    if ((status & SX1268_IRQ_CAD_DETECTED) != 0)                                                               /* if cad detected */
     {
-        if (handle->receive_callback)                                                                          /* if receive callback */
+        if (handle->receive_callback != NULL)                                                                  /* if receive callback */
         {
             handle->receive_callback(SX1268_IRQ_CAD_DETECTED, NULL, 0);                                        /* run callback */
         }
         handle->cad_detected = 1;                                                                              /* set detected */
     }
-    if (status & SX1268_IRQ_TIMEOUT)                                                                           /* if timeout */
+    if ((status & SX1268_IRQ_TIMEOUT) != 0)                                                                    /* if timeout */
     {
-        volatile uint8_t control;
-        volatile uint8_t mask;
+        uint8_t control;
+        uint8_t mask;
         
         control = 0x00;
-        res = _sx1268_spi_write_register(handle, SX1268_REG_DIO3_OUTPUT_CONTROL, (uint8_t *)&control, 1);      /* write register */
-        if (res)                                                                                               /* check result */
+        res = a_sx1268_spi_write_register(handle, SX1268_REG_DIO3_OUTPUT_CONTROL, (uint8_t *)&control, 1);     /* write register */
+        if (res != 0)                                                                                          /* check result */
         {
             handle->debug_print("sx1268: write register failed.\n");                                           /* write register failed */
            
@@ -494,43 +497,44 @@ uint8_t sx1268_irq_handler(sx1268_handle_t *handle)
         }
         
         /* read mask */
-        res = _sx1268_spi_read_register(handle, SX1268_REG_EVENT_MASK, (uint8_t *)&mask, 1);                   /* read register */
-        if (res)                                                                                               /* check result */
+        res = a_sx1268_spi_read_register(handle, SX1268_REG_EVENT_MASK, (uint8_t *)&mask, 1);                  /* read register */
+        if (res != 0)                                                                                          /* check result */
         {
             handle->debug_print("sx1268: read register failed.\n");                                            /* read register failed */
            
             return 1;                                                                                          /* return error */
         }
         mask |= 0x02;                                                                                          /* set mask */
-        res = _sx1268_spi_write_register(handle, SX1268_REG_EVENT_MASK, (uint8_t *)&mask, 1);                  /* write register */
-        if (res)                                                                                               /* check result */
+        res = a_sx1268_spi_write_register(handle, SX1268_REG_EVENT_MASK, (uint8_t *)&mask, 1);                 /* write register */
+        if (res != 0)                                                                                          /* check result */
         {
             handle->debug_print("sx1268: write register failed.\n");                                           /* write register failed */
            
             return 1;                                                                                          /* return error */
         }
         
-        if (handle->receive_callback)                                                                          /* if receive callback */
+        if (handle->receive_callback != NULL)                                                                  /* if receive callback */
         {
             handle->receive_callback(SX1268_IRQ_TIMEOUT, NULL, 0);                                             /* run callback */
         }
         handle->timeout = 1;                                                                                   /* flag timeout */
     }
-    if (status & SX1268_IRQ_TX_DONE)                                                                           /* if tx done */
+    if ((status & SX1268_IRQ_TX_DONE) != 0)                                                                    /* if tx done */
     {
-        if (handle->receive_callback)                                                                          /* if receive callback */
+        if (handle->receive_callback != NULL)                                                                  /* if receive callback */
         {
             handle->receive_callback(SX1268_IRQ_TX_DONE, NULL, 0);                                             /* run callback */
         }
         handle->tx_done = 1;                                                                                   /* flag tx done */
     }
-    if (status & SX1268_IRQ_RX_DONE)                                                                           /* if rx done */
+    if ((status & SX1268_IRQ_RX_DONE) != 0)                                                                    /* if rx done */
     {
-        volatile uint8_t payload_length_rx;
-        volatile uint8_t rx_start_buffer_pointer;
+        uint8_t payload_length_rx;
+        uint8_t rx_start_buffer_pointer;
         
-        res = _sx1268_spi_read(handle, SX1268_COMMAND_GET_RX_BUFFER_STATUS, (uint8_t *)buf, 3);                /* read command */
-        if (res)                                                                                               /* check result */
+        memset(buf, 0, sizeof(uint8_t) * 3);                                                                   /* clear the buffer */
+        res = a_sx1268_spi_read(handle, SX1268_COMMAND_GET_RX_BUFFER_STATUS, (uint8_t *)buf, 3);               /* read command */
+        if (res != 0)                                                                                          /* check result */
         {
             handle->debug_print("sx1268: get rx buffer status failed.\n");                                     /* get rx buffer status failed */
            
@@ -539,15 +543,15 @@ uint8_t sx1268_irq_handler(sx1268_handle_t *handle)
         payload_length_rx = buf[1];                                                                            /* set status */
         rx_start_buffer_pointer = buf[2];                                                                      /* set status */
         
-        res = _sx1268_spi_read_buffer(handle, rx_start_buffer_pointer, handle->receive_buf,
-                                      payload_length_rx);                                                      /* read buffer */
-        if (res)
+        res = a_sx1268_spi_read_buffer(handle, rx_start_buffer_pointer, handle->receive_buf,
+                                       payload_length_rx);                                                     /* read buffer */
+        if (res != 0)                                                                                          /* check result */
         {
             handle->debug_print("sx1268: read buffer failed.\n");                                              /* read buffer failed */
            
             return 1;                                                                                          /* return error */
         }
-        if (handle->receive_callback)                                                                          /* if receive callback */
+        if (handle->receive_callback != NULL)                                                                  /* if receive callback */
         {
             if (handle->crc_error == 0)                                                                        /* check crc error */
             {
@@ -578,8 +582,8 @@ uint8_t sx1268_irq_handler(sx1268_handle_t *handle)
  */
 uint8_t sx1268_init(sx1268_handle_t *handle)
 {
-    volatile uint8_t buf[2];
-    volatile uint8_t prev;
+    uint8_t buf[2];
+    uint8_t prev;
     
     if (handle == NULL)                                                                    /* check handle */
     {
@@ -656,67 +660,67 @@ uint8_t sx1268_init(sx1268_handle_t *handle)
         return 3;                                                                          /* return error */
     }
     
-    if (handle->spi_init())                                                                /* spi initialization */
+    if (handle->spi_init() != 0)                                                           /* spi initialization */
     {
         handle->debug_print("sx1268: spi initialization failed.\n");                       /* spi initialization failed */
        
         return 1;                                                                          /* return error */ 
     }
-    if (handle->reset_gpio_init())                                                         /* reset gpio initialization */
+    if (handle->reset_gpio_init() != 0)                                                    /* reset gpio initialization */
     {
         handle->debug_print("sx1268: reset gpio initialization failed.\n");                /* reset gpio initialization failed */
-        handle->spi_deinit();                                                              /* spi deinit */
+        (void)handle->spi_deinit();                                                        /* spi deinit */
         
         return 4;                                                                          /* return error */ 
     }
-    if (handle->busy_gpio_init())                                                          /* busy gpio initialization */
+    if (handle->busy_gpio_init() != 0)                                                     /* busy gpio initialization */
     {
         handle->debug_print("sx1268: busy gpio initialization failed.\n");                 /* busy gpio initialization failed */
-        handle->spi_deinit();                                                              /* spi deinit */
-        handle->reset_gpio_deinit();                                                       /* reset gpio deinit */
+        (void)handle->spi_deinit();                                                        /* spi deinit */
+        (void)handle->reset_gpio_deinit();                                                 /* reset gpio deinit */
         
         return 5;                                                                          /* return error */ 
     }
     
-    if (handle->reset_gpio_write(1))                                                       /* set high */
+    if (handle->reset_gpio_write(1) != 0)                                                  /* set high */
     {
         handle->debug_print("sx1268: reset chip failed.\n");                               /* reset chip failed */
-        handle->spi_deinit();                                                              /* spi deinit */
-        handle->reset_gpio_deinit();                                                       /* reset gpio deinit */
-        handle->busy_gpio_deinit();                                                        /* busy gpio deinit */
+        (void)handle->spi_deinit();                                                        /* spi deinit */
+        (void)handle->reset_gpio_deinit();                                                 /* reset gpio deinit */
+        (void)handle->busy_gpio_deinit();                                                  /* busy gpio deinit */
         
         return 6;                                                                          /* return error */ 
     }
     handle->delay_ms(5);                                                                   /* delay 5 ms */
-    if (handle->reset_gpio_write(0))                                                       /* set low */
+    if (handle->reset_gpio_write(0) != 0)                                                  /* set low */
     {
         handle->debug_print("sx1268: reset chip failed.\n");                               /* reset chip failed */
-        handle->spi_deinit();                                                              /* spi deinit */
-        handle->reset_gpio_deinit();                                                       /* reset gpio deinit */
-        handle->busy_gpio_deinit();                                                        /* busy gpio deinit */
+        (void)handle->spi_deinit();                                                        /* spi deinit */
+        (void)handle->reset_gpio_deinit();                                                 /* reset gpio deinit */
+        (void)handle->busy_gpio_deinit();                                                  /* busy gpio deinit */
         
         return 6;                                                                          /* return error */ 
     }
     handle->delay_ms(10);                                                                  /* delay 5 ms */
-    if (handle->reset_gpio_write(1))                                                       /* set high */
+    if (handle->reset_gpio_write(1) != 0)                                                  /* set high */
     {
         handle->debug_print("sx1268: reset chip failed.\n");                               /* reset chip failed */
-        handle->spi_deinit();                                                              /* spi deinit */
-        handle->reset_gpio_deinit();                                                       /* reset gpio deinit */
-        handle->busy_gpio_deinit();                                                        /* busy gpio deinit */
+        (void)handle->spi_deinit();                                                        /* spi deinit */
+        (void)handle->reset_gpio_deinit();                                                 /* reset gpio deinit */
+        (void)handle->busy_gpio_deinit();                                                  /* busy gpio deinit */
         
         return 6;                                                                          /* return error */ 
     }
     handle->delay_ms(5);                                                                   /* delay 5 ms */
     
-    if (_sx1268_spi_read(handle, SX1268_COMMAND_GET_STATUS, (uint8_t *)buf, 2))            /* read command */
+    if (a_sx1268_spi_read(handle, SX1268_COMMAND_GET_STATUS, (uint8_t *)buf, 2) != 0)      /* read command */
     {
         handle->debug_print("sx1268: get status failed.\n");                               /* get status failed */
        
         return 6;                                                                          /* return error */
     }
     prev = 0x00;
-    if (_sx1268_spi_write(handle, SX1268_COMMAND_SET_STANDBY, (uint8_t *)&prev, 1))        /* write command */
+    if (a_sx1268_spi_write(handle, SX1268_COMMAND_SET_STANDBY, (uint8_t *)&prev, 1) != 0)  /* write command */
     {
         handle->debug_print("sx1268: set standby failed.\n");                              /* set standby failed */
        
@@ -743,7 +747,7 @@ uint8_t sx1268_init(sx1268_handle_t *handle)
  */
 uint8_t sx1268_deinit(sx1268_handle_t *handle)
 {
-    volatile uint8_t res, prev;
+    uint8_t res, prev;
     
     if (handle == NULL)                                                                    /* check handle */
     {
@@ -754,8 +758,8 @@ uint8_t sx1268_deinit(sx1268_handle_t *handle)
         return 3;                                                                          /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                      /* check busy */
-    if (res)                                                                               /* check result */
+    res = a_sx1268_check_busy(handle);                                                     /* check busy */
+    if (res != 0)                                                                          /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                    /* chip is busy */
        
@@ -763,8 +767,8 @@ uint8_t sx1268_deinit(sx1268_handle_t *handle)
     }
     
     prev = 0x00;                                                                           /* set power down */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_SLEEP, (uint8_t *)&prev, 1);        /* write command */
-    if (res)                                                                               /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_SLEEP, (uint8_t *)&prev, 1);       /* write command */
+    if (res != 0)                                                                          /* check result */
     {
         handle->debug_print("sx1268: power down failed.\n");                               /* power down failed */
        
@@ -772,21 +776,21 @@ uint8_t sx1268_deinit(sx1268_handle_t *handle)
     }
     
     res = handle->busy_gpio_deinit();                                                      /* busy gpio deinit */
-    if (res)                                                                               /* check result */
+    if (res != 0)                                                                          /* check result */
     {
         handle->debug_print("sx1268: busy gpio deinit failed.\n");                         /* busy gpio deinit failed */
        
         return 6;                                                                          /* return error */
     }
     res = handle->reset_gpio_deinit();                                                     /* reset gpio deinit */
-    if (res)                                                                               /* check result */
+    if (res != 0)                                                                          /* check result */
     {
         handle->debug_print("sx1268: reset gpio deinit failed.\n");                        /* reset gpio deinit failed */
        
         return 7;                                                                          /* return error */
     }
     res = handle->spi_deinit();                                                            /* spi deinit */
-    if (res)                                                                               /* check result */
+    if (res != 0)                                                                          /* check result */
     {
         handle->debug_print("sx1268: spi deinit failed.\n");                               /* spi deinit failed */
        
@@ -810,10 +814,10 @@ uint8_t sx1268_deinit(sx1268_handle_t *handle)
  */
 uint8_t sx1268_single_receive(sx1268_handle_t *handle, double us)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[3];
-    volatile uint16_t clear_irq_param;
-    volatile uint32_t timeout;
+    uint8_t res;
+    uint8_t buf[3];
+    uint16_t clear_irq_param;
+    uint32_t timeout;
     
     if (handle == NULL)                                                                         /* check handle */
     {
@@ -824,8 +828,8 @@ uint8_t sx1268_single_receive(sx1268_handle_t *handle, double us)
         return 3;                                                                               /* return error */
     }
 
-    res = _sx1268_check_busy(handle);                                                           /* check busy */
-    if (res)                                                                                    /* check result */
+    res = a_sx1268_check_busy(handle);                                                          /* check busy */
+    if (res != 0)                                                                               /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                         /* chip is busy */
        
@@ -835,16 +839,16 @@ uint8_t sx1268_single_receive(sx1268_handle_t *handle, double us)
     clear_irq_param = 0x03FF;                                                                   /* set mask */
     buf[0] = (clear_irq_param >> 8) & 0xFF;                                                     /* set param */
     buf[1] = (clear_irq_param >> 0) & 0xFF;                                                     /* set param */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_CLEAR_IRQ_STATUS, (uint8_t *)buf, 2);        /* write command */
-    if (res)                                                                                    /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_CLEAR_IRQ_STATUS, (uint8_t *)buf, 2);       /* write command */
+    if (res != 0)                                                                               /* check result */
     {
         handle->debug_print("sx1268: clear irq status failed.\n");                              /* clear irq status failed */
        
         return 1;                                                                               /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                           /* check busy */
-    if (res)                                                                                    /* check result */
+    res = a_sx1268_check_busy(handle);                                                          /* check busy */
+    if (res != 0)                                                                               /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                         /* chip is busy */
        
@@ -855,8 +859,8 @@ uint8_t sx1268_single_receive(sx1268_handle_t *handle, double us)
     buf[0] = (timeout >> 16) & 0xFF;                                                            /* bit 23 : 16 */
     buf[1] = (timeout >> 8) & 0xFF;                                                             /* bit 15 : 8 */
     buf[2] = (timeout >> 0) & 0xFF;                                                             /* bit 7 : 0 */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_RX, (uint8_t *)buf, 3);                  /* write command */
-    if (res)                                                                                    /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_RX, (uint8_t *)buf, 3);                 /* write command */
+    if (res != 0)                                                                               /* check result */
     {
         handle->debug_print("sx1268: set rx failed.\n");                                        /* set rx failed */
        
@@ -879,9 +883,9 @@ uint8_t sx1268_single_receive(sx1268_handle_t *handle, double us)
  */
 uint8_t sx1268_continuous_receive(sx1268_handle_t *handle)
 {
-    volatile uint8_t res;
-    volatile uint16_t clear_irq_param;
-    volatile uint8_t buf[3];
+    uint8_t res;
+    uint16_t clear_irq_param;
+    uint8_t buf[3];
     
     if (handle == NULL)                                                                         /* check handle */
     {
@@ -892,8 +896,8 @@ uint8_t sx1268_continuous_receive(sx1268_handle_t *handle)
         return 3;                                                                               /* return error */
     }
 
-    res = _sx1268_check_busy(handle);                                                           /* check busy */
-    if (res)                                                                                    /* check result */
+    res = a_sx1268_check_busy(handle);                                                          /* check busy */
+    if (res != 0)                                                                               /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                         /* chip is busy */
        
@@ -903,16 +907,16 @@ uint8_t sx1268_continuous_receive(sx1268_handle_t *handle)
     clear_irq_param = 0x03FF;                                                                   /* set mask */
     buf[0] = (clear_irq_param >> 8) & 0xFF;                                                     /* set param */
     buf[1] = (clear_irq_param >> 0) & 0xFF;                                                     /* set param */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_CLEAR_IRQ_STATUS, (uint8_t *)buf, 2);        /* write command */
-    if (res)                                                                                    /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_CLEAR_IRQ_STATUS, (uint8_t *)buf, 2);       /* write command */
+    if (res != 0)                                                                               /* check result */
     {
         handle->debug_print("sx1268: clear irq status failed.\n");                              /* clear irq status failed */
        
         return 1;                                                                               /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                           /* check busy */
-    if (res)                                                                                    /* check result */
+    res = a_sx1268_check_busy(handle);                                                          /* check busy */
+    if (res != 0)                                                                               /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                         /* chip is busy */
        
@@ -922,8 +926,8 @@ uint8_t sx1268_continuous_receive(sx1268_handle_t *handle)
     buf[0] = 0xFF;                                                                              /* bit 23 : 16 */
     buf[1] = 0xFF;                                                                              /* bit 15 : 8 */
     buf[2] = 0xFF;                                                                              /* bit 7 : 0 */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_RX, (uint8_t *)buf, 3);                  /* write command */
-    if (res)                                                                                    /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_RX, (uint8_t *)buf, 3);                 /* write command */
+    if (res != 0)                                                                               /* check result */
     {
         handle->debug_print("sx1268: set rx failed.\n");                                        /* set rx failed */
        
@@ -948,10 +952,10 @@ uint8_t sx1268_continuous_receive(sx1268_handle_t *handle)
  */
 uint8_t sx1268_lora_cad(sx1268_handle_t *handle, sx1268_bool_t *enable)
 {
-    volatile uint8_t res;
-    volatile uint16_t clear_irq_param;
-    volatile uint8_t buf[2];
-    volatile uint16_t timeout;
+    uint8_t res;
+    uint16_t clear_irq_param;
+    uint8_t buf[2];
+    uint16_t timeout;
     
     if (handle == NULL)                                                                         /* check handle */
     {
@@ -962,8 +966,8 @@ uint8_t sx1268_lora_cad(sx1268_handle_t *handle, sx1268_bool_t *enable)
         return 3;                                                                               /* return error */
     }
 
-    res = _sx1268_check_busy(handle);                                                           /* check busy */
-    if (res)                                                                                    /* check result */
+    res = a_sx1268_check_busy(handle);                                                          /* check busy */
+    if (res != 0)                                                                               /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                         /* chip is busy */
        
@@ -973,16 +977,16 @@ uint8_t sx1268_lora_cad(sx1268_handle_t *handle, sx1268_bool_t *enable)
     clear_irq_param = 0x03FF;                                                                   /* set mask */
     buf[0] = (clear_irq_param >> 8) & 0xFF;                                                     /* set param */
     buf[1] = (clear_irq_param >> 0) & 0xFF;                                                     /* set param */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_CLEAR_IRQ_STATUS, (uint8_t *)buf, 2);        /* write command */
-    if (res)                                                                                    /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_CLEAR_IRQ_STATUS, (uint8_t *)buf, 2);       /* write command */
+    if (res != 0)                                                                               /* check result */
     {
         handle->debug_print("sx1268: clear irq status failed.\n");                              /* clear irq status failed */
        
         return 1;                                                                               /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                           /* check busy */
-    if (res)                                                                                    /* check result */
+    res = a_sx1268_check_busy(handle);                                                          /* check busy */
+    if (res != 0)                                                                               /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                         /* chip is busy */
        
@@ -991,8 +995,8 @@ uint8_t sx1268_lora_cad(sx1268_handle_t *handle, sx1268_bool_t *enable)
     
     handle->cad_done = 0;                                                                       /* clear cad done */
     handle->cad_detected = 0;                                                                   /* clear cad done */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_CAD, NULL, 0);                           /* write command */
-    if (res)                                                                                    /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_CAD, NULL, 0);                          /* write command */
+    if (res != 0)                                                                               /* check result */
     {
         handle->debug_print("sx1268: set cad failed.\n");                                       /* set cad failed */
        
@@ -1000,7 +1004,7 @@ uint8_t sx1268_lora_cad(sx1268_handle_t *handle, sx1268_bool_t *enable)
     }
     
     timeout = 10000;                                                                            /*  set timeout */
-    while (timeout && (handle->cad_done == 0))                                                  /* wait */
+    while ((timeout != 0) && (handle->cad_done == 0))                                           /* wait */
     {
         handle->delay_ms(1);                                                                    /* delay 1 ms */
         timeout--;                                                                              /* timeout-- */
@@ -1071,17 +1075,17 @@ uint8_t sx1268_check_packet_error(sx1268_handle_t *handle, sx1268_bool_t *enable
  *            - 7 unknown result
  * @note      none
  */
-uint8_t sx1268_lora_sent(sx1268_handle_t *handle, sx1268_clock_source_t standby_src,
-                         uint16_t preamble_length, sx1268_lora_header_t header_type,
-                         sx1268_lora_crc_type_t crc_type, sx1268_bool_t invert_iq_enable,
-                         uint8_t *buf, uint16_t len, uint32_t us)
+uint8_t sx1268_lora_transmit(sx1268_handle_t *handle, sx1268_clock_source_t standby_src,
+                             uint16_t preamble_length, sx1268_lora_header_t header_type,
+                             sx1268_lora_crc_type_t crc_type, sx1268_bool_t invert_iq_enable,
+                             uint8_t *buf, uint16_t len, uint32_t us)
 {
-    volatile uint8_t res;
-    volatile uint8_t prev;
-    volatile uint8_t buffer[6];
-    volatile uint16_t clear_irq_param;
-    volatile uint32_t ms;
-    volatile uint32_t reg;
+    uint8_t res;
+    uint8_t prev;
+    uint8_t buffer[6];
+    uint16_t clear_irq_param;
+    uint32_t ms;
+    uint32_t reg;
     
     if (handle == NULL)                                                                                    /* check handle */
     {
@@ -1092,8 +1096,8 @@ uint8_t sx1268_lora_sent(sx1268_handle_t *handle, sx1268_clock_source_t standby_
         return 3;                                                                                          /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                      /* check busy */
-    if (res)                                                                                               /* check result */
+    res = a_sx1268_check_busy(handle);                                                                     /* check busy */
+    if (res != 0)                                                                                          /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                    /* chip is busy */
        
@@ -1103,16 +1107,16 @@ uint8_t sx1268_lora_sent(sx1268_handle_t *handle, sx1268_clock_source_t standby_
     clear_irq_param = 0x03FF;                                                                              /* set mask */
     buffer[0] = (clear_irq_param >> 8) & 0xFF;                                                             /* set param */
     buffer[1] = (clear_irq_param >> 0) & 0xFF;                                                             /* set param */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_CLEAR_IRQ_STATUS, (uint8_t *)buffer, 2);                /* write command */
-    if (res)                                                                                               /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_CLEAR_IRQ_STATUS, (uint8_t *)buffer, 2);               /* write command */
+    if (res != 0)                                                                                          /* check result */
     {
         handle->debug_print("sx1268: clear irq status failed.\n");                                         /* clear irq status failed */
        
         return 1;                                                                                          /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                      /* check busy */
-    if (res)                                                                                               /* check result */
+    res = a_sx1268_check_busy(handle);                                                                     /* check busy */
+    if (res != 0)                                                                                          /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                    /* chip is busy */
        
@@ -1120,16 +1124,16 @@ uint8_t sx1268_lora_sent(sx1268_handle_t *handle, sx1268_clock_source_t standby_
     }
     
     prev = standby_src;                                                                                    /* set param */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_STANDBY, (uint8_t *)&prev, 1);                      /* write command */
-    if (res)                                                                                               /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_STANDBY, (uint8_t *)&prev, 1);                     /* write command */
+    if (res != 0)                                                                                          /* check result */
     {
         handle->debug_print("sx1268: set standby failed.\n");                                              /* set standby failed */
        
         return 1;                                                                                          /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                      /* check busy */
-    if (res)                                                                                               /* check result */
+    res = a_sx1268_check_busy(handle);                                                                     /* check busy */
+    if (res != 0)                                                                                          /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                    /* chip is busy */
        
@@ -1139,11 +1143,11 @@ uint8_t sx1268_lora_sent(sx1268_handle_t *handle, sx1268_clock_source_t standby_
     buffer[0] = (preamble_length >> 8) & 0xFF;                                                             /* set param */
     buffer[1] = (preamble_length >> 0) & 0xFF;                                                             /* set param */
     buffer[2] = header_type;                                                                               /* set param */
-    buffer[3] = len;                                                                                       /* set param */
+    buffer[3] = (uint8_t)len;                                                                              /* set param */
     buffer[4] = crc_type;                                                                                  /* set param */
     buffer[5] = invert_iq_enable;                                                                          /* set param */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_PACKET_PARAMS, (uint8_t *)buffer, 6);               /* write command */
-    if (res)                                                                                               /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_PACKET_PARAMS, (uint8_t *)buffer, 6);              /* write command */
+    if (res != 0)                                                                                          /* check result */
     {
         handle->debug_print("sx1268: set lora modulation params failed.\n");                               /* set lora modulation params failed */
        
@@ -1152,27 +1156,27 @@ uint8_t sx1268_lora_sent(sx1268_handle_t *handle, sx1268_clock_source_t standby_
     
     if (invert_iq_enable == SX1268_BOOL_FALSE)                                                             /* not invert iq */
     {
-        volatile uint8_t setup;
+        uint8_t setup;
         
-        res = _sx1268_check_busy(handle);                                                                  /* check busy */
-        if (res)                                                                                           /* check result */
+        res = a_sx1268_check_busy(handle);                                                                 /* check busy */
+        if (res != 0)                                                                                      /* check result */
         {
             handle->debug_print("sx1268: chip is busy.\n");                                                /* chip is busy */
            
             return 4;                                                                                      /* return error */
         }
         
-        res = _sx1268_spi_read_register(handle, SX1268_REG_IQ_POLARITY_SETUP, (uint8_t *)&setup, 1);       /* read register */
-        if (res)                                                                                           /* check result */
+        res = a_sx1268_spi_read_register(handle, SX1268_REG_IQ_POLARITY_SETUP, (uint8_t *)&setup, 1);      /* read register */
+        if (res != 0)                                                                                      /* check result */
         {
             handle->debug_print("sx1268: read register failed.\n");                                        /* read register failed */
            
             return 1;                                                                                      /* return error */
         }
-        setup |= (1 << 2);                                                                                 /* set bit 2 */
         
-        res = _sx1268_spi_write_register(handle, SX1268_REG_IQ_POLARITY_SETUP, (uint8_t *)&setup, 1);      /* read register */
-        if (res)                                                                                           /* check result */
+        setup |= (1 << 2);                                                                                 /* set bit 2 */
+        res = a_sx1268_spi_write_register(handle, SX1268_REG_IQ_POLARITY_SETUP, (uint8_t *)&setup, 1);     /* read register */
+        if (res != 0)                                                                                      /* check result */
         {
             handle->debug_print("sx1268: read register failed.\n");                                        /* read register failed */
            
@@ -1181,27 +1185,27 @@ uint8_t sx1268_lora_sent(sx1268_handle_t *handle, sx1268_clock_source_t standby_
     }
     else
     {
-        volatile uint8_t setup;
+        uint8_t setup;
         
-        res = _sx1268_check_busy(handle);                                                                  /* check busy */
-        if (res)                                                                                           /* check result */
+        res = a_sx1268_check_busy(handle);                                                                 /* check busy */
+        if (res != 0)                                                                                      /* check result */
         {
             handle->debug_print("sx1268: chip is busy.\n");                                                /* chip is busy */
            
             return 4;                                                                                      /* return error */
         }
         
-        res = _sx1268_spi_read_register(handle, SX1268_REG_IQ_POLARITY_SETUP, (uint8_t *)&setup, 1);       /* read register */
-        if (res)                                                                                           /* check result */
+        res = a_sx1268_spi_read_register(handle, SX1268_REG_IQ_POLARITY_SETUP, (uint8_t *)&setup, 1);      /* read register */
+        if (res != 0)                                                                                      /* check result */
         {
             handle->debug_print("sx1268: read register failed.\n");                                        /* read register failed */
            
             return 1;                                                                                      /* return error */
         }
-        setup &= ~(1 << 2);                                                                                /* clear bit 2 */
         
-        res = _sx1268_spi_write_register(handle, SX1268_REG_IQ_POLARITY_SETUP, (uint8_t *)&setup, 1);      /* read register */
-        if (res)                                                                                           /* check result */
+        setup &= ~(1 << 2);                                                                                /* clear bit 2 */
+        res = a_sx1268_spi_write_register(handle, SX1268_REG_IQ_POLARITY_SETUP, (uint8_t *)&setup, 1);     /* read register */
+        if (res != 0)                                                                                      /* check result */
         {
             handle->debug_print("sx1268: read register failed.\n");                                        /* read register failed */
            
@@ -1209,23 +1213,23 @@ uint8_t sx1268_lora_sent(sx1268_handle_t *handle, sx1268_clock_source_t standby_
         }
     }
     
-    res = _sx1268_check_busy(handle);                                                                      /* check busy */
-    if (res)                                                                                               /* check result */
+    res = a_sx1268_check_busy(handle);                                                                     /* check busy */
+    if (res != 0)                                                                                          /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                    /* chip is busy */
        
         return 4;                                                                                          /* return error */
     }
     
-    if (_sx1268_spi_write_buffer(handle, 0x00, buf, len))                                                  /* write buffer */
+    if (a_sx1268_spi_write_buffer(handle, 0x00, buf, len) != 0)                                            /* write buffer */
     {
         handle->debug_print("sx1268: write buffer failed.\n");                                             /* write buffer failed */
        
         return 1;                                                                                          /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                      /* check busy */
-    if (res)                                                                                               /* check result */
+    res = a_sx1268_check_busy(handle);                                                                     /* check busy */
+    if (res != 0)                                                                                          /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                    /* chip is busy */
        
@@ -1238,15 +1242,15 @@ uint8_t sx1268_lora_sent(sx1268_handle_t *handle, sx1268_clock_source_t standby_
     buffer[2] = (reg >> 0) & 0xFF;                                                                         /* bit 7 : 0 */
     handle->tx_done = 0;                                                                                   /* flag 0 */
     handle->timeout = 0;                                                                                   /* flag 0 */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_TX, (uint8_t *)buffer, 3);                          /* write command */
-    if (res)                                                                                               /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_TX, (uint8_t *)buffer, 3);                         /* write command */
+    if (res != 0)                                                                                          /* check result */
     {
         handle->debug_print("sx1268: set tx failed.\n");                                                   /* set tx failed */
        
         return 1;                                                                                          /* return error */
     }
     ms = us / 1000 + 10000;                                                                                /* set timeout */
-    while (ms && (handle->tx_done == 0) && (handle->timeout == 0))                                         /* check timeout */
+    while ((ms != 0) && (handle->tx_done == 0) && (handle->timeout == 0))                                  /* check timeout */
     {
         handle->delay_ms(1);                                                                               /* delay 1 ms */
         ms--;                                                                                              /* ms-- */
@@ -1291,7 +1295,7 @@ uint8_t sx1268_lora_sent(sx1268_handle_t *handle, sx1268_clock_source_t standby_
  */
 uint8_t sx1268_write_register(sx1268_handle_t *handle, uint16_t reg, uint8_t *buf, uint16_t len)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                 /* check handle */
     {
@@ -1302,15 +1306,15 @@ uint8_t sx1268_write_register(sx1268_handle_t *handle, uint16_t reg, uint8_t *bu
         return 3;                                                       /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                   /* check busy */
-    if (res)                                                            /* check result */
+    res = a_sx1268_check_busy(handle);                                  /* check busy */
+    if (res != 0)                                                       /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                 /* chip is busy */
        
         return 4;                                                       /* return error */
     }
     
-    if (_sx1268_spi_write_register(handle, reg, buf, len))              /* write register */
+    if (a_sx1268_spi_write_register(handle, reg, buf, len) != 0)        /* write register */
     {
         handle->debug_print("sx1268: write register failed.\n");        /* write register failed */
        
@@ -1336,7 +1340,7 @@ uint8_t sx1268_write_register(sx1268_handle_t *handle, uint16_t reg, uint8_t *bu
  */
 uint8_t sx1268_read_register(sx1268_handle_t *handle, uint16_t reg, uint8_t *buf, uint16_t len)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                /* check handle */
     {
@@ -1347,15 +1351,15 @@ uint8_t sx1268_read_register(sx1268_handle_t *handle, uint16_t reg, uint8_t *buf
         return 3;                                                      /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                  /* check busy */
-    if (res)                                                           /* check result */
+    res = a_sx1268_check_busy(handle);                                 /* check busy */
+    if (res != 0)                                                      /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                /* chip is busy */
        
         return 4;                                                      /* return error */
     }
     
-    if (_sx1268_spi_read_register(handle, reg, buf, len))              /* read register */
+    if (a_sx1268_spi_read_register(handle, reg, buf, len) != 0)        /* read register */
     {
         handle->debug_print("sx1268: read register failed.\n");        /* read register failed */
        
@@ -1381,7 +1385,7 @@ uint8_t sx1268_read_register(sx1268_handle_t *handle, uint16_t reg, uint8_t *buf
  */
 uint8_t sx1268_write_buffer(sx1268_handle_t *handle, uint8_t offset, uint8_t *buf, uint16_t len)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                               /* check handle */
     {
@@ -1392,15 +1396,15 @@ uint8_t sx1268_write_buffer(sx1268_handle_t *handle, uint8_t offset, uint8_t *bu
         return 3;                                                     /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                 /* check busy */
-    if (res)                                                          /* check result */
+    res = a_sx1268_check_busy(handle);                                /* check busy */
+    if (res != 0)                                                     /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");               /* chip is busy */
        
         return 4;                                                     /* return error */
     }
     
-    if (_sx1268_spi_write_buffer(handle, offset, buf, len))           /* write buffer */
+    if (a_sx1268_spi_write_buffer(handle, offset, buf, len) != 0)     /* write buffer */
     {
         handle->debug_print("sx1268: write buffer failed.\n");        /* write buffer failed */
        
@@ -1426,7 +1430,7 @@ uint8_t sx1268_write_buffer(sx1268_handle_t *handle, uint8_t offset, uint8_t *bu
  */
 uint8_t sx1268_read_buffer(sx1268_handle_t *handle, uint8_t offset, uint8_t *buf, uint16_t len)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                              /* check handle */
     {
@@ -1437,15 +1441,15 @@ uint8_t sx1268_read_buffer(sx1268_handle_t *handle, uint8_t offset, uint8_t *buf
         return 3;                                                    /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                /* check busy */
-    if (res)                                                         /* check result */
+    res = a_sx1268_check_busy(handle);                               /* check busy */
+    if (res != 0)                                                    /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");              /* chip is busy */
        
         return 4;                                                    /* return error */
     }
     
-    if (_sx1268_spi_read_buffer(handle, offset, buf, len))           /* read buffer */
+    if (a_sx1268_spi_read_buffer(handle, offset, buf, len) != 0)     /* read buffer */
     {
         handle->debug_print("sx1268: read buffer failed.\n");        /* read buffer failed */
        
@@ -1470,8 +1474,8 @@ uint8_t sx1268_read_buffer(sx1268_handle_t *handle, uint8_t offset, uint8_t *buf
  */
 uint8_t sx1268_set_sleep(sx1268_handle_t *handle, sx1268_start_mode_t mode, sx1268_bool_t rtc_wake_up_enable)
 {
-    volatile uint8_t res;
-    volatile uint8_t prev;
+    uint8_t res;
+    uint8_t prev;
     
     if (handle == NULL)                                                                    /* check handle */
     {
@@ -1482,17 +1486,17 @@ uint8_t sx1268_set_sleep(sx1268_handle_t *handle, sx1268_start_mode_t mode, sx12
         return 3;                                                                          /* return error */
     }
 
-    res = _sx1268_check_busy(handle);                                                      /* check busy */
-    if (res)                                                                               /* check result */
+    res = a_sx1268_check_busy(handle);                                                     /* check busy */
+    if (res != 0)                                                                          /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                    /* chip is busy */
        
         return 4;                                                                          /* return error */
     }
     
-    prev = (mode << 2) | (rtc_wake_up_enable << 0);                                        /* set param */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_SLEEP, (uint8_t *)&prev, 1);        /* write command */
-    if (res)                                                                               /* check result */
+    prev = (uint8_t)((mode << 2) | (rtc_wake_up_enable << 0));                             /* set param */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_SLEEP, (uint8_t *)&prev, 1);       /* write command */
+    if (res != 0)                                                                          /* check result */
     {
         handle->debug_print("sx1268: set sleep failed.\n");                                /* set sleep failed */
        
@@ -1516,8 +1520,8 @@ uint8_t sx1268_set_sleep(sx1268_handle_t *handle, sx1268_start_mode_t mode, sx12
  */
 uint8_t sx1268_set_standby(sx1268_handle_t *handle, sx1268_clock_source_t src)
 {
-    volatile uint8_t res;
-    volatile uint8_t prev;
+    uint8_t res;
+    uint8_t prev;
     
     if (handle == NULL)                                                                    /* check handle */
     {
@@ -1528,8 +1532,8 @@ uint8_t sx1268_set_standby(sx1268_handle_t *handle, sx1268_clock_source_t src)
         return 3;                                                                          /* return error */
     }
 
-    res = _sx1268_check_busy(handle);                                                      /* check busy */
-    if (res)                                                                               /* check result */
+    res = a_sx1268_check_busy(handle);                                                     /* check busy */
+    if (res != 0)                                                                          /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                    /* chip is busy */
        
@@ -1537,8 +1541,8 @@ uint8_t sx1268_set_standby(sx1268_handle_t *handle, sx1268_clock_source_t src)
     }
     
     prev = src;                                                                            /* set param */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_STANDBY, (uint8_t *)&prev, 1);      /* write command */
-    if (res)                                                                               /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_STANDBY, (uint8_t *)&prev, 1);     /* write command */
+    if (res != 0)                                                                          /* check result */
     {
         handle->debug_print("sx1268: set standby failed.\n");                              /* set standby failed */
        
@@ -1561,7 +1565,7 @@ uint8_t sx1268_set_standby(sx1268_handle_t *handle, sx1268_clock_source_t src)
  */
 uint8_t sx1268_set_frequency_synthesis(sx1268_handle_t *handle)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                     /* check handle */
     {
@@ -1572,16 +1576,16 @@ uint8_t sx1268_set_frequency_synthesis(sx1268_handle_t *handle)
         return 3;                                                           /* return error */
     }
 
-    res = _sx1268_check_busy(handle);                                       /* check busy */
-    if (res)                                                                /* check result */
+    res = a_sx1268_check_busy(handle);                                      /* check busy */
+    if (res != 0)                                                           /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                     /* chip is busy */
        
         return 4;                                                           /* return error */
     }
     
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_FS, NULL, 0);        /* write command */
-    if (res)                                                                /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_FS, NULL, 0);       /* write command */
+    if (res != 0)                                                           /* check result */
     {
         handle->debug_print("sx1268: set fs failed.\n");                    /* set fs failed */
        
@@ -1605,8 +1609,8 @@ uint8_t sx1268_set_frequency_synthesis(sx1268_handle_t *handle)
  */
 uint8_t sx1268_set_tx(sx1268_handle_t *handle, uint32_t timeout)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[3];
+    uint8_t res;
+    uint8_t buf[3];
     
     if (handle == NULL)                                                             /* check handle */
     {
@@ -1617,8 +1621,8 @@ uint8_t sx1268_set_tx(sx1268_handle_t *handle, uint32_t timeout)
         return 3;                                                                   /* return error */
     }
 
-    res = _sx1268_check_busy(handle);                                               /* check busy */
-    if (res)                                                                        /* check result */
+    res = a_sx1268_check_busy(handle);                                              /* check busy */
+    if (res != 0)                                                                   /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                             /* chip is busy */
        
@@ -1628,8 +1632,8 @@ uint8_t sx1268_set_tx(sx1268_handle_t *handle, uint32_t timeout)
     buf[0] = (timeout >> 16) & 0xFF;                                                /* bit 23 : 16 */
     buf[1] = (timeout >> 8) & 0xFF;                                                 /* bit 15 : 8 */
     buf[2] = (timeout >> 0) & 0xFF;                                                 /* bit 7 : 0 */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_TX, (uint8_t *)buf, 3);      /* write command */
-    if (res)                                                                        /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_TX, (uint8_t *)buf, 3);     /* write command */
+    if (res != 0)                                                                   /* check result */
     {
         handle->debug_print("sx1268: set tx failed.\n");                            /* set tx failed */
        
@@ -1654,8 +1658,8 @@ uint8_t sx1268_set_tx(sx1268_handle_t *handle, uint32_t timeout)
  */
 uint8_t sx1268_set_rx(sx1268_handle_t *handle, uint32_t timeout)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[3];
+    uint8_t res;
+    uint8_t buf[3];
     
     if (handle == NULL)                                                             /* check handle */
     {
@@ -1666,8 +1670,8 @@ uint8_t sx1268_set_rx(sx1268_handle_t *handle, uint32_t timeout)
         return 3;                                                                   /* return error */
     }
 
-    res = _sx1268_check_busy(handle);                                               /* check busy */
-    if (res)                                                                        /* check result */
+    res = a_sx1268_check_busy(handle);                                              /* check busy */
+    if (res != 0)                                                                   /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                             /* chip is busy */
        
@@ -1677,8 +1681,8 @@ uint8_t sx1268_set_rx(sx1268_handle_t *handle, uint32_t timeout)
     buf[0] = (timeout >> 16) & 0xFF;                                                /* bit 23 : 16 */
     buf[1] = (timeout >> 8) & 0xFF;                                                 /* bit 15 : 8 */
     buf[2] = (timeout >> 0) & 0xFF;                                                 /* bit 7 : 0 */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_RX, (uint8_t *)buf, 3);      /* write command */
-    if (res)                                                                        /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_RX, (uint8_t *)buf, 3);     /* write command */
+    if (res != 0)                                                                   /* check result */
     {
         handle->debug_print("sx1268: set rx failed.\n");                            /* set rx failed */
        
@@ -1756,8 +1760,8 @@ uint8_t sx1268_timeout_convert_to_data(sx1268_handle_t *handle, uint32_t reg, do
  */
 uint8_t sx1268_set_stop_timer_on_preamble(sx1268_handle_t *handle, sx1268_bool_t enable)
 {
-    volatile uint8_t res;
-    volatile uint8_t prev;
+    uint8_t res;
+    uint8_t prev;
     
     if (handle == NULL)                                                                                 /* check handle */
     {
@@ -1768,8 +1772,8 @@ uint8_t sx1268_set_stop_timer_on_preamble(sx1268_handle_t *handle, sx1268_bool_t
         return 3;                                                                                       /* return error */
     }
 
-    res = _sx1268_check_busy(handle);                                                                   /* check busy */
-    if (res)                                                                                            /* check result */
+    res = a_sx1268_check_busy(handle);                                                                  /* check busy */
+    if (res != 0)                                                                                       /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                 /* chip is busy */
        
@@ -1777,8 +1781,8 @@ uint8_t sx1268_set_stop_timer_on_preamble(sx1268_handle_t *handle, sx1268_bool_t
     }
     
     prev = enable;                                                                                      /* set param */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_STOP_TIMER_ON_PREAMBLE, (uint8_t *)&prev, 1);        /* write command */
-    if (res)                                                                                            /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_STOP_TIMER_ON_PREAMBLE, (uint8_t *)&prev, 1);       /* write command */
+    if (res != 0)                                                                                       /* check result */
     {
         handle->debug_print("sx1268: set stop timer on preamble failed.\n");                            /* set stop timer on preamble failed */
        
@@ -1803,8 +1807,8 @@ uint8_t sx1268_set_stop_timer_on_preamble(sx1268_handle_t *handle, sx1268_bool_t
  */
 uint8_t sx1268_set_rx_duty_cycle(sx1268_handle_t *handle, uint32_t rx_period, uint32_t sleep_period)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[6];
+    uint8_t res;
+    uint8_t buf[6];
     
     if (handle == NULL)                                                                        /* check handle */
     {
@@ -1815,8 +1819,8 @@ uint8_t sx1268_set_rx_duty_cycle(sx1268_handle_t *handle, uint32_t rx_period, ui
         return 3;                                                                              /* return error */
     }
 
-    res = _sx1268_check_busy(handle);                                                          /* check busy */
-    if (res)                                                                                   /* check result */
+    res = a_sx1268_check_busy(handle);                                                         /* check busy */
+    if (res != 0)                                                                              /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                        /* chip is busy */
        
@@ -1829,8 +1833,8 @@ uint8_t sx1268_set_rx_duty_cycle(sx1268_handle_t *handle, uint32_t rx_period, ui
     buf[3] = (sleep_period >> 16) & 0xFF;                                                      /* bit 23 : 16 */
     buf[4] = (sleep_period >> 8) & 0xFF;                                                       /* bit 15 : 8 */
     buf[5] = (sleep_period >> 0) & 0xFF;                                                       /* bit 7 : 0 */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_RX_DUTY_CYCLE, (uint8_t *)buf, 6);      /* write command */
-    if (res)                                                                                   /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_RX_DUTY_CYCLE, (uint8_t *)buf, 6);     /* write command */
+    if (res != 0)                                                                              /* check result */
     {
         handle->debug_print("sx1268: set rx duty cycle failed.\n");                            /* set rx duty cycle failed */
        
@@ -1853,7 +1857,7 @@ uint8_t sx1268_set_rx_duty_cycle(sx1268_handle_t *handle, uint32_t rx_period, ui
  */
 uint8_t sx1268_set_cad(sx1268_handle_t *handle)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                      /* check handle */
     {
@@ -1864,16 +1868,16 @@ uint8_t sx1268_set_cad(sx1268_handle_t *handle)
         return 3;                                                            /* return error */
     }
 
-    res = _sx1268_check_busy(handle);                                        /* check busy */
-    if (res)                                                                 /* check result */
+    res = a_sx1268_check_busy(handle);                                       /* check busy */
+    if (res != 0)                                                            /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                      /* chip is busy */
        
         return 4;                                                            /* return error */
     }
     
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_CAD, NULL, 0);        /* write command */
-    if (res)                                                                 /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_CAD, NULL, 0);       /* write command */
+    if (res != 0)                                                            /* check result */
     {
         handle->debug_print("sx1268: set cad failed.\n");                    /* set cad failed */
        
@@ -1896,7 +1900,7 @@ uint8_t sx1268_set_cad(sx1268_handle_t *handle)
  */
 uint8_t sx1268_set_tx_continuous_wave(sx1268_handle_t *handle)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                      /* check handle */
     {
@@ -1907,16 +1911,16 @@ uint8_t sx1268_set_tx_continuous_wave(sx1268_handle_t *handle)
         return 3;                                                                            /* return error */
     }
 
-    res = _sx1268_check_busy(handle);                                                        /* check busy */
-    if (res)                                                                                 /* check result */
+    res = a_sx1268_check_busy(handle);                                                       /* check busy */
+    if (res != 0)                                                                            /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                      /* chip is busy */
        
         return 4;                                                                            /* return error */
     }
     
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_TX_CONTINUOUS_WAVE, NULL, 0);         /* write command */
-    if (res)                                                                                 /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_TX_CONTINUOUS_WAVE, NULL, 0);        /* write command */
+    if (res != 0)                                                                            /* check result */
     {
         handle->debug_print("sx1268: set tx continuous wave failed.\n");                     /* set tx continuous wave failed */
        
@@ -1939,7 +1943,7 @@ uint8_t sx1268_set_tx_continuous_wave(sx1268_handle_t *handle)
  */
 uint8_t sx1268_set_tx_infinite_preamble(sx1268_handle_t *handle)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                        /* check handle */
     {
@@ -1950,16 +1954,16 @@ uint8_t sx1268_set_tx_infinite_preamble(sx1268_handle_t *handle)
         return 3;                                                                              /* return error */
     }
 
-    res = _sx1268_check_busy(handle);                                                          /* check busy */
-    if (res)                                                                                   /* check result */
+    res = a_sx1268_check_busy(handle);                                                         /* check busy */
+    if (res != 0)                                                                              /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                        /* chip is busy */
        
         return 4;                                                                              /* return error */
     }
     
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_TX_INFINITE_PREAMBLE, NULL, 0);         /* write command */
-    if (res)                                                                                   /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_TX_INFINITE_PREAMBLE, NULL, 0);        /* write command */
+    if (res != 0)                                                                              /* check result */
     {
         handle->debug_print("sx1268: set tx infinite preamble failed.\n");                     /* set tx infinite preamble failed */
        
@@ -1983,8 +1987,8 @@ uint8_t sx1268_set_tx_infinite_preamble(sx1268_handle_t *handle)
  */
 uint8_t sx1268_set_regulator_mode(sx1268_handle_t *handle, sx1268_regulator_mode_t mode)
 {
-    volatile uint8_t res;
-    volatile uint8_t prev;
+    uint8_t res;
+    uint8_t prev;
     
     if (handle == NULL)                                                                             /* check handle */
     {
@@ -1995,8 +1999,8 @@ uint8_t sx1268_set_regulator_mode(sx1268_handle_t *handle, sx1268_regulator_mode
         return 3;                                                                                   /* return error */
     }
 
-    res = _sx1268_check_busy(handle);                                                               /* check busy */
-    if (res)                                                                                        /* check result */
+    res = a_sx1268_check_busy(handle);                                                              /* check busy */
+    if (res != 0)                                                                                   /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                             /* chip is busy */
        
@@ -2004,8 +2008,8 @@ uint8_t sx1268_set_regulator_mode(sx1268_handle_t *handle, sx1268_regulator_mode
     }
     
     prev = mode;                                                                                    /* set param */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_REGULATOR_MODE, (uint8_t *)&prev, 1);        /* write command */
-    if (res)                                                                                        /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_REGULATOR_MODE, (uint8_t *)&prev, 1);       /* write command */
+    if (res != 0)                                                                                   /* check result */
     {
         handle->debug_print("sx1268: set regulator mode failed.\n");                                /* set regulator mode failed */
        
@@ -2029,8 +2033,8 @@ uint8_t sx1268_set_regulator_mode(sx1268_handle_t *handle, sx1268_regulator_mode
  */
 uint8_t sx1268_set_calibration(sx1268_handle_t *handle, uint8_t settings)
 {
-    volatile uint8_t res;
-    volatile uint8_t prev;
+    uint8_t res;
+    uint8_t prev;
     
     if (handle == NULL)                                                                        /* check handle */
     {
@@ -2041,8 +2045,8 @@ uint8_t sx1268_set_calibration(sx1268_handle_t *handle, uint8_t settings)
         return 3;                                                                              /* return error */
     }
 
-    res = _sx1268_check_busy(handle);                                                          /* check busy */
-    if (res)                                                                                   /* check result */
+    res = a_sx1268_check_busy(handle);                                                         /* check busy */
+    if (res != 0)                                                                              /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                        /* chip is busy */
        
@@ -2050,8 +2054,8 @@ uint8_t sx1268_set_calibration(sx1268_handle_t *handle, uint8_t settings)
     }
     
     prev = settings;                                                                           /* set param */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_CALIBRATE, (uint8_t *)&prev, 1);        /* write command */
-    if (res)                                                                                   /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_CALIBRATE, (uint8_t *)&prev, 1);       /* write command */
+    if (res != 0)                                                                              /* check result */
     {
         handle->debug_print("sx1268: set calibration failed.\n");                              /* set calibration failed */
        
@@ -2076,8 +2080,8 @@ uint8_t sx1268_set_calibration(sx1268_handle_t *handle, uint8_t settings)
  */
 uint8_t sx1268_set_calibration_image(sx1268_handle_t *handle, uint8_t freq1, uint8_t freq2)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[2];
+    uint8_t res;
+    uint8_t buf[2];
     
     if (handle == NULL)                                                                            /* check handle */
     {
@@ -2088,8 +2092,8 @@ uint8_t sx1268_set_calibration_image(sx1268_handle_t *handle, uint8_t freq1, uin
         return 3;                                                                                  /* return error */
     }
 
-    res = _sx1268_check_busy(handle);                                                              /* check busy */
-    if (res)                                                                                       /* check result */
+    res = a_sx1268_check_busy(handle);                                                             /* check busy */
+    if (res != 0)                                                                                  /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                            /* chip is busy */
        
@@ -2098,8 +2102,8 @@ uint8_t sx1268_set_calibration_image(sx1268_handle_t *handle, uint8_t freq1, uin
     
     buf[0] = freq1;                                                                                /* set param */
     buf[1] = freq2;                                                                                /* set param */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_CALIBRATE_IMAGE, (uint8_t *)buf, 2);        /* write command */
-    if (res)                                                                                       /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_CALIBRATE_IMAGE, (uint8_t *)buf, 2);       /* write command */
+    if (res != 0)                                                                                  /* check result */
     {
         handle->debug_print("sx1268: set calibration image failed.\n");                            /* set calibration image failed */
        
@@ -2124,8 +2128,8 @@ uint8_t sx1268_set_calibration_image(sx1268_handle_t *handle, uint8_t freq1, uin
  */
 uint8_t sx1268_set_pa_config(sx1268_handle_t *handle, uint8_t pa_duty_cycle, uint8_t hp_max)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[4];
+    uint8_t res;
+    uint8_t buf[4];
     
     if (handle == NULL)                                                                      /* check handle */
     {
@@ -2136,8 +2140,8 @@ uint8_t sx1268_set_pa_config(sx1268_handle_t *handle, uint8_t pa_duty_cycle, uin
         return 3;                                                                            /* return error */
     }
 
-    res = _sx1268_check_busy(handle);                                                        /* check busy */
-    if (res)                                                                                 /* check result */
+    res = a_sx1268_check_busy(handle);                                                       /* check busy */
+    if (res != 0)                                                                            /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                      /* chip is busy */
        
@@ -2148,8 +2152,8 @@ uint8_t sx1268_set_pa_config(sx1268_handle_t *handle, uint8_t pa_duty_cycle, uin
     buf[1] = hp_max;                                                                         /* set param */
     buf[2] = 0x00;                                                                           /* set param */
     buf[3] = 0x01;                                                                           /* set param */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_PA_CONFIG, (uint8_t *)buf, 4);        /* write command */
-    if (res)                                                                                 /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_PA_CONFIG, (uint8_t *)buf, 4);       /* write command */
+    if (res != 0)                                                                            /* check result */
     {
         handle->debug_print("sx1268: set pa config failed.\n");                              /* set pa config failed */
        
@@ -2173,8 +2177,8 @@ uint8_t sx1268_set_pa_config(sx1268_handle_t *handle, uint8_t pa_duty_cycle, uin
  */
 uint8_t sx1268_set_rx_tx_fallback_mode(sx1268_handle_t *handle, sx1268_rx_tx_fallback_mode_t mode)
 {
-    volatile uint8_t res;
-    volatile uint8_t prev;
+    uint8_t res;
+    uint8_t prev;
     
     if (handle == NULL)                                                                                  /* check handle */
     {
@@ -2185,8 +2189,8 @@ uint8_t sx1268_set_rx_tx_fallback_mode(sx1268_handle_t *handle, sx1268_rx_tx_fal
         return 3;                                                                                        /* return error */
     }
 
-    res = _sx1268_check_busy(handle);                                                                    /* check busy */
-    if (res)                                                                                             /* check result */
+    res = a_sx1268_check_busy(handle);                                                                   /* check busy */
+    if (res != 0)                                                                                        /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                  /* chip is busy */
        
@@ -2194,8 +2198,8 @@ uint8_t sx1268_set_rx_tx_fallback_mode(sx1268_handle_t *handle, sx1268_rx_tx_fal
     }
     
     prev = mode;                                                                                         /* set param */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_RX_TX_FALLBACK_MODE, (uint8_t *)&prev, 1);        /* write command */
-    if (res)                                                                                             /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_RX_TX_FALLBACK_MODE, (uint8_t *)&prev, 1);       /* write command */
+    if (res != 0)                                                                                        /* check result */
     {
         handle->debug_print("sx1268: set rx tx fallback mode failed.\n");                                /* set rx tx fallback mode failed */
        
@@ -2223,8 +2227,8 @@ uint8_t sx1268_set_rx_tx_fallback_mode(sx1268_handle_t *handle, sx1268_rx_tx_fal
 uint8_t sx1268_set_dio_irq_params(sx1268_handle_t *handle, uint16_t irq_mask, uint16_t dio1_mask,
                                   uint16_t dio2_mask, uint16_t dio3_mask)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[8];
+    uint8_t res;
+    uint8_t buf[8];
     
     if (handle == NULL)                                                                           /* check handle */
     {
@@ -2235,8 +2239,8 @@ uint8_t sx1268_set_dio_irq_params(sx1268_handle_t *handle, uint16_t irq_mask, ui
         return 3;                                                                                 /* return error */
     }
 
-    res = _sx1268_check_busy(handle);                                                             /* check busy */
-    if (res)                                                                                      /* check result */
+    res = a_sx1268_check_busy(handle);                                                            /* check busy */
+    if (res != 0)                                                                                 /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                           /* chip is busy */
        
@@ -2252,8 +2256,8 @@ uint8_t sx1268_set_dio_irq_params(sx1268_handle_t *handle, uint16_t irq_mask, ui
     buf[6] = (dio3_mask >> 8) & 0xFF;                                                             /* set param */
     buf[7] = (dio3_mask >> 0) & 0xFF;                                                             /* set param */
     
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_DIO_IRQ_PARAMS, (uint8_t *)buf, 8);        /* write command */
-    if (res)                                                                                      /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_DIO_IRQ_PARAMS, (uint8_t *)buf, 8);       /* write command */
+    if (res != 0)                                                                                 /* check result */
     {
         handle->debug_print("sx1268: set dio irq params failed.\n");                              /* set dio irq params failed */
        
@@ -2277,8 +2281,8 @@ uint8_t sx1268_set_dio_irq_params(sx1268_handle_t *handle, uint16_t irq_mask, ui
  */
 uint8_t sx1268_get_irq_status(sx1268_handle_t *handle, uint16_t *status)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[3];
+    uint8_t res;
+    uint8_t buf[3];
     
     if (handle == NULL)                                                                      /* check handle */
     {
@@ -2289,16 +2293,16 @@ uint8_t sx1268_get_irq_status(sx1268_handle_t *handle, uint16_t *status)
         return 3;                                                                            /* return error */
     }
 
-    res = _sx1268_check_busy(handle);                                                        /* check busy */
-    if (res)                                                                                 /* check result */
+    res = a_sx1268_check_busy(handle);                                                       /* check busy */
+    if (res != 0)                                                                            /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                      /* chip is busy */
        
         return 4;                                                                            /* return error */
     }
     
-    res = _sx1268_spi_read(handle, SX1268_COMMAND_GET_IRQ_STATUS, (uint8_t *)buf, 3);        /* read command */
-    if (res)                                                                                 /* check result */
+    res = a_sx1268_spi_read(handle, SX1268_COMMAND_GET_IRQ_STATUS, (uint8_t *)buf, 3);       /* read command */
+    if (res != 0)                                                                            /* check result */
     {
         handle->debug_print("sx1268: get irq status failed.\n");                             /* get irq status failed */
        
@@ -2323,8 +2327,8 @@ uint8_t sx1268_get_irq_status(sx1268_handle_t *handle, uint16_t *status)
  */
 uint8_t sx1268_clear_irq_status(sx1268_handle_t *handle, uint16_t clear_irq_param)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[2];
+    uint8_t res;
+    uint8_t buf[2];
     
     if (handle == NULL)                                                                         /* check handle */
     {
@@ -2335,8 +2339,8 @@ uint8_t sx1268_clear_irq_status(sx1268_handle_t *handle, uint16_t clear_irq_para
         return 3;                                                                               /* return error */
     }
 
-    res = _sx1268_check_busy(handle);                                                           /* check busy */
-    if (res)                                                                                    /* check result */
+    res = a_sx1268_check_busy(handle);                                                          /* check busy */
+    if (res != 0)                                                                               /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                         /* chip is busy */
        
@@ -2345,8 +2349,8 @@ uint8_t sx1268_clear_irq_status(sx1268_handle_t *handle, uint16_t clear_irq_para
     
     buf[0] = (clear_irq_param >> 8) & 0xFF;                                                     /* set param */
     buf[1] = (clear_irq_param >> 0) & 0xFF;                                                     /* set param */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_CLEAR_IRQ_STATUS, (uint8_t *)buf, 2);        /* write command */
-    if (res)                                                                                    /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_CLEAR_IRQ_STATUS, (uint8_t *)buf, 2);       /* write command */
+    if (res != 0)                                                                               /* check result */
     {
         handle->debug_print("sx1268: clear irq status failed.\n");                              /* clear irq status failed */
        
@@ -2370,8 +2374,8 @@ uint8_t sx1268_clear_irq_status(sx1268_handle_t *handle, uint16_t clear_irq_para
  */
 uint8_t sx1268_set_dio2_as_rf_switch_ctrl(sx1268_handle_t *handle, sx1268_bool_t enable)
 {
-    volatile uint8_t res;
-    volatile uint8_t prev;
+    uint8_t res;
+    uint8_t prev;
     
     if (handle == NULL)                                                                                     /* check handle */
     {
@@ -2382,8 +2386,8 @@ uint8_t sx1268_set_dio2_as_rf_switch_ctrl(sx1268_handle_t *handle, sx1268_bool_t
         return 3;                                                                                           /* return error */
     }
 
-    res = _sx1268_check_busy(handle);                                                                       /* check busy */
-    if (res)                                                                                                /* check result */
+    res = a_sx1268_check_busy(handle);                                                                      /* check busy */
+    if (res != 0)                                                                                           /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                     /* chip is busy */
        
@@ -2391,8 +2395,8 @@ uint8_t sx1268_set_dio2_as_rf_switch_ctrl(sx1268_handle_t *handle, sx1268_bool_t
     }
     
     prev = enable;                                                                                          /* set param */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_DIO2_AS_RF_SWITCH_CTRL, (uint8_t *)&prev, 1);        /* write command */
-    if (res)                                                                                                /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_DIO2_AS_RF_SWITCH_CTRL, (uint8_t *)&prev, 1);       /* write command */
+    if (res != 0)                                                                                           /* check result */
     {
         handle->debug_print("sx1268: set dio2 as rf switch ctrl failed.\n");                                /* set dio2 as rf switch ctrl failed */
        
@@ -2417,8 +2421,8 @@ uint8_t sx1268_set_dio2_as_rf_switch_ctrl(sx1268_handle_t *handle, sx1268_bool_t
  */
 uint8_t sx1268_set_dio3_as_tcxo_ctrl(sx1268_handle_t *handle, sx1268_tcxo_voltage_t voltage, uint32_t delay)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[4];
+    uint8_t res;
+    uint8_t buf[4];
     
     if (handle == NULL)                                                                              /* check handle */
     {
@@ -2429,8 +2433,8 @@ uint8_t sx1268_set_dio3_as_tcxo_ctrl(sx1268_handle_t *handle, sx1268_tcxo_voltag
         return 3;                                                                                    /* return error */
     }
 
-    res = _sx1268_check_busy(handle);                                                                /* check busy */
-    if (res)                                                                                         /* check result */
+    res = a_sx1268_check_busy(handle);                                                               /* check busy */
+    if (res != 0)                                                                                    /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                              /* chip is busy */
        
@@ -2441,8 +2445,8 @@ uint8_t sx1268_set_dio3_as_tcxo_ctrl(sx1268_handle_t *handle, sx1268_tcxo_voltag
     buf[1] = (delay >> 16) & 0xFF;                                                                   /* set param */
     buf[2] = (delay >> 8) & 0xFF;                                                                    /* set param */
     buf[3] = (delay >> 0) & 0xFF;                                                                    /* set param */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_DIO3_AS_TCXO_CTRL, (uint8_t *)buf, 4);        /* write command */
-    if (res)                                                                                         /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_DIO3_AS_TCXO_CTRL, (uint8_t *)buf, 4);       /* write command */
+    if (res != 0)                                                                                    /* check result */
     {
         handle->debug_print("sx1268: set dio3 as tcxo ctrl status failed.\n");                       /* set dio3 as tcxo ctrl status failed */
        
@@ -2520,8 +2524,8 @@ uint8_t sx1268_frequency_convert_to_data(sx1268_handle_t *handle, uint32_t reg, 
  */
 uint8_t sx1268_set_rf_frequency(sx1268_handle_t *handle, uint32_t reg)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[4];
+    uint8_t res;
+    uint8_t buf[4];
     
     if (handle == NULL)                                                                         /* check handle */
     {
@@ -2532,8 +2536,8 @@ uint8_t sx1268_set_rf_frequency(sx1268_handle_t *handle, uint32_t reg)
         return 3;                                                                               /* return error */
     }
 
-    res = _sx1268_check_busy(handle);                                                           /* check busy */
-    if (res)                                                                                    /* check result */
+    res = a_sx1268_check_busy(handle);                                                          /* check busy */
+    if (res != 0)                                                                               /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                         /* chip is busy */
        
@@ -2544,8 +2548,8 @@ uint8_t sx1268_set_rf_frequency(sx1268_handle_t *handle, uint32_t reg)
     buf[1] = (reg >> 16) & 0xFF;                                                                /* set param */
     buf[2] = (reg >> 8) & 0xFF;                                                                 /* set param */
     buf[3] = (reg >> 0) & 0xFF;                                                                 /* set param */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_RF_FREQUENCY, (uint8_t *)buf, 4);        /* write command */
-    if (res)                                                                                    /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_RF_FREQUENCY, (uint8_t *)buf, 4);       /* write command */
+    if (res != 0)                                                                               /* check result */
     {
         handle->debug_print("sx1268: set rf frequency failed.\n");                              /* set rf frequency failed */
        
@@ -2569,8 +2573,8 @@ uint8_t sx1268_set_rf_frequency(sx1268_handle_t *handle, uint32_t reg)
  */
 uint8_t sx1268_set_packet_type(sx1268_handle_t *handle, sx1268_packet_type_t type)
 {
-    volatile uint8_t res;
-    volatile uint8_t prev;
+    uint8_t res;
+    uint8_t prev;
     
     if (handle == NULL)                                                                          /* check handle */
     {
@@ -2581,8 +2585,8 @@ uint8_t sx1268_set_packet_type(sx1268_handle_t *handle, sx1268_packet_type_t typ
         return 3;                                                                                /* return error */
     }
 
-    res = _sx1268_check_busy(handle);                                                            /* check busy */
-    if (res)                                                                                     /* check result */
+    res = a_sx1268_check_busy(handle);                                                           /* check busy */
+    if (res != 0)                                                                                /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                          /* chip is busy */
        
@@ -2590,8 +2594,8 @@ uint8_t sx1268_set_packet_type(sx1268_handle_t *handle, sx1268_packet_type_t typ
     }
     
     prev = type;                                                                                 /* set param */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_PACKET_TYPE, (uint8_t *)&prev, 1);        /* write command */
-    if (res)                                                                                     /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_PACKET_TYPE, (uint8_t *)&prev, 1);       /* write command */
+    if (res != 0)                                                                                /* check result */
     {
         handle->debug_print("sx1268: set packet type failed.\n");                                /* set packet type failed */
        
@@ -2615,8 +2619,8 @@ uint8_t sx1268_set_packet_type(sx1268_handle_t *handle, sx1268_packet_type_t typ
  */
 uint8_t sx1268_get_packet_type(sx1268_handle_t *handle, sx1268_packet_type_t *type)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[2];
+    uint8_t res;
+    uint8_t buf[2];
     
     if (handle == NULL)                                                                       /* check handle */
     {
@@ -2627,16 +2631,16 @@ uint8_t sx1268_get_packet_type(sx1268_handle_t *handle, sx1268_packet_type_t *ty
         return 3;                                                                             /* return error */
     }
 
-    res = _sx1268_check_busy(handle);                                                         /* check busy */
-    if (res)                                                                                  /* check result */
+    res = a_sx1268_check_busy(handle);                                                        /* check busy */
+    if (res != 0)                                                                             /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                       /* chip is busy */
        
         return 4;                                                                             /* return error */
     }
     
-    res = _sx1268_spi_read(handle, SX1268_COMMAND_GET_PACKET_TYPE, (uint8_t *)buf, 2);        /* write command */
-    if (res)                                                                                  /* check result */
+    res = a_sx1268_spi_read(handle, SX1268_COMMAND_GET_PACKET_TYPE, (uint8_t *)buf, 2);       /* write command */
+    if (res != 0)                                                                             /* check result */
     {
         handle->debug_print("sx1268: get packet type failed.\n");                             /* get packet type failed */
        
@@ -2651,7 +2655,7 @@ uint8_t sx1268_get_packet_type(sx1268_handle_t *handle, sx1268_packet_type_t *ty
  * @brief     set the tx params
  * @param[in] *handle points to a sx1268 handle structure
  * @param[in] dbm is the rf power 
- * @param[in] time is the ramp time
+ * @param[in] t is the ramp time
  * @return    status code
  *            - 0 success
  *            - 1 set tx params failed
@@ -2660,10 +2664,10 @@ uint8_t sx1268_get_packet_type(sx1268_handle_t *handle, sx1268_packet_type_t *ty
  *            - 4 chip is busy
  * @note      none
  */
-uint8_t sx1268_set_tx_params(sx1268_handle_t *handle, int8_t dbm, sx1268_ramp_time_t time)
+uint8_t sx1268_set_tx_params(sx1268_handle_t *handle, int8_t dbm, sx1268_ramp_time_t t)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[2];
+    uint8_t res;
+    uint8_t buf[2];
     
     if (handle == NULL)                                                                      /* check handle */
     {
@@ -2674,8 +2678,8 @@ uint8_t sx1268_set_tx_params(sx1268_handle_t *handle, int8_t dbm, sx1268_ramp_ti
         return 3;                                                                            /* return error */
     }
 
-    res = _sx1268_check_busy(handle);                                                        /* check busy */
-    if (res)                                                                                 /* check result */
+    res = a_sx1268_check_busy(handle);                                                       /* check busy */
+    if (res != 0)                                                                            /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                      /* chip is busy */
        
@@ -2683,9 +2687,9 @@ uint8_t sx1268_set_tx_params(sx1268_handle_t *handle, int8_t dbm, sx1268_ramp_ti
     }
     
     buf[0] = dbm;                                                                            /* set param */
-    buf[1] = time;                                                                           /* set param */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_TX_PARAMS, (uint8_t *)buf, 2);        /* write command */
-    if (res)                                                                                 /* check result */
+    buf[1] = t;                                                                              /* set param */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_TX_PARAMS, (uint8_t *)buf, 2);       /* write command */
+    if (res != 0)                                                                            /* check result */
     {
         handle->debug_print("sx1268: set tx params failed.\n");                              /* set tx params failed */
        
@@ -2713,8 +2717,8 @@ uint8_t sx1268_set_tx_params(sx1268_handle_t *handle, int8_t dbm, sx1268_ramp_ti
 uint8_t sx1268_set_gfsk_modulation_params(sx1268_handle_t *handle, uint32_t br, sx1268_gfsk_pulse_shape_t shape, 
                                           sx1268_gfsk_bandwidth_t bw, uint32_t fdev)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[8];
+    uint8_t res;
+    uint8_t buf[8];
     
     if (handle == NULL)                                                                              /* check handle */
     {
@@ -2725,8 +2729,8 @@ uint8_t sx1268_set_gfsk_modulation_params(sx1268_handle_t *handle, uint32_t br, 
         return 3;                                                                                    /* return error */
     }
 
-    res = _sx1268_check_busy(handle);                                                                /* check busy */
-    if (res)                                                                                         /* check result */
+    res = a_sx1268_check_busy(handle);                                                               /* check busy */
+    if (res != 0)                                                                                    /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                              /* chip is busy */
        
@@ -2741,8 +2745,8 @@ uint8_t sx1268_set_gfsk_modulation_params(sx1268_handle_t *handle, uint32_t br, 
     buf[5] = (fdev >> 16) & 0xFF;                                                                    /* set param */
     buf[6] = (fdev >> 8) & 0xFF;                                                                     /* set param */
     buf[7] = (fdev >> 0) & 0xFF;                                                                     /* set param */ 
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_MODULATION_PARAMS, (uint8_t *)buf, 8);        /* write command */
-    if (res)                                                                                         /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_MODULATION_PARAMS, (uint8_t *)buf, 8);       /* write command */
+    if (res != 0)                                                                                    /* check result */
     {
         handle->debug_print("sx1268: set gfsk modulation params failed.\n");                         /* set gfsk modulation params failed */
        
@@ -2878,8 +2882,8 @@ uint8_t sx1268_gfsk_frequency_deviation_convert_to_data(sx1268_handle_t *handle,
 uint8_t sx1268_set_lora_modulation_params(sx1268_handle_t *handle, sx1268_lora_sf_t sf, sx1268_lora_bandwidth_t bw, 
                                           sx1268_lora_cr_t cr, sx1268_bool_t low_data_rate_optimize_enable)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[4];
+    uint8_t res;
+    uint8_t buf[4];
     
     if (handle == NULL)                                                                              /* check handle */
     {
@@ -2890,8 +2894,8 @@ uint8_t sx1268_set_lora_modulation_params(sx1268_handle_t *handle, sx1268_lora_s
         return 3;                                                                                    /* return error */
     }
 
-    res = _sx1268_check_busy(handle);                                                                /* check busy */
-    if (res)                                                                                         /* check result */
+    res = a_sx1268_check_busy(handle);                                                               /* check busy */
+    if (res != 0)                                                                                    /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                              /* chip is busy */
        
@@ -2902,8 +2906,8 @@ uint8_t sx1268_set_lora_modulation_params(sx1268_handle_t *handle, sx1268_lora_s
     buf[1] = bw;                                                                                     /* set param */
     buf[2] = cr;                                                                                     /* set param */
     buf[3] = low_data_rate_optimize_enable;                                                          /* set param */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_MODULATION_PARAMS, (uint8_t *)buf, 4);        /* write command */
-    if (res)                                                                                         /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_MODULATION_PARAMS, (uint8_t *)buf, 4);       /* write command */
+    if (res != 0)                                                                                    /* check result */
     {
         handle->debug_print("sx1268: set lora modulation params failed.\n");                         /* set lora modulation params failed */
        
@@ -2939,8 +2943,8 @@ uint8_t sx1268_set_gfsk_packet_params(sx1268_handle_t *handle, uint16_t preamble
                                       sx1268_gfsk_packet_type_t packet_type, uint8_t payload_length,
                                       sx1268_gfsk_crc_type_t crc_type, sx1268_bool_t whitening_enable)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[9];
+    uint8_t res;
+    uint8_t buf[9];
     
     if (handle == NULL)                                                                              /* check handle */
     {
@@ -2957,8 +2961,8 @@ uint8_t sx1268_set_gfsk_packet_params(sx1268_handle_t *handle, uint16_t preamble
         return 5;                                                                                    /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                /* check busy */
-    if (res)                                                                                         /* check result */
+    res = a_sx1268_check_busy(handle);                                                               /* check busy */
+    if (res != 0)                                                                                    /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                              /* chip is busy */
        
@@ -2974,8 +2978,8 @@ uint8_t sx1268_set_gfsk_packet_params(sx1268_handle_t *handle, uint16_t preamble
     buf[6] = payload_length;                                                                         /* set param */
     buf[7] = crc_type;                                                                               /* set param */
     buf[8] = whitening_enable;                                                                       /* set param */ 
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_PACKET_PARAMS, (uint8_t *)buf, 9);            /* write command */
-    if (res)                                                                                         /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_PACKET_PARAMS, (uint8_t *)buf, 9);           /* write command */
+    if (res != 0)                                                                                    /* check result */
     {
         handle->debug_print("sx1268: set gfsk modulation params failed.\n");                         /* set gfsk modulation params failed */
        
@@ -3005,8 +3009,8 @@ uint8_t sx1268_set_lora_packet_params(sx1268_handle_t *handle, uint16_t preamble
                                       sx1268_lora_header_t header_type, uint8_t payload_length,
                                       sx1268_lora_crc_type_t crc_type, sx1268_bool_t invert_iq_enable)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[6];
+    uint8_t res;
+    uint8_t buf[6];
     
     if (handle == NULL)                                                                          /* check handle */
     {
@@ -3017,8 +3021,8 @@ uint8_t sx1268_set_lora_packet_params(sx1268_handle_t *handle, uint16_t preamble
         return 3;                                                                                /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                            /* check busy */
-    if (res)                                                                                     /* check result */
+    res = a_sx1268_check_busy(handle);                                                           /* check busy */
+    if (res != 0)                                                                                /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                          /* chip is busy */
        
@@ -3031,8 +3035,8 @@ uint8_t sx1268_set_lora_packet_params(sx1268_handle_t *handle, uint16_t preamble
     buf[3] = payload_length;                                                                     /* set param */
     buf[4] = crc_type;                                                                           /* set param */
     buf[5] = invert_iq_enable;                                                                   /* set param */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_PACKET_PARAMS, (uint8_t *)buf, 6);        /* write command */
-    if (res)                                                                                     /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_PACKET_PARAMS, (uint8_t *)buf, 6);       /* write command */
+    if (res != 0)                                                                                /* check result */
     {
         handle->debug_print("sx1268: set lora modulation params failed.\n");                     /* set lora modulation params failed */
        
@@ -3062,8 +3066,8 @@ uint8_t sx1268_set_cad_params(sx1268_handle_t *handle, sx1268_lora_cad_symbol_nu
                               uint8_t cad_det_peak, uint8_t cad_det_min, sx1268_lora_cad_exit_mode_t mode,
                               uint32_t timeout)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[7];
+    uint8_t res;
+    uint8_t buf[7];
     
     if (handle == NULL)                                                                       /* check handle */
     {
@@ -3074,8 +3078,8 @@ uint8_t sx1268_set_cad_params(sx1268_handle_t *handle, sx1268_lora_cad_symbol_nu
         return 3;                                                                             /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                         /* check busy */
-    if (res)                                                                                  /* check result */
+    res = a_sx1268_check_busy(handle);                                                        /* check busy */
+    if (res != 0)                                                                             /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                       /* chip is busy */
        
@@ -3089,8 +3093,8 @@ uint8_t sx1268_set_cad_params(sx1268_handle_t *handle, sx1268_lora_cad_symbol_nu
     buf[4] = (timeout >> 16) & 0xFF;                                                          /* set param */
     buf[5] = (timeout >> 8) & 0xFF;                                                           /* set param */
     buf[6] = (timeout >> 0) & 0xFF;                                                           /* set param */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_CAD_PARAMS, (uint8_t *)buf, 7);        /* write command */
-    if (res)                                                                                  /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_CAD_PARAMS, (uint8_t *)buf, 7);       /* write command */
+    if (res != 0)                                                                             /* check result */
     {
         handle->debug_print("sx1268: set cad params failed.\n");                              /* set cad params failed */
        
@@ -3115,8 +3119,8 @@ uint8_t sx1268_set_cad_params(sx1268_handle_t *handle, sx1268_lora_cad_symbol_nu
  */
 uint8_t sx1268_set_buffer_base_address(sx1268_handle_t *handle, uint8_t tx_base_addr, uint8_t rx_base_addr)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[2];
+    uint8_t res;
+    uint8_t buf[2];
     
     if (handle == NULL)                                                                                /* check handle */
     {
@@ -3127,8 +3131,8 @@ uint8_t sx1268_set_buffer_base_address(sx1268_handle_t *handle, uint8_t tx_base_
         return 3;                                                                                      /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                  /* check busy */
-    if (res)                                                                                           /* check result */
+    res = a_sx1268_check_busy(handle);                                                                 /* check busy */
+    if (res != 0)                                                                                      /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                /* chip is busy */
        
@@ -3137,8 +3141,8 @@ uint8_t sx1268_set_buffer_base_address(sx1268_handle_t *handle, uint8_t tx_base_
     
     buf[0] = tx_base_addr;                                                                             /* set param */
     buf[1] = rx_base_addr;                                                                             /* set param */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_BUFFER_BASE_ADDRESS, (uint8_t *)buf, 2);        /* write command */
-    if (res)                                                                                           /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_BUFFER_BASE_ADDRESS, (uint8_t *)buf, 2);       /* write command */
+    if (res != 0)                                                                                      /* check result */
     {
         handle->debug_print("sx1268: set buffer base address failed.\n");                              /* set buffer base address failed */
        
@@ -3162,8 +3166,8 @@ uint8_t sx1268_set_buffer_base_address(sx1268_handle_t *handle, uint8_t tx_base_
  */
 uint8_t sx1268_set_lora_symb_num_timeout(sx1268_handle_t *handle, uint8_t symb_num)
 {
-    volatile uint8_t res;
-    volatile uint8_t prev;
+    uint8_t res;
+    uint8_t prev;
     
     if (handle == NULL)                                                                                    /* check handle */
     {
@@ -3174,8 +3178,8 @@ uint8_t sx1268_set_lora_symb_num_timeout(sx1268_handle_t *handle, uint8_t symb_n
         return 3;                                                                                          /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                      /* check busy */
-    if (res)                                                                                               /* check result */
+    res = a_sx1268_check_busy(handle);                                                                     /* check busy */
+    if (res != 0)                                                                                          /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                    /* chip is busy */
        
@@ -3183,8 +3187,8 @@ uint8_t sx1268_set_lora_symb_num_timeout(sx1268_handle_t *handle, uint8_t symb_n
     }
     
     prev = symb_num;                                                                                       /* set param */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_SET_LORA_SYMB_NUM_TIMEOUT, (uint8_t *)&prev, 1);        /* write command */
-    if (res)                                                                                               /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_SET_LORA_SYMB_NUM_TIMEOUT, (uint8_t *)&prev, 1);       /* write command */
+    if (res != 0)                                                                                          /* check result */
     {
         handle->debug_print("sx1268: set lora symb num timeout failed.\n");                                /* set lora symb num timeout failed */
        
@@ -3208,8 +3212,8 @@ uint8_t sx1268_set_lora_symb_num_timeout(sx1268_handle_t *handle, uint8_t symb_n
  */
 uint8_t sx1268_get_status(sx1268_handle_t *handle, uint8_t *status)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[2];
+    uint8_t res;
+    uint8_t buf[2];
     
     if (handle == NULL)                                                                  /* check handle */
     {
@@ -3220,16 +3224,17 @@ uint8_t sx1268_get_status(sx1268_handle_t *handle, uint8_t *status)
         return 3;                                                                        /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                    /* check busy */
-    if (res)                                                                             /* check result */
+    res = a_sx1268_check_busy(handle);                                                   /* check busy */
+    if (res != 0)                                                                        /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                  /* chip is busy */
        
         return 4;                                                                        /* return error */
     }
     
-    res = _sx1268_spi_read(handle, SX1268_COMMAND_GET_STATUS, (uint8_t *)buf, 2);        /* read command */
-    if (res)                                                                             /* check result */
+    memset(buf, 0, sizeof(uint8_t) * 2);                                                 /* clear the buffer */
+    res = a_sx1268_spi_read(handle, SX1268_COMMAND_GET_STATUS, (uint8_t *)buf, 2);       /* read command */
+    if (res != 0)                                                                        /* check result */
     {
         handle->debug_print("sx1268: get status failed.\n");                             /* get status failed */
        
@@ -3255,8 +3260,8 @@ uint8_t sx1268_get_status(sx1268_handle_t *handle, uint8_t *status)
  */
 uint8_t sx1268_get_rx_buffer_status(sx1268_handle_t *handle, uint8_t *payload_length_rx, uint8_t *rx_start_buffer_pointer)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[3];
+    uint8_t res;
+    uint8_t buf[3];
     
     if (handle == NULL)                                                                            /* check handle */
     {
@@ -3267,16 +3272,16 @@ uint8_t sx1268_get_rx_buffer_status(sx1268_handle_t *handle, uint8_t *payload_le
         return 3;                                                                                  /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                              /* check busy */
-    if (res)                                                                                       /* check result */
+    res = a_sx1268_check_busy(handle);                                                             /* check busy */
+    if (res != 0)                                                                                  /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                            /* chip is busy */
        
         return 4;                                                                                  /* return error */
     }
     
-    res = _sx1268_spi_read(handle, SX1268_COMMAND_GET_RX_BUFFER_STATUS, (uint8_t *)buf, 3);        /* read command */
-    if (res)                                                                                       /* check result */
+    res = a_sx1268_spi_read(handle, SX1268_COMMAND_GET_RX_BUFFER_STATUS, (uint8_t *)buf, 3);       /* read command */
+    if (res != 0)                                                                                  /* check result */
     {
         handle->debug_print("sx1268: get rx buffer status failed.\n");                             /* get rx buffer status failed */
        
@@ -3307,8 +3312,8 @@ uint8_t sx1268_get_rx_buffer_status(sx1268_handle_t *handle, uint8_t *payload_le
 uint8_t sx1268_get_gfsk_packet_status(sx1268_handle_t *handle, uint8_t *rx_status, uint8_t *rssi_sync_raw,
                                       uint8_t *rssi_avg_raw, float *rssi_sync, float *rssi_avg)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[4];
+    uint8_t res;
+    uint8_t buf[4];
     
     if (handle == NULL)                                                                         /* check handle */
     {
@@ -3319,16 +3324,16 @@ uint8_t sx1268_get_gfsk_packet_status(sx1268_handle_t *handle, uint8_t *rx_statu
         return 3;                                                                               /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                           /* check busy */
-    if (res)                                                                                    /* check result */
+    res = a_sx1268_check_busy(handle);                                                          /* check busy */
+    if (res != 0)                                                                               /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                         /* chip is busy */
        
         return 4;                                                                               /* return error */
     }
     
-    res = _sx1268_spi_read(handle, SX1268_COMMAND_GET_PACKET_STATUS, (uint8_t *)buf, 4);        /* read command */
-    if (res)                                                                                    /* check result */
+    res = a_sx1268_spi_read(handle, SX1268_COMMAND_GET_PACKET_STATUS, (uint8_t *)buf, 4);       /* read command */
+    if (res != 0)                                                                               /* check result */
     {
         handle->debug_print("sx1268: get packet status failed.\n");                             /* get packet status failed */
        
@@ -3363,8 +3368,8 @@ uint8_t sx1268_get_gfsk_packet_status(sx1268_handle_t *handle, uint8_t *rx_statu
 uint8_t sx1268_get_lora_packet_status(sx1268_handle_t *handle, uint8_t *rssi_pkt_raw, uint8_t *snr_pkt_raw,
                                       uint8_t *signal_rssi_pkt_raw, float *rssi_pkt, float *snr_pkt, float *signal_rssi_pkt)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[4];
+    uint8_t res;
+    uint8_t buf[4];
     
     if (handle == NULL)                                                                         /* check handle */
     {
@@ -3375,16 +3380,16 @@ uint8_t sx1268_get_lora_packet_status(sx1268_handle_t *handle, uint8_t *rssi_pkt
         return 3;                                                                               /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                           /* check busy */
-    if (res)                                                                                    /* check result */
+    res = a_sx1268_check_busy(handle);                                                          /* check busy */
+    if (res != 0)                                                                               /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                         /* chip is busy */
        
         return 4;                                                                               /* return error */
     }
     
-    res = _sx1268_spi_read(handle, SX1268_COMMAND_GET_PACKET_STATUS, (uint8_t *)buf, 4);        /* read command */
-    if (res)                                                                                    /* check result */
+    res = a_sx1268_spi_read(handle, SX1268_COMMAND_GET_PACKET_STATUS, (uint8_t *)buf, 4);       /* read command */
+    if (res != 0)                                                                               /* check result */
     {
         handle->debug_print("sx1268: get packet status failed.\n");                             /* get packet status failed */
        
@@ -3415,8 +3420,8 @@ uint8_t sx1268_get_lora_packet_status(sx1268_handle_t *handle, uint8_t *rssi_pkt
  */
 uint8_t sx1268_get_instantaneous_rssi(sx1268_handle_t *handle, uint8_t *rssi_inst_raw, float *rssi_inst)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[2];
+    uint8_t res;
+    uint8_t buf[2];
     
     if (handle == NULL)                                                                     /* check handle */
     {
@@ -3427,16 +3432,16 @@ uint8_t sx1268_get_instantaneous_rssi(sx1268_handle_t *handle, uint8_t *rssi_ins
         return 3;                                                                           /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                       /* check busy */
-    if (res)                                                                                /* check result */
+    res = a_sx1268_check_busy(handle);                                                      /* check busy */
+    if (res != 0)                                                                           /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                     /* chip is busy */
        
         return 4;                                                                           /* return error */
     }
     
-    res = _sx1268_spi_read(handle, SX1268_COMMAND_GET_RSSI_LNST, (uint8_t *)buf, 2);        /* read command */
-    if (res)                                                                                /* check result */
+    res = a_sx1268_spi_read(handle, SX1268_COMMAND_GET_RSSI_LNST, (uint8_t *)buf, 2);       /* read command */
+    if (res != 0)                                                                           /* check result */
     {
         handle->debug_print("sx1268: get instantaneous rssi failed.\n");                    /* get instantaneous rssi failed */
        
@@ -3464,8 +3469,8 @@ uint8_t sx1268_get_instantaneous_rssi(sx1268_handle_t *handle, uint8_t *rssi_ins
  */
 uint8_t sx1268_get_stats(sx1268_handle_t *handle, uint16_t *pkt_received, uint16_t *pkt_crc_error, uint16_t *pkt_length_header_error)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[7];
+    uint8_t res;
+    uint8_t buf[7];
     
     if (handle == NULL)                                                                 /* check handle */
     {
@@ -3476,16 +3481,16 @@ uint8_t sx1268_get_stats(sx1268_handle_t *handle, uint16_t *pkt_received, uint16
         return 3;                                                                       /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                   /* check busy */
-    if (res)                                                                            /* check result */
+    res = a_sx1268_check_busy(handle);                                                  /* check busy */
+    if (res != 0)                                                                       /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                 /* chip is busy */
        
         return 4;                                                                       /* return error */
     }
     
-    res = _sx1268_spi_read(handle, SX1268_COMMAND_GET_STATS, (uint8_t *)buf, 7);        /* read command */
-    if (res)                                                                            /* check result */
+    res = a_sx1268_spi_read(handle, SX1268_COMMAND_GET_STATS, (uint8_t *)buf, 7);       /* read command */
+    if (res != 0)                                                                       /* check result */
     {
         handle->debug_print("sx1268: get stats failed.\n");                             /* get stats failed */
        
@@ -3514,8 +3519,8 @@ uint8_t sx1268_get_stats(sx1268_handle_t *handle, uint16_t *pkt_received, uint16
  */
 uint8_t sx1268_reset_stats(sx1268_handle_t *handle, uint16_t pkt_received, uint16_t pkt_crc_error, uint16_t pkt_length_header_error)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[6];
+    uint8_t res;
+    uint8_t buf[6];
     
     if (handle == NULL)                                                                    /* check handle */
     {
@@ -3526,8 +3531,8 @@ uint8_t sx1268_reset_stats(sx1268_handle_t *handle, uint16_t pkt_received, uint1
         return 3;                                                                          /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                      /* check busy */
-    if (res)                                                                               /* check result */
+    res = a_sx1268_check_busy(handle);                                                     /* check busy */
+    if (res != 0)                                                                          /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                    /* chip is busy */
        
@@ -3540,8 +3545,8 @@ uint8_t sx1268_reset_stats(sx1268_handle_t *handle, uint16_t pkt_received, uint1
     buf[3] = (pkt_crc_error >> 0) & 0xFF;                                                  /* set status */
     buf[4] = (pkt_length_header_error >> 8) & 0xFF;                                        /* set status */
     buf[5] = (pkt_length_header_error >> 0) & 0xFF;                                        /* set status */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_RESET_STATS, (uint8_t *)buf, 6);        /* write command */
-    if (res)                                                                               /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_RESET_STATS, (uint8_t *)buf, 6);       /* write command */
+    if (res != 0)                                                                          /* check result */
     {
         handle->debug_print("sx1268: reset stats failed.\n");                              /* reset stats failed */
        
@@ -3565,8 +3570,8 @@ uint8_t sx1268_reset_stats(sx1268_handle_t *handle, uint16_t pkt_received, uint1
  */
 uint8_t sx1268_get_device_errors(sx1268_handle_t *handle, uint16_t *op_error)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[3];
+    uint8_t res;
+    uint8_t buf[3];
     
     if (handle == NULL)                                                                         /* check handle */
     {
@@ -3577,16 +3582,16 @@ uint8_t sx1268_get_device_errors(sx1268_handle_t *handle, uint16_t *op_error)
         return 3;                                                                               /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                           /* check busy */
-    if (res)                                                                                    /* check result */
+    res = a_sx1268_check_busy(handle);                                                          /* check busy */
+    if (res != 0)                                                                               /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                         /* chip is busy */
        
         return 4;                                                                               /* return error */
     }
     
-    res = _sx1268_spi_read(handle, SX1268_COMMAND_GET_DEVICE_ERRORS, (uint8_t *)buf, 3);        /* read command */
-    if (res)                                                                                    /* check result */
+    res = a_sx1268_spi_read(handle, SX1268_COMMAND_GET_DEVICE_ERRORS, (uint8_t *)buf, 3);       /* read command */
+    if (res != 0)                                                                               /* check result */
     {
         handle->debug_print("sx1268: get device errors failed.\n");                             /* get device errors failed */
        
@@ -3610,8 +3615,8 @@ uint8_t sx1268_get_device_errors(sx1268_handle_t *handle, uint16_t *op_error)
  */
 uint8_t sx1268_clear_device_errors(sx1268_handle_t *handle)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[2];
+    uint8_t res;
+    uint8_t buf[2];
     
     if (handle == NULL)                                                                             /* check handle */
     {
@@ -3622,8 +3627,8 @@ uint8_t sx1268_clear_device_errors(sx1268_handle_t *handle)
         return 3;                                                                                   /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                               /* check busy */
-    if (res)                                                                                        /* check result */
+    res = a_sx1268_check_busy(handle);                                                              /* check busy */
+    if (res != 0)                                                                                   /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                             /* chip is busy */
        
@@ -3632,8 +3637,8 @@ uint8_t sx1268_clear_device_errors(sx1268_handle_t *handle)
     
     buf[0] = 0x00;                                                                                  /* set status */
     buf[1] = 0x00;                                                                                  /* set status */
-    res = _sx1268_spi_write(handle, SX1268_COMMAND_CLEAR_DEVICE_ERRORS, (uint8_t *)buf, 2);         /* write command */
-    if (res)                                                                                        /* check result */
+    res = a_sx1268_spi_write(handle, SX1268_COMMAND_CLEAR_DEVICE_ERRORS, (uint8_t *)buf, 2);        /* write command */
+    if (res != 0)                                                                                   /* check result */
     {
         handle->debug_print("sx1268: clear device errors failed.\n");                               /* clear device errors failed */
        
@@ -3657,8 +3662,8 @@ uint8_t sx1268_clear_device_errors(sx1268_handle_t *handle)
  */
 uint8_t sx1268_set_fsk_whitening_initial_value(sx1268_handle_t *handle, uint16_t value)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[2];
+    uint8_t res;
+    uint8_t buf[2];
     
     if (handle == NULL)                                                                                      /* check handle */
     {
@@ -3669,8 +3674,8 @@ uint8_t sx1268_set_fsk_whitening_initial_value(sx1268_handle_t *handle, uint16_t
         return 3;                                                                                            /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                        /* check busy */
-    if (res)                                                                                                 /* check result */
+    res = a_sx1268_check_busy(handle);                                                                       /* check busy */
+    if (res != 0)                                                                                            /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                      /* chip is busy */
        
@@ -3679,8 +3684,8 @@ uint8_t sx1268_set_fsk_whitening_initial_value(sx1268_handle_t *handle, uint16_t
     
     buf[0] = (value >> 8) & 0xFF;                                                                            /* set msb */
     buf[1] = (value >> 0) & 0xFF;                                                                            /* set lsb */
-    res = _sx1268_spi_write_register(handle, SX1268_REG_WHITENING_INIT_VALUE_MSB, (uint8_t *)buf, 2);        /* write register */
-    if (res)                                                                                                 /* check result */
+    res = a_sx1268_spi_write_register(handle, SX1268_REG_WHITENING_INIT_VALUE_MSB, (uint8_t *)buf, 2);       /* write register */
+    if (res != 0)                                                                                            /* check result */
     {
         handle->debug_print("sx1268: write register failed.\n");                                             /* write register failed */
        
@@ -3704,8 +3709,8 @@ uint8_t sx1268_set_fsk_whitening_initial_value(sx1268_handle_t *handle, uint16_t
  */
 uint8_t sx1268_get_fsk_whitening_initial_value(sx1268_handle_t *handle, uint16_t *value)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[2];
+    uint8_t res;
+    uint8_t buf[2];
     
     if (handle == NULL)                                                                                      /* check handle */
     {
@@ -3716,16 +3721,16 @@ uint8_t sx1268_get_fsk_whitening_initial_value(sx1268_handle_t *handle, uint16_t
         return 3;                                                                                            /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                        /* check busy */
-    if (res)                                                                                                 /* check result */
+    res = a_sx1268_check_busy(handle);                                                                       /* check busy */
+    if (res != 0)                                                                                            /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                      /* chip is busy */
        
         return 4;                                                                                            /* return error */
     }
     
-    res = _sx1268_spi_read_register(handle, SX1268_REG_WHITENING_INIT_VALUE_MSB, (uint8_t *)buf, 2);         /* read register */
-    if (res)                                                                                                 /* check result */
+    res = a_sx1268_spi_read_register(handle, SX1268_REG_WHITENING_INIT_VALUE_MSB, (uint8_t *)buf, 2);        /* read register */
+    if (res != 0)                                                                                            /* check result */
     {
         handle->debug_print("sx1268: read register failed.\n");                                              /* read register failed */
        
@@ -3750,8 +3755,8 @@ uint8_t sx1268_get_fsk_whitening_initial_value(sx1268_handle_t *handle, uint16_t
  */
 uint8_t sx1268_set_fsk_crc_initical_value(sx1268_handle_t *handle, uint16_t value)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[2];
+    uint8_t res;
+    uint8_t buf[2];
     
     if (handle == NULL)                                                                                /* check handle */
     {
@@ -3762,8 +3767,8 @@ uint8_t sx1268_set_fsk_crc_initical_value(sx1268_handle_t *handle, uint16_t valu
         return 3;                                                                                      /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                  /* check busy */
-    if (res)                                                                                           /* check result */
+    res = a_sx1268_check_busy(handle);                                                                 /* check busy */
+    if (res != 0)                                                                                      /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                /* chip is busy */
        
@@ -3772,8 +3777,8 @@ uint8_t sx1268_set_fsk_crc_initical_value(sx1268_handle_t *handle, uint16_t valu
     
     buf[0] = (value >> 8) & 0xFF;                                                                      /* set msb */
     buf[1] = (value >> 0) & 0xFF;                                                                      /* set lsb */
-    res = _sx1268_spi_write_register(handle, SX1268_REG_CRC_INIT_VALUE_MSB, (uint8_t *)buf, 2);        /* write register */
-    if (res)                                                                                           /* check result */
+    res = a_sx1268_spi_write_register(handle, SX1268_REG_CRC_INIT_VALUE_MSB, (uint8_t *)buf, 2);       /* write register */
+    if (res != 0)                                                                                      /* check result */
     {
         handle->debug_print("sx1268: write register failed.\n");                                       /* write register failed */
        
@@ -3797,8 +3802,8 @@ uint8_t sx1268_set_fsk_crc_initical_value(sx1268_handle_t *handle, uint16_t valu
  */
 uint8_t sx1268_get_fsk_crc_initical_value(sx1268_handle_t *handle, uint16_t *value)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[2];
+    uint8_t res;
+    uint8_t buf[2];
     
     if (handle == NULL)                                                                                /* check handle */
     {
@@ -3809,16 +3814,16 @@ uint8_t sx1268_get_fsk_crc_initical_value(sx1268_handle_t *handle, uint16_t *val
         return 3;                                                                                      /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                  /* check busy */
-    if (res)                                                                                           /* check result */
+    res = a_sx1268_check_busy(handle);                                                                 /* check busy */
+    if (res != 0)                                                                                      /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                /* chip is busy */
        
         return 4;                                                                                      /* return error */
     }
     
-    res = _sx1268_spi_read_register(handle, SX1268_REG_CRC_INIT_VALUE_MSB, (uint8_t *)buf, 2);         /* read register */
-    if (res)                                                                                           /* check result */
+    res = a_sx1268_spi_read_register(handle, SX1268_REG_CRC_INIT_VALUE_MSB, (uint8_t *)buf, 2);        /* read register */
+    if (res != 0)                                                                                      /* check result */
     {
         handle->debug_print("sx1268: read register failed.\n");                                        /* read register failed */
        
@@ -3843,8 +3848,8 @@ uint8_t sx1268_get_fsk_crc_initical_value(sx1268_handle_t *handle, uint16_t *val
  */
 uint8_t sx1268_set_fsk_crc_polynomial_value(sx1268_handle_t *handle, uint16_t value)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[2];
+    uint8_t res;
+    uint8_t buf[2];
     
     if (handle == NULL)                                                                                      /* check handle */
     {
@@ -3855,8 +3860,8 @@ uint8_t sx1268_set_fsk_crc_polynomial_value(sx1268_handle_t *handle, uint16_t va
         return 3;                                                                                            /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                        /* check busy */
-    if (res)                                                                                                 /* check result */
+    res = a_sx1268_check_busy(handle);                                                                       /* check busy */
+    if (res != 0)                                                                                            /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                      /* chip is busy */
        
@@ -3865,8 +3870,8 @@ uint8_t sx1268_set_fsk_crc_polynomial_value(sx1268_handle_t *handle, uint16_t va
     
     buf[0] = (value >> 8) & 0xFF;                                                                            /* set msb */
     buf[1] = (value >> 0) & 0xFF;                                                                            /* set lsb */
-    res = _sx1268_spi_write_register(handle, SX1268_REG_CRC_POLYNOMIAL_VALUE_MSB, (uint8_t *)buf, 2);        /* write register */
-    if (res)                                                                                                 /* check result */
+    res = a_sx1268_spi_write_register(handle, SX1268_REG_CRC_POLYNOMIAL_VALUE_MSB, (uint8_t *)buf, 2);       /* write register */
+    if (res != 0)                                                                                            /* check result */
     {
         handle->debug_print("sx1268: write register failed.\n");                                             /* write register failed */
        
@@ -3890,8 +3895,8 @@ uint8_t sx1268_set_fsk_crc_polynomial_value(sx1268_handle_t *handle, uint16_t va
  */
 uint8_t sx1268_get_fsk_crc_polynomial_value(sx1268_handle_t *handle, uint16_t *value)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[2];
+    uint8_t res;
+    uint8_t buf[2];
     
     if (handle == NULL)                                                                                      /* check handle */
     {
@@ -3902,16 +3907,16 @@ uint8_t sx1268_get_fsk_crc_polynomial_value(sx1268_handle_t *handle, uint16_t *v
         return 3;                                                                                            /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                        /* check busy */
-    if (res)                                                                                                 /* check result */
+    res = a_sx1268_check_busy(handle);                                                                       /* check busy */
+    if (res != 0)                                                                                            /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                      /* chip is busy */
        
         return 4;                                                                                            /* return error */
     }
     
-    res = _sx1268_spi_read_register(handle, SX1268_REG_CRC_POLYNOMIAL_VALUE_MSB, (uint8_t *)buf, 2);         /* read register */
-    if (res)                                                                                                 /* check result */
+    res = a_sx1268_spi_read_register(handle, SX1268_REG_CRC_POLYNOMIAL_VALUE_MSB, (uint8_t *)buf, 2);        /* read register */
+    if (res != 0)                                                                                            /* check result */
     {
         handle->debug_print("sx1268: read register failed.\n");                                              /* read register failed */
        
@@ -3936,7 +3941,7 @@ uint8_t sx1268_get_fsk_crc_polynomial_value(sx1268_handle_t *handle, uint16_t *v
  */
 uint8_t sx1268_set_fsk_sync_word(sx1268_handle_t *handle, uint8_t sync_word[8])
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                               /* check handle */
     {
@@ -3947,16 +3952,16 @@ uint8_t sx1268_set_fsk_sync_word(sx1268_handle_t *handle, uint8_t sync_word[8])
         return 3;                                                                                     /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                 /* check busy */
-    if (res)                                                                                          /* check result */
+    res = a_sx1268_check_busy(handle);                                                                /* check busy */
+    if (res != 0)                                                                                     /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                               /* chip is busy */
        
         return 4;                                                                                     /* return error */
     }
     
-    res = _sx1268_spi_write_register(handle, SX1268_REG_SYNC_WORD_0, (uint8_t *)sync_word, 8);        /* write register */
-    if (res)                                                                                          /* check result */
+    res = a_sx1268_spi_write_register(handle, SX1268_REG_SYNC_WORD_0, (uint8_t *)sync_word, 8);       /* write register */
+    if (res != 0)                                                                                     /* check result */
     {
         handle->debug_print("sx1268: write register failed.\n");                                      /* write register failed */
        
@@ -3980,7 +3985,7 @@ uint8_t sx1268_set_fsk_sync_word(sx1268_handle_t *handle, uint8_t sync_word[8])
  */
 uint8_t sx1268_get_fsk_sync_word(sx1268_handle_t *handle, uint8_t sync_word[8])
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                              /* check handle */
     {
@@ -3991,16 +3996,16 @@ uint8_t sx1268_get_fsk_sync_word(sx1268_handle_t *handle, uint8_t sync_word[8])
         return 3;                                                                                    /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                /* check busy */
-    if (res)                                                                                         /* check result */
+    res = a_sx1268_check_busy(handle);                                                               /* check busy */
+    if (res != 0)                                                                                    /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                              /* chip is busy */
        
         return 4;                                                                                    /* return error */
     }
     
-    res = _sx1268_spi_read_register(handle, SX1268_REG_SYNC_WORD_0, (uint8_t *)sync_word, 8);        /* read register */
-    if (res)                                                                                         /* check result */
+    res = a_sx1268_spi_read_register(handle, SX1268_REG_SYNC_WORD_0, (uint8_t *)sync_word, 8);       /* read register */
+    if (res != 0)                                                                                    /* check result */
     {
         handle->debug_print("sx1268: read register failed.\n");                                      /* read register failed */
        
@@ -4024,7 +4029,7 @@ uint8_t sx1268_get_fsk_sync_word(sx1268_handle_t *handle, uint8_t sync_word[8])
  */
 uint8_t sx1268_set_fsk_node_address(sx1268_handle_t *handle, uint8_t addr)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                            /* check handle */
     {
@@ -4035,16 +4040,16 @@ uint8_t sx1268_set_fsk_node_address(sx1268_handle_t *handle, uint8_t addr)
         return 3;                                                                                  /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                              /* check busy */
-    if (res)                                                                                       /* check result */
+    res = a_sx1268_check_busy(handle);                                                             /* check busy */
+    if (res != 0)                                                                                  /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                            /* chip is busy */
        
         return 4;                                                                                  /* return error */
     }
     
-    res = _sx1268_spi_write_register(handle, SX1268_REG_NODE_ADDRESS, (uint8_t *)&addr, 1);        /* write register */
-    if (res)                                                                                       /* check result */
+    res = a_sx1268_spi_write_register(handle, SX1268_REG_NODE_ADDRESS, (uint8_t *)&addr, 1);       /* write register */
+    if (res != 0)                                                                                  /* check result */
     {
         handle->debug_print("sx1268: write register failed.\n");                                   /* write register failed */
        
@@ -4068,7 +4073,7 @@ uint8_t sx1268_set_fsk_node_address(sx1268_handle_t *handle, uint8_t addr)
  */
 uint8_t sx1268_get_fsk_node_address(sx1268_handle_t *handle, uint8_t *addr)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                          /* check handle */
     {
@@ -4079,16 +4084,16 @@ uint8_t sx1268_get_fsk_node_address(sx1268_handle_t *handle, uint8_t *addr)
         return 3;                                                                                /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                            /* check busy */
-    if (res)                                                                                     /* check result */
+    res = a_sx1268_check_busy(handle);                                                           /* check busy */
+    if (res != 0)                                                                                /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                          /* chip is busy */
        
         return 4;                                                                                /* return error */
     }
     
-    res = _sx1268_spi_read_register(handle, SX1268_REG_NODE_ADDRESS, (uint8_t *)addr, 1);        /* read register */
-    if (res)                                                                                     /* check result */
+    res = a_sx1268_spi_read_register(handle, SX1268_REG_NODE_ADDRESS, (uint8_t *)addr, 1);       /* read register */
+    if (res != 0)                                                                                /* check result */
     {
         handle->debug_print("sx1268: read register failed.\n");                                  /* read register failed */
        
@@ -4112,7 +4117,7 @@ uint8_t sx1268_get_fsk_node_address(sx1268_handle_t *handle, uint8_t *addr)
  */
 uint8_t sx1268_set_fsk_broadcast_address(sx1268_handle_t *handle, uint8_t addr)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                                 /* check handle */
     {
@@ -4123,16 +4128,16 @@ uint8_t sx1268_set_fsk_broadcast_address(sx1268_handle_t *handle, uint8_t addr)
         return 3;                                                                                       /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                   /* check busy */
-    if (res)                                                                                            /* check result */
+    res = a_sx1268_check_busy(handle);                                                                  /* check busy */
+    if (res != 0)                                                                                       /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                 /* chip is busy */
        
         return 4;                                                                                       /* return error */
     }
     
-    res = _sx1268_spi_write_register(handle, SX1268_REG_BROADCAST_ADDRESS, (uint8_t *)&addr, 1);        /* write register */
-    if (res)                                                                                            /* check result */
+    res = a_sx1268_spi_write_register(handle, SX1268_REG_BROADCAST_ADDRESS, (uint8_t *)&addr, 1);       /* write register */
+    if (res != 0)                                                                                       /* check result */
     {
         handle->debug_print("sx1268: write register failed.\n");                                        /* write register failed */
        
@@ -4156,7 +4161,7 @@ uint8_t sx1268_set_fsk_broadcast_address(sx1268_handle_t *handle, uint8_t addr)
  */
 uint8_t sx1268_get_fsk_broadcast_address(sx1268_handle_t *handle, uint8_t *addr)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                               /* check handle */
     {
@@ -4167,16 +4172,16 @@ uint8_t sx1268_get_fsk_broadcast_address(sx1268_handle_t *handle, uint8_t *addr)
         return 3;                                                                                     /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                 /* check busy */
-    if (res)                                                                                          /* check result */
+    res = a_sx1268_check_busy(handle);                                                                /* check busy */
+    if (res != 0)                                                                                     /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                               /* chip is busy */
        
         return 4;                                                                                     /* return error */
     }
     
-    res = _sx1268_spi_read_register(handle, SX1268_REG_BROADCAST_ADDRESS, (uint8_t *)addr, 1);        /* read register */
-    if (res)                                                                                          /* check result */
+    res = a_sx1268_spi_read_register(handle, SX1268_REG_BROADCAST_ADDRESS, (uint8_t *)addr, 1);       /* read register */
+    if (res != 0)                                                                                     /* check result */
     {
         handle->debug_print("sx1268: read register failed.\n");                                       /* read register failed */
        
@@ -4200,7 +4205,7 @@ uint8_t sx1268_get_fsk_broadcast_address(sx1268_handle_t *handle, uint8_t *addr)
  */
 uint8_t sx1268_set_iq_polarity(sx1268_handle_t *handle, uint8_t setup)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                                  /* check handle */
     {
@@ -4211,16 +4216,16 @@ uint8_t sx1268_set_iq_polarity(sx1268_handle_t *handle, uint8_t setup)
         return 3;                                                                                        /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                    /* check busy */
-    if (res)                                                                                             /* check result */
+    res = a_sx1268_check_busy(handle);                                                                   /* check busy */
+    if (res != 0)                                                                                        /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                  /* chip is busy */
        
         return 4;                                                                                        /* return error */
     }
     
-    res = _sx1268_spi_write_register(handle, SX1268_REG_IQ_POLARITY_SETUP, (uint8_t *)&setup, 1);        /* write register */
-    if (res)                                                                                             /* check result */
+    res = a_sx1268_spi_write_register(handle, SX1268_REG_IQ_POLARITY_SETUP, (uint8_t *)&setup, 1);       /* write register */
+    if (res != 0)                                                                                        /* check result */
     {
         handle->debug_print("sx1268: write register failed.\n");                                         /* write register failed */
        
@@ -4244,7 +4249,7 @@ uint8_t sx1268_set_iq_polarity(sx1268_handle_t *handle, uint8_t setup)
  */
 uint8_t sx1268_get_iq_polarity(sx1268_handle_t *handle, uint8_t *setup)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                                /* check handle */
     {
@@ -4255,16 +4260,16 @@ uint8_t sx1268_get_iq_polarity(sx1268_handle_t *handle, uint8_t *setup)
         return 3;                                                                                      /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                  /* check busy */
-    if (res)                                                                                           /* check result */
+    res = a_sx1268_check_busy(handle);                                                                 /* check busy */
+    if (res != 0)                                                                                      /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                /* chip is busy */
        
         return 4;                                                                                      /* return error */
     }
     
-    res = _sx1268_spi_read_register(handle, SX1268_REG_IQ_POLARITY_SETUP, (uint8_t *)setup, 1);        /* read register */
-    if (res)                                                                                           /* check result */
+    res = a_sx1268_spi_read_register(handle, SX1268_REG_IQ_POLARITY_SETUP, (uint8_t *)setup, 1);       /* read register */
+    if (res != 0)                                                                                      /* check result */
     {
         handle->debug_print("sx1268: read register failed.\n");                                        /* read register failed */
        
@@ -4288,8 +4293,8 @@ uint8_t sx1268_get_iq_polarity(sx1268_handle_t *handle, uint8_t *setup)
  */
 uint8_t sx1268_set_lora_sync_word(sx1268_handle_t *handle, uint16_t sync_word)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[2];
+    uint8_t res;
+    uint8_t buf[2];
     
     if (handle == NULL)                                                                                /* check handle */
     {
@@ -4300,8 +4305,8 @@ uint8_t sx1268_set_lora_sync_word(sx1268_handle_t *handle, uint16_t sync_word)
         return 3;                                                                                      /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                  /* check busy */
-    if (res)                                                                                           /* check result */
+    res = a_sx1268_check_busy(handle);                                                                 /* check busy */
+    if (res != 0)                                                                                      /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                /* chip is busy */
        
@@ -4310,8 +4315,8 @@ uint8_t sx1268_set_lora_sync_word(sx1268_handle_t *handle, uint16_t sync_word)
     
     buf[0] = (sync_word >> 8) & 0xFF;                                                                  /* set msb */
     buf[1] = (sync_word >> 0) & 0xFF;                                                                  /* set lsb */
-    res = _sx1268_spi_write_register(handle, SX1268_REG_LORA_SYNC_WORD_MSB, (uint8_t *)buf, 2);        /* write register */
-    if (res)                                                                                           /* check result */
+    res = a_sx1268_spi_write_register(handle, SX1268_REG_LORA_SYNC_WORD_MSB, (uint8_t *)buf, 2);       /* write register */
+    if (res != 0)                                                                                      /* check result */
     {
         handle->debug_print("sx1268: write register failed.\n");                                       /* write register failed */
        
@@ -4335,8 +4340,8 @@ uint8_t sx1268_set_lora_sync_word(sx1268_handle_t *handle, uint16_t sync_word)
  */
 uint8_t sx1268_get_lora_sync_word(sx1268_handle_t *handle, uint16_t *sync_word)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[2];
+    uint8_t res;
+    uint8_t buf[2];
     
     if (handle == NULL)                                                                               /* check handle */
     {
@@ -4347,16 +4352,16 @@ uint8_t sx1268_get_lora_sync_word(sx1268_handle_t *handle, uint16_t *sync_word)
         return 3;                                                                                     /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                 /* check busy */
-    if (res)                                                                                          /* check result */
+    res = a_sx1268_check_busy(handle);                                                                /* check busy */
+    if (res != 0)                                                                                     /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                               /* chip is busy */
        
         return 4;                                                                                     /* return error */
     }
     
-    res = _sx1268_spi_read_register(handle, SX1268_REG_LORA_SYNC_WORD_MSB, (uint8_t *)buf, 2);        /* read register */
-    if (res)                                                                                          /* check result */
+    res = a_sx1268_spi_read_register(handle, SX1268_REG_LORA_SYNC_WORD_MSB, (uint8_t *)buf, 2);       /* read register */
+    if (res != 0)                                                                                     /* check result */
     {
         handle->debug_print("sx1268: read register failed.\n");                                       /* read register failed */
        
@@ -4370,7 +4375,7 @@ uint8_t sx1268_get_lora_sync_word(sx1268_handle_t *handle, uint16_t *sync_word)
 /**
  * @brief      get the random number
  * @param[in]  *handle points to a sx1268 handle structure
- * @param[out] *rand points to a random number buffer
+ * @param[out] *r points to a random number buffer
  * @return     status code
  *             - 0 success
  *             - 1 get random number failed
@@ -4379,10 +4384,10 @@ uint8_t sx1268_get_lora_sync_word(sx1268_handle_t *handle, uint16_t *sync_word)
  *             - 4 chip is busy
  * @note       none
  */
-uint8_t sx1268_get_random_number(sx1268_handle_t *handle, uint32_t *rand)
+uint8_t sx1268_get_random_number(sx1268_handle_t *handle, uint32_t *r)
 {
-    volatile uint8_t res;
-    volatile uint8_t buf[4];
+    uint8_t res;
+    uint8_t buf[4];
     
     if (handle == NULL)                                                                                /* check handle */
     {
@@ -4393,23 +4398,23 @@ uint8_t sx1268_get_random_number(sx1268_handle_t *handle, uint32_t *rand)
         return 3;                                                                                      /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                  /* check busy */
-    if (res)                                                                                           /* check result */
+    res = a_sx1268_check_busy(handle);                                                                 /* check busy */
+    if (res != 0)                                                                                      /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                /* chip is busy */
        
         return 4;                                                                                      /* return error */
     }
     
-    res = _sx1268_spi_read_register(handle, SX1268_REG_RANDOM_NUMBER_GEN_0, (uint8_t *)buf, 4);        /* read register */
-    if (res)                                                                                           /* check result */
+    res = a_sx1268_spi_read_register(handle, SX1268_REG_RANDOM_NUMBER_GEN_0, (uint8_t *)buf, 4);       /* read register */
+    if (res != 0)                                                                                      /* check result */
     {
         handle->debug_print("sx1268: read register failed.\n");                                        /* read register failed */
        
         return 1;                                                                                      /* return error */
     }
-    *rand = (uint32_t)((uint32_t)buf[0] << 24 | (uint32_t)buf[1] << 16 | 
-                       (uint32_t)buf[2] << 8 | buf[3]);                                                /* set rand */
+    *r = (uint32_t)((uint32_t)buf[0] << 24 | (uint32_t)buf[1] << 16 | 
+                    (uint32_t)buf[2] << 8 | buf[3]);                                                   /* set rand */
     
     return 0;                                                                                          /* success return 0 */
 }
@@ -4428,7 +4433,7 @@ uint8_t sx1268_get_random_number(sx1268_handle_t *handle, uint32_t *rand)
  */
 uint8_t sx1268_set_tx_modulation(sx1268_handle_t *handle, uint8_t modulation)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                                   /* check handle */
     {
@@ -4439,16 +4444,16 @@ uint8_t sx1268_set_tx_modulation(sx1268_handle_t *handle, uint8_t modulation)
         return 3;                                                                                         /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                     /* check busy */
-    if (res)                                                                                              /* check result */
+    res = a_sx1268_check_busy(handle);                                                                    /* check busy */
+    if (res != 0)                                                                                         /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                   /* chip is busy */
        
         return 4;                                                                                         /* return error */
     }
     
-    res = _sx1268_spi_write_register(handle, SX1268_REG_TX_MODULATION, (uint8_t *)&modulation, 1);        /* write register */
-    if (res)                                                                                              /* check result */
+    res = a_sx1268_spi_write_register(handle, SX1268_REG_TX_MODULATION, (uint8_t *)&modulation, 1);       /* write register */
+    if (res != 0)                                                                                         /* check result */
     {
         handle->debug_print("sx1268: write register failed.\n");                                          /* write register failed */
        
@@ -4472,7 +4477,7 @@ uint8_t sx1268_set_tx_modulation(sx1268_handle_t *handle, uint8_t modulation)
  */
 uint8_t sx1268_get_tx_modulation(sx1268_handle_t *handle, uint8_t *modulation)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                                 /* check handle */
     {
@@ -4483,16 +4488,16 @@ uint8_t sx1268_get_tx_modulation(sx1268_handle_t *handle, uint8_t *modulation)
         return 3;                                                                                       /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                   /* check busy */
-    if (res)                                                                                            /* check result */
+    res = a_sx1268_check_busy(handle);                                                                  /* check busy */
+    if (res != 0)                                                                                       /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                 /* chip is busy */
        
         return 4;                                                                                       /* return error */
     }
     
-    res = _sx1268_spi_read_register(handle, SX1268_REG_TX_MODULATION, (uint8_t *)modulation, 1);        /* read register */
-    if (res)                                                                                            /* check result */
+    res = a_sx1268_spi_read_register(handle, SX1268_REG_TX_MODULATION, (uint8_t *)modulation, 1);       /* read register */
+    if (res != 0)                                                                                       /* check result */
     {
         handle->debug_print("sx1268: read register failed.\n");                                         /* read register failed */
        
@@ -4516,7 +4521,7 @@ uint8_t sx1268_get_tx_modulation(sx1268_handle_t *handle, uint8_t *modulation)
  */
 uint8_t sx1268_set_rx_gain(sx1268_handle_t *handle, uint8_t gain)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                       /* check handle */
     {
@@ -4527,16 +4532,16 @@ uint8_t sx1268_set_rx_gain(sx1268_handle_t *handle, uint8_t gain)
         return 3;                                                                             /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                         /* check busy */
-    if (res)                                                                                  /* check result */
+    res = a_sx1268_check_busy(handle);                                                        /* check busy */
+    if (res != 0)                                                                             /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                       /* chip is busy */
        
         return 4;                                                                             /* return error */
     }
     
-    res = _sx1268_spi_write_register(handle, SX1268_REG_RX_GAIN, (uint8_t *)&gain, 1);        /* write register */
-    if (res)                                                                                  /* check result */
+    res = a_sx1268_spi_write_register(handle, SX1268_REG_RX_GAIN, (uint8_t *)&gain, 1);       /* write register */
+    if (res != 0)                                                                             /* check result */
     {
         handle->debug_print("sx1268: write register failed.\n");                              /* write register failed */
        
@@ -4560,7 +4565,7 @@ uint8_t sx1268_set_rx_gain(sx1268_handle_t *handle, uint8_t gain)
  */
 uint8_t sx1268_get_rx_gain(sx1268_handle_t *handle, uint8_t *gain)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                     /* check handle */
     {
@@ -4571,16 +4576,16 @@ uint8_t sx1268_get_rx_gain(sx1268_handle_t *handle, uint8_t *gain)
         return 3;                                                                           /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                       /* check busy */
-    if (res)                                                                                /* check result */
+    res = a_sx1268_check_busy(handle);                                                      /* check busy */
+    if (res != 0)                                                                           /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                     /* chip is busy */
        
         return 4;                                                                           /* return error */
     }
     
-    res = _sx1268_spi_read_register(handle, SX1268_REG_RX_GAIN, (uint8_t *)gain, 1);        /* read register */
-    if (res)                                                                                /* check result */
+    res = a_sx1268_spi_read_register(handle, SX1268_REG_RX_GAIN, (uint8_t *)gain, 1);       /* read register */
+    if (res != 0)                                                                           /* check result */
     {
         handle->debug_print("sx1268: read register failed.\n");                             /* read register failed */
        
@@ -4604,7 +4609,7 @@ uint8_t sx1268_get_rx_gain(sx1268_handle_t *handle, uint8_t *gain)
  */
 uint8_t sx1268_set_tx_clamp_config(sx1268_handle_t *handle, uint8_t config)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                                 /* check handle */
     {
@@ -4615,16 +4620,16 @@ uint8_t sx1268_set_tx_clamp_config(sx1268_handle_t *handle, uint8_t config)
         return 3;                                                                                       /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                   /* check busy */
-    if (res)                                                                                            /* check result */
+    res = a_sx1268_check_busy(handle);                                                                  /* check busy */
+    if (res != 0)                                                                                       /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                 /* chip is busy */
        
         return 4;                                                                                       /* return error */
     }
     
-    res = _sx1268_spi_write_register(handle, SX1268_REG_TX_CLAMP_CONFIG, (uint8_t *)&config, 1);        /* write register */
-    if (res)                                                                                            /* check result */
+    res = a_sx1268_spi_write_register(handle, SX1268_REG_TX_CLAMP_CONFIG, (uint8_t *)&config, 1);       /* write register */
+    if (res != 0)                                                                                       /* check result */
     {
         handle->debug_print("sx1268: write register failed.\n");                                        /* write register failed */
        
@@ -4648,7 +4653,7 @@ uint8_t sx1268_set_tx_clamp_config(sx1268_handle_t *handle, uint8_t config)
  */
 uint8_t sx1268_get_tx_clamp_config(sx1268_handle_t *handle, uint8_t *config)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                               /* check handle */
     {
@@ -4659,16 +4664,16 @@ uint8_t sx1268_get_tx_clamp_config(sx1268_handle_t *handle, uint8_t *config)
         return 3;                                                                                     /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                 /* check busy */
-    if (res)                                                                                          /* check result */
+    res = a_sx1268_check_busy(handle);                                                                /* check busy */
+    if (res != 0)                                                                                     /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                               /* chip is busy */
        
         return 4;                                                                                     /* return error */
     }
     
-    res = _sx1268_spi_read_register(handle, SX1268_REG_TX_CLAMP_CONFIG, (uint8_t *)config, 1);        /* read register */
-    if (res)                                                                                          /* check result */
+    res = a_sx1268_spi_read_register(handle, SX1268_REG_TX_CLAMP_CONFIG, (uint8_t *)config, 1);       /* read register */
+    if (res != 0)                                                                                     /* check result */
     {
         handle->debug_print("sx1268: read register failed.\n");                                       /* read register failed */
        
@@ -4692,7 +4697,7 @@ uint8_t sx1268_get_tx_clamp_config(sx1268_handle_t *handle, uint8_t *config)
  */
 uint8_t sx1268_set_ocp(sx1268_handle_t *handle, uint8_t ocp)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                                /* check handle */
     {
@@ -4703,16 +4708,16 @@ uint8_t sx1268_set_ocp(sx1268_handle_t *handle, uint8_t ocp)
         return 3;                                                                                      /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                  /* check busy */
-    if (res)                                                                                           /* check result */
+    res = a_sx1268_check_busy(handle);                                                                 /* check busy */
+    if (res != 0)                                                                                      /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                /* chip is busy */
        
         return 4;                                                                                      /* return error */
     }
     
-    res = _sx1268_spi_write_register(handle, SX1268_REG_OCP_CONFIGURATION, (uint8_t *)&ocp, 1);        /* write register */
-    if (res)                                                                                           /* check result */
+    res = a_sx1268_spi_write_register(handle, SX1268_REG_OCP_CONFIGURATION, (uint8_t *)&ocp, 1);       /* write register */
+    if (res != 0)                                                                                      /* check result */
     {
         handle->debug_print("sx1268: write register failed.\n");                                       /* write register failed */
        
@@ -4736,7 +4741,7 @@ uint8_t sx1268_set_ocp(sx1268_handle_t *handle, uint8_t ocp)
  */
 uint8_t sx1268_get_ocp(sx1268_handle_t *handle, uint8_t *ocp)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                              /* check handle */
     {
@@ -4747,16 +4752,16 @@ uint8_t sx1268_get_ocp(sx1268_handle_t *handle, uint8_t *ocp)
         return 3;                                                                                    /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                /* check busy */
-    if (res)                                                                                         /* check result */
+    res = a_sx1268_check_busy(handle);                                                               /* check busy */
+    if (res != 0)                                                                                    /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                              /* chip is busy */
        
         return 4;                                                                                    /* return error */
     }
     
-    res = _sx1268_spi_read_register(handle, SX1268_REG_OCP_CONFIGURATION, (uint8_t *)ocp, 1);        /* read register */
-    if (res)                                                                                         /* check result */
+    res = a_sx1268_spi_read_register(handle, SX1268_REG_OCP_CONFIGURATION, (uint8_t *)ocp, 1);       /* read register */
+    if (res != 0)                                                                                    /* check result */
     {
         handle->debug_print("sx1268: read register failed.\n");                                      /* read register failed */
        
@@ -4780,7 +4785,7 @@ uint8_t sx1268_get_ocp(sx1268_handle_t *handle, uint8_t *ocp)
  */
 uint8_t sx1268_set_rtc_control(sx1268_handle_t *handle, uint8_t control)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                              /* check handle */
     {
@@ -4791,16 +4796,16 @@ uint8_t sx1268_set_rtc_control(sx1268_handle_t *handle, uint8_t control)
         return 3;                                                                                    /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                /* check busy */
-    if (res)                                                                                         /* check result */
+    res = a_sx1268_check_busy(handle);                                                               /* check busy */
+    if (res != 0)                                                                                    /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                              /* chip is busy */
        
         return 4;                                                                                    /* return error */
     }
     
-    res = _sx1268_spi_write_register(handle, SX1268_REG_RTC_CONTROL, (uint8_t *)&control, 1);        /* write register */
-    if (res)                                                                                         /* check result */
+    res = a_sx1268_spi_write_register(handle, SX1268_REG_RTC_CONTROL, (uint8_t *)&control, 1);       /* write register */
+    if (res != 0)                                                                                    /* check result */
     {
         handle->debug_print("sx1268: write register failed.\n");                                     /* write register failed */
        
@@ -4824,7 +4829,7 @@ uint8_t sx1268_set_rtc_control(sx1268_handle_t *handle, uint8_t control)
  */
 uint8_t sx1268_get_rtc_control(sx1268_handle_t *handle, uint8_t *control)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                            /* check handle */
     {
@@ -4835,16 +4840,16 @@ uint8_t sx1268_get_rtc_control(sx1268_handle_t *handle, uint8_t *control)
         return 3;                                                                                  /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                              /* check busy */
-    if (res)                                                                                       /* check result */
+    res = a_sx1268_check_busy(handle);                                                             /* check busy */
+    if (res != 0)                                                                                  /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                            /* chip is busy */
        
         return 4;                                                                                  /* return error */
     }
     
-    res = _sx1268_spi_read_register(handle, SX1268_REG_RTC_CONTROL, (uint8_t *)control, 1);        /* read register */
-    if (res)                                                                                       /* check result */
+    res = a_sx1268_spi_read_register(handle, SX1268_REG_RTC_CONTROL, (uint8_t *)control, 1);       /* read register */
+    if (res != 0)                                                                                  /* check result */
     {
         handle->debug_print("sx1268: read register failed.\n");                                    /* read register failed */
        
@@ -4868,7 +4873,7 @@ uint8_t sx1268_get_rtc_control(sx1268_handle_t *handle, uint8_t *control)
  */
 uint8_t sx1268_set_xta_trim(sx1268_handle_t *handle, uint8_t trim)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                        /* check handle */
     {
@@ -4879,16 +4884,16 @@ uint8_t sx1268_set_xta_trim(sx1268_handle_t *handle, uint8_t trim)
         return 3;                                                                              /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                          /* check busy */
-    if (res)                                                                                   /* check result */
+    res = a_sx1268_check_busy(handle);                                                         /* check busy */
+    if (res != 0)                                                                              /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                        /* chip is busy */
        
         return 4;                                                                              /* return error */
     }
     
-    res = _sx1268_spi_write_register(handle, SX1268_REG_XTA_TRIM, (uint8_t *)&trim, 1);        /* write register */
-    if (res)                                                                                   /* check result */
+    res = a_sx1268_spi_write_register(handle, SX1268_REG_XTA_TRIM, (uint8_t *)&trim, 1);       /* write register */
+    if (res != 0)                                                                              /* check result */
     {
         handle->debug_print("sx1268: write register failed.\n");                               /* write register failed */
        
@@ -4912,7 +4917,7 @@ uint8_t sx1268_set_xta_trim(sx1268_handle_t *handle, uint8_t trim)
  */
 uint8_t sx1268_get_xta_trim(sx1268_handle_t *handle, uint8_t *trim)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                      /* check handle */
     {
@@ -4923,16 +4928,16 @@ uint8_t sx1268_get_xta_trim(sx1268_handle_t *handle, uint8_t *trim)
         return 3;                                                                            /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                        /* check busy */
-    if (res)                                                                                 /* check result */
+    res = a_sx1268_check_busy(handle);                                                       /* check busy */
+    if (res != 0)                                                                            /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                      /* chip is busy */
        
         return 4;                                                                            /* return error */
     }
     
-    res = _sx1268_spi_read_register(handle, SX1268_REG_XTA_TRIM, (uint8_t *)trim, 1);        /* read register */
-    if (res)                                                                                 /* check result */
+    res = a_sx1268_spi_read_register(handle, SX1268_REG_XTA_TRIM, (uint8_t *)trim, 1);       /* read register */
+    if (res != 0)                                                                            /* check result */
     {
         handle->debug_print("sx1268: read register failed.\n");                              /* read register failed */
        
@@ -4956,7 +4961,7 @@ uint8_t sx1268_get_xta_trim(sx1268_handle_t *handle, uint8_t *trim)
  */
 uint8_t sx1268_set_xtb_trim(sx1268_handle_t *handle, uint8_t trim)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                        /* check handle */
     {
@@ -4967,16 +4972,16 @@ uint8_t sx1268_set_xtb_trim(sx1268_handle_t *handle, uint8_t trim)
         return 3;                                                                              /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                          /* check busy */
-    if (res)                                                                                   /* check result */
+    res = a_sx1268_check_busy(handle);                                                         /* check busy */
+    if (res != 0)                                                                              /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                        /* chip is busy */
        
         return 4;                                                                              /* return error */
     }
     
-    res = _sx1268_spi_write_register(handle, SX1268_REG_XTB_TRIM, (uint8_t *)&trim, 1);        /* write register */
-    if (res)                                                                                   /* check result */
+    res = a_sx1268_spi_write_register(handle, SX1268_REG_XTB_TRIM, (uint8_t *)&trim, 1);       /* write register */
+    if (res != 0)                                                                              /* check result */
     {
         handle->debug_print("sx1268: write register failed.\n");                               /* write register failed */
        
@@ -5000,7 +5005,7 @@ uint8_t sx1268_set_xtb_trim(sx1268_handle_t *handle, uint8_t trim)
  */
 uint8_t sx1268_get_xtb_trim(sx1268_handle_t *handle, uint8_t *trim)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                      /* check handle */
     {
@@ -5011,16 +5016,16 @@ uint8_t sx1268_get_xtb_trim(sx1268_handle_t *handle, uint8_t *trim)
         return 3;                                                                            /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                        /* check busy */
-    if (res)                                                                                 /* check result */
+    res = a_sx1268_check_busy(handle);                                                       /* check busy */
+    if (res != 0)                                                                            /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                      /* chip is busy */
        
         return 4;                                                                            /* return error */
     }
     
-    res = _sx1268_spi_read_register(handle, SX1268_REG_XTB_TRIM, (uint8_t *)trim, 1);        /* read register */
-    if (res)                                                                                 /* check result */
+    res = a_sx1268_spi_read_register(handle, SX1268_REG_XTB_TRIM, (uint8_t *)trim, 1);       /* read register */
+    if (res != 0)                                                                            /* check result */
     {
         handle->debug_print("sx1268: read register failed.\n");                              /* read register failed */
        
@@ -5044,7 +5049,7 @@ uint8_t sx1268_get_xtb_trim(sx1268_handle_t *handle, uint8_t *trim)
  */
 uint8_t sx1268_set_dio3_output_control(sx1268_handle_t *handle, uint8_t control)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                                      /* check handle */
     {
@@ -5055,16 +5060,16 @@ uint8_t sx1268_set_dio3_output_control(sx1268_handle_t *handle, uint8_t control)
         return 3;                                                                                            /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                        /* check busy */
-    if (res)                                                                                                 /* check result */
+    res = a_sx1268_check_busy(handle);                                                                       /* check busy */
+    if (res != 0)                                                                                            /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                      /* chip is busy */
        
         return 4;                                                                                            /* return error */
     }
     
-    res = _sx1268_spi_write_register(handle, SX1268_REG_DIO3_OUTPUT_CONTROL, (uint8_t *)&control, 1);        /* write register */
-    if (res)                                                                                                 /* check result */
+    res = a_sx1268_spi_write_register(handle, SX1268_REG_DIO3_OUTPUT_CONTROL, (uint8_t *)&control, 1);       /* write register */
+    if (res != 0)                                                                                            /* check result */
     {
         handle->debug_print("sx1268: write register failed.\n");                                             /* write register failed */
        
@@ -5088,7 +5093,7 @@ uint8_t sx1268_set_dio3_output_control(sx1268_handle_t *handle, uint8_t control)
  */
 uint8_t sx1268_get_dio3_output_control(sx1268_handle_t *handle, uint8_t *control)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                                    /* check handle */
     {
@@ -5099,16 +5104,16 @@ uint8_t sx1268_get_dio3_output_control(sx1268_handle_t *handle, uint8_t *control
         return 3;                                                                                          /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                      /* check busy */
-    if (res)                                                                                               /* check result */
+    res = a_sx1268_check_busy(handle);                                                                     /* check busy */
+    if (res != 0)                                                                                          /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                    /* chip is busy */
        
         return 4;                                                                                          /* return error */
     }
     
-    res = _sx1268_spi_read_register(handle, SX1268_REG_DIO3_OUTPUT_CONTROL, (uint8_t *)control, 1);        /* read register */
-    if (res)                                                                                               /* check result */
+    res = a_sx1268_spi_read_register(handle, SX1268_REG_DIO3_OUTPUT_CONTROL, (uint8_t *)control, 1);       /* read register */
+    if (res != 0)                                                                                          /* check result */
     {
         handle->debug_print("sx1268: read register failed.\n");                                            /* read register failed */
        
@@ -5132,7 +5137,7 @@ uint8_t sx1268_get_dio3_output_control(sx1268_handle_t *handle, uint8_t *control
  */
 uint8_t sx1268_set_event_mask(sx1268_handle_t *handle, uint8_t mask)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                          /* check handle */
     {
@@ -5143,16 +5148,16 @@ uint8_t sx1268_set_event_mask(sx1268_handle_t *handle, uint8_t mask)
         return 3;                                                                                /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                            /* check busy */
-    if (res)                                                                                     /* check result */
+    res = a_sx1268_check_busy(handle);                                                           /* check busy */
+    if (res != 0)                                                                                /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                          /* chip is busy */
        
         return 4;                                                                                /* return error */
     }
     
-    res = _sx1268_spi_write_register(handle, SX1268_REG_EVENT_MASK, (uint8_t *)&mask, 1);        /* write register */
-    if (res)                                                                                     /* check result */
+    res = a_sx1268_spi_write_register(handle, SX1268_REG_EVENT_MASK, (uint8_t *)&mask, 1);       /* write register */
+    if (res != 0)                                                                                /* check result */
     {
         handle->debug_print("sx1268: write register failed.\n");                                 /* write register failed */
        
@@ -5176,7 +5181,7 @@ uint8_t sx1268_set_event_mask(sx1268_handle_t *handle, uint8_t mask)
  */
 uint8_t sx1268_get_event_mask(sx1268_handle_t *handle, uint8_t *mask)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                        /* check handle */
     {
@@ -5187,16 +5192,16 @@ uint8_t sx1268_get_event_mask(sx1268_handle_t *handle, uint8_t *mask)
         return 3;                                                                              /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                          /* check busy */
-    if (res)                                                                                   /* check result */
+    res = a_sx1268_check_busy(handle);                                                         /* check busy */
+    if (res != 0)                                                                              /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                        /* chip is busy */
        
         return 4;                                                                              /* return error */
     }
     
-    res = _sx1268_spi_read_register(handle, SX1268_REG_EVENT_MASK, (uint8_t *)mask, 1);        /* read register */
-    if (res)                                                                                   /* check result */
+    res = a_sx1268_spi_read_register(handle, SX1268_REG_EVENT_MASK, (uint8_t *)mask, 1);       /* read register */
+    if (res != 0)                                                                              /* check result */
     {
         handle->debug_print("sx1268: read register failed.\n");                                /* read register failed */
        
@@ -5220,7 +5225,7 @@ uint8_t sx1268_get_event_mask(sx1268_handle_t *handle, uint8_t *mask)
  */
 uint8_t sx1268_set_dio_output_enable(sx1268_handle_t *handle, uint8_t enable)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                                    /* check handle */
     {
@@ -5231,16 +5236,16 @@ uint8_t sx1268_set_dio_output_enable(sx1268_handle_t *handle, uint8_t enable)
         return 3;                                                                                          /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                      /* check busy */
-    if (res)                                                                                               /* check result */
+    res = a_sx1268_check_busy(handle);                                                                     /* check busy */
+    if (res != 0)                                                                                          /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                    /* chip is busy */
        
         return 4;                                                                                          /* return error */
     }
     
-    res = _sx1268_spi_write_register(handle, SX1268_REG_DIOX_OUTPUT_ENABLE, (uint8_t *)&enable, 1);        /* write register */
-    if (res)                                                                                               /* check result */
+    res = a_sx1268_spi_write_register(handle, SX1268_REG_DIOX_OUTPUT_ENABLE, (uint8_t *)&enable, 1);       /* write register */
+    if (res != 0)                                                                                          /* check result */
     {
         handle->debug_print("sx1268: write register failed.\n");                                           /* write register failed */
        
@@ -5264,7 +5269,7 @@ uint8_t sx1268_set_dio_output_enable(sx1268_handle_t *handle, uint8_t enable)
  */
 uint8_t sx1268_get_dio_output_enable(sx1268_handle_t *handle, uint8_t *enable)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                                  /* check handle */
     {
@@ -5275,16 +5280,16 @@ uint8_t sx1268_get_dio_output_enable(sx1268_handle_t *handle, uint8_t *enable)
         return 3;                                                                                        /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                    /* check busy */
-    if (res)                                                                                             /* check result */
+    res = a_sx1268_check_busy(handle);                                                                   /* check busy */
+    if (res != 0)                                                                                        /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                  /* chip is busy */
        
         return 4;                                                                                        /* return error */
     }
     
-    res = _sx1268_spi_read_register(handle, SX1268_REG_DIOX_OUTPUT_ENABLE, (uint8_t *)enable, 1);        /* read register */
-    if (res)                                                                                             /* check result */
+    res = a_sx1268_spi_read_register(handle, SX1268_REG_DIOX_OUTPUT_ENABLE, (uint8_t *)enable, 1);       /* read register */
+    if (res != 0)                                                                                        /* check result */
     {
         handle->debug_print("sx1268: read register failed.\n");                                          /* read register failed */
        
@@ -5308,7 +5313,7 @@ uint8_t sx1268_get_dio_output_enable(sx1268_handle_t *handle, uint8_t *enable)
  */
 uint8_t sx1268_set_dio_input_enable(sx1268_handle_t *handle, uint8_t enable)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                                   /* check handle */
     {
@@ -5319,16 +5324,16 @@ uint8_t sx1268_set_dio_input_enable(sx1268_handle_t *handle, uint8_t enable)
         return 3;                                                                                         /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                     /* check busy */
-    if (res)                                                                                              /* check result */
+    res = a_sx1268_check_busy(handle);                                                                    /* check busy */
+    if (res != 0)                                                                                         /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                   /* chip is busy */
        
         return 4;                                                                                         /* return error */
     }
     
-    res = _sx1268_spi_write_register(handle, SX1268_REG_DIOX_INPUT_ENABLE, (uint8_t *)&enable, 1);        /* write register */
-    if (res)                                                                                              /* check result */
+    res = a_sx1268_spi_write_register(handle, SX1268_REG_DIOX_INPUT_ENABLE, (uint8_t *)&enable, 1);       /* write register */
+    if (res != 0)                                                                                         /* check result */
     {
         handle->debug_print("sx1268: write register failed.\n");                                          /* write register failed */
        
@@ -5352,7 +5357,7 @@ uint8_t sx1268_set_dio_input_enable(sx1268_handle_t *handle, uint8_t enable)
  */
 uint8_t sx1268_get_dio_input_enable(sx1268_handle_t *handle, uint8_t *enable)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                                 /* check handle */
     {
@@ -5363,16 +5368,16 @@ uint8_t sx1268_get_dio_input_enable(sx1268_handle_t *handle, uint8_t *enable)
         return 3;                                                                                       /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                   /* check busy */
-    if (res)                                                                                            /* check result */
+    res = a_sx1268_check_busy(handle);                                                                  /* check busy */
+    if (res != 0)                                                                                       /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                 /* chip is busy */
        
         return 4;                                                                                       /* return error */
     }
     
-    res = _sx1268_spi_read_register(handle, SX1268_REG_DIOX_INPUT_ENABLE, (uint8_t *)enable, 1);        /* read register */
-    if (res)                                                                                            /* check result */
+    res = a_sx1268_spi_read_register(handle, SX1268_REG_DIOX_INPUT_ENABLE, (uint8_t *)enable, 1);       /* read register */
+    if (res != 0)                                                                                       /* check result */
     {
         handle->debug_print("sx1268: read register failed.\n");                                         /* read register failed */
        
@@ -5396,7 +5401,7 @@ uint8_t sx1268_get_dio_input_enable(sx1268_handle_t *handle, uint8_t *enable)
  */
 uint8_t sx1268_set_pull_up_control(sx1268_handle_t *handle, uint8_t control)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                                       /* check handle */
     {
@@ -5407,16 +5412,16 @@ uint8_t sx1268_set_pull_up_control(sx1268_handle_t *handle, uint8_t control)
         return 3;                                                                                             /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                         /* check busy */
-    if (res)                                                                                                  /* check result */
+    res = a_sx1268_check_busy(handle);                                                                        /* check busy */
+    if (res != 0)                                                                                             /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                       /* chip is busy */
        
         return 4;                                                                                             /* return error */
     }
     
-    res = _sx1268_spi_write_register(handle, SX1268_REG_DIOX_PULL_UP_CONTROL, (uint8_t *)&control, 1);        /* write register */
-    if (res)                                                                                                  /* check result */
+    res = a_sx1268_spi_write_register(handle, SX1268_REG_DIOX_PULL_UP_CONTROL, (uint8_t *)&control, 1);       /* write register */
+    if (res != 0)                                                                                             /* check result */
     {
         handle->debug_print("sx1268: write register failed.\n");                                              /* write register failed */
        
@@ -5440,7 +5445,7 @@ uint8_t sx1268_set_pull_up_control(sx1268_handle_t *handle, uint8_t control)
  */
 uint8_t sx1268_get_pull_up_control(sx1268_handle_t *handle, uint8_t *control)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                                     /* check handle */
     {
@@ -5451,16 +5456,16 @@ uint8_t sx1268_get_pull_up_control(sx1268_handle_t *handle, uint8_t *control)
         return 3;                                                                                           /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                       /* check busy */
-    if (res)                                                                                                /* check result */
+    res = a_sx1268_check_busy(handle);                                                                      /* check busy */
+    if (res != 0)                                                                                           /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                     /* chip is busy */
        
         return 4;                                                                                           /* return error */
     }
     
-    res = _sx1268_spi_read_register(handle, SX1268_REG_DIOX_PULL_UP_CONTROL, (uint8_t *)control, 1);        /* read register */
-    if (res)                                                                                                /* check result */
+    res = a_sx1268_spi_read_register(handle, SX1268_REG_DIOX_PULL_UP_CONTROL, (uint8_t *)control, 1);       /* read register */
+    if (res != 0)                                                                                           /* check result */
     {
         handle->debug_print("sx1268: read register failed.\n");                                             /* read register failed */
        
@@ -5484,7 +5489,7 @@ uint8_t sx1268_get_pull_up_control(sx1268_handle_t *handle, uint8_t *control)
  */
 uint8_t sx1268_set_pull_down_control(sx1268_handle_t *handle, uint8_t control)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                                         /* check handle */
     {
@@ -5495,16 +5500,16 @@ uint8_t sx1268_set_pull_down_control(sx1268_handle_t *handle, uint8_t control)
         return 3;                                                                                               /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                           /* check busy */
-    if (res)                                                                                                    /* check result */
+    res = a_sx1268_check_busy(handle);                                                                          /* check busy */
+    if (res != 0)                                                                                               /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                         /* chip is busy */
        
         return 4;                                                                                               /* return error */
     }
     
-    res = _sx1268_spi_write_register(handle, SX1268_REG_DIOX_PULL_DOWN_CONTROL, (uint8_t *)&control, 1);        /* write register */
-    if (res)                                                                                                    /* check result */
+    res = a_sx1268_spi_write_register(handle, SX1268_REG_DIOX_PULL_DOWN_CONTROL, (uint8_t *)&control, 1);       /* write register */
+    if (res != 0)                                                                                               /* check result */
     {
         handle->debug_print("sx1268: write register failed.\n");                                                /* write register failed */
        
@@ -5528,7 +5533,7 @@ uint8_t sx1268_set_pull_down_control(sx1268_handle_t *handle, uint8_t control)
  */
 uint8_t sx1268_get_pull_down_control(sx1268_handle_t *handle, uint8_t *control)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     if (handle == NULL)                                                                                       /* check handle */
     {
@@ -5539,16 +5544,16 @@ uint8_t sx1268_get_pull_down_control(sx1268_handle_t *handle, uint8_t *control)
         return 3;                                                                                             /* return error */
     }
     
-    res = _sx1268_check_busy(handle);                                                                         /* check busy */
-    if (res)                                                                                                  /* check result */
+    res = a_sx1268_check_busy(handle);                                                                        /* check busy */
+    if (res != 0)                                                                                             /* check result */
     {
         handle->debug_print("sx1268: chip is busy.\n");                                                       /* chip is busy */
        
         return 4;                                                                                             /* return error */
     }
     
-    res = _sx1268_spi_read_register(handle, SX1268_REG_DIOX_PULL_DOWN_CONTROL, (uint8_t *)control, 1);        /* read register */
-    if (res)                                                                                                  /* check result */
+    res = a_sx1268_spi_read_register(handle, SX1268_REG_DIOX_PULL_DOWN_CONTROL, (uint8_t *)control, 1);       /* read register */
+    if (res != 0)                                                                                             /* check result */
     {
         handle->debug_print("sx1268: read register failed.\n");                                               /* read register failed */
        
@@ -5585,7 +5590,7 @@ uint8_t sx1268_write_read_reg(sx1268_handle_t *handle, uint8_t *in_buf, uint32_t
         return 3;                                                        /* return error */
     }
     
-    if (handle->spi_write_read(in_buf, in_len, out_buf, out_len))        /* spi read */
+    if (handle->spi_write_read(in_buf, in_len, out_buf, out_len) != 0)   /* spi read */
     {
         return 1;                                                        /* return error */
     }

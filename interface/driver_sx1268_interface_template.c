@@ -164,12 +164,11 @@ void sx1268_interface_delay_ms(uint32_t ms)
 /**
  * @brief     interface print format data
  * @param[in] fmt is the format data
- * @return    length of the send data
  * @note      none
  */
-uint16_t sx1268_interface_debug_print(char *fmt, ...)
+void sx1268_interface_debug_print(const char *const fmt, ...)
 {
-    return 0;
+
 }
 
 /**
@@ -177,12 +176,9 @@ uint16_t sx1268_interface_debug_print(char *fmt, ...)
  * @param[in] type is the receive callback type
  * @param[in] *buf points to a buffer address
  * @param[in] len is the buffer length
- * @return    status code
- *            - 0 success
- *            - 1 run failed
  * @note      none
  */
-uint8_t sx1268_interface_receive_callback(uint16_t type, uint8_t *buf, uint16_t len)
+void sx1268_interface_receive_callback(uint16_t type, uint8_t *buf, uint16_t len)
 {
     switch (type)
     {
@@ -190,65 +186,67 @@ uint8_t sx1268_interface_receive_callback(uint16_t type, uint8_t *buf, uint16_t 
         {
             sx1268_interface_debug_print("sx1268: irq tx done.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_RX_DONE :
         {
             sx1268_interface_debug_print("sx1268: irq rx done.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_PREAMBLE_DETECTED :
         {
             sx1268_interface_debug_print("sx1268: irq preamble detected.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_SYNC_WORD_VALID :
         {
             sx1268_interface_debug_print("sx1268: irq valid sync word detected.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_HEADER_VALID :
         {
             sx1268_interface_debug_print("sx1268: irq valid header.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_HEADER_ERR :
         {
             sx1268_interface_debug_print("sx1268: irq header error.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_CRC_ERR :
         {
             sx1268_interface_debug_print("sx1268: irq crc error.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_CAD_DONE :
         {
             sx1268_interface_debug_print("sx1268: irq cad done.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_CAD_DETECTED :
         {
             sx1268_interface_debug_print("sx1268: irq cad detected.\n");
             
-            return 0;
+            break;
         }
         case SX1268_IRQ_TIMEOUT :
         {
             sx1268_interface_debug_print("sx1268: irq timeout.\n");
             
-            return 0;
+            break;
         }
         default :
         {
-            return 1;
+            sx1268_interface_debug_print("sx1268: unknown code.\n");
+            
+            break;
         }
     }
 }
