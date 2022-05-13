@@ -75,13 +75,13 @@ sx1268: min temperature is -40.0C.
 ```shell
 ./sx1268 -p
 
-sx1268: SCK connected to GPIO11.
-sx1268: MISO connected to GPIO9.
-sx1268: MOSI connected to GPIO10.
-sx1268: CS connected to GPIO8.
-sx1268: RST connected to GPIO27.
-sx1268: DIO1 connected to GPIO22.
-sx1268: BUSY connected to GPIO17.
+sx1268: SCK connected to GPIO11(BCM).
+sx1268: MISO connected to GPIO9(BCM).
+sx1268: MOSI connected to GPIO10(BCM).
+sx1268: CS connected to GPIO8(BCM).
+sx1268: RST connected to GPIO27(BCM).
+sx1268: DIO1 connected to GPIO22(BCM).
+sx1268: BUSY connected to GPIO17(BCM).
 ```
 
 ```shell
