@@ -716,14 +716,20 @@ uint8_t sx1268_init(sx1268_handle_t *handle)
     if (a_sx1268_spi_read(handle, SX1268_COMMAND_GET_STATUS, (uint8_t *)buf, 2) != 0)      /* read command */
     {
         handle->debug_print("sx1268: get status failed.\n");                               /* get status failed */
-       
+        (void)handle->spi_deinit();                                                        /* spi deinit */
+        (void)handle->reset_gpio_deinit();                                                 /* reset gpio deinit */
+        (void)handle->busy_gpio_deinit();                                                  /* busy gpio deinit */
+        
         return 6;                                                                          /* return error */
     }
     prev = 0x00;
     if (a_sx1268_spi_write(handle, SX1268_COMMAND_SET_STANDBY, (uint8_t *)&prev, 1) != 0)  /* write command */
     {
         handle->debug_print("sx1268: set standby failed.\n");                              /* set standby failed */
-       
+        (void)handle->spi_deinit();                                                        /* spi deinit */
+        (void)handle->reset_gpio_deinit();                                                 /* reset gpio deinit */
+        (void)handle->busy_gpio_deinit();                                                  /* busy gpio deinit */
+        
         return 6;                                                                          /* return error */
     }
     handle->inited = 1;                                                                    /* flag finish initialization */
