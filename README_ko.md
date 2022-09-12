@@ -51,6 +51,8 @@ LibDriver SX1268은 LibDriver에서 출시한 SX1268의 전체 기능 드라이�
 #### example basic sent
 
 ```C
+#include "driver_sx1268_lora.h"
+
 uint8_t (*g_gpio_irq)(void) = NULL;
 uint8_t res;
 static uint8_t gs_rx_done;
@@ -214,6 +216,8 @@ return 0;
 #### example basic receive
 
 ```c
+#include "driver_sx1268_lora.h"
+
 uint8_t (*g_gpio_irq)(void) = NULL;
 uint8_t res;
 uint32_t timeout;
