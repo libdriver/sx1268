@@ -1,10 +1,10 @@
-### 1. chip
+### 1. Chip
 
-#### 1.1 chip info
+#### 1.1 Chip Info
 
-chip name : Raspberry Pi 4B
+chip name : Raspberry Pi 4B.
 
-spi pin: SCLK/MOSI/MISO/CS GPIO11/GPIO10/GPIO9/GPIO8
+spi pin: SCLK/MOSI/MISO/CS GPIO11/GPIO10/GPIO9/GPIO8.
 
 rst pin: RST GPIO27.
 
@@ -12,19 +12,73 @@ dio1 pin: DIO1 GPIO22.
 
 busy pin: BUSY GPIO17.
 
-### 2. install
+### 2. Install
 
-#### 2.1 install info
+#### 2.1 Dependencies
+
+Install the necessary dependencies.
 
 ```shell
-sudo apt-get install libgpiod-dev
+sudo apt-get install libgpiod-dev pkg-config cmake -y
+```
 
+#### 2.2 Makefile
+
+Build the project.
+
+```shell
 make
 ```
 
-### 3. sx1268
+Install the project and this is optional.
 
-#### 3.1 command Instruction
+```shell
+sudo make install
+```
+
+Uninstall the project and this is optional.
+
+```shell
+sudo make uninstall
+```
+
+#### 2.3 CMake
+
+Build the project.
+
+```shell
+mkdir build && cd build 
+cmake .. 
+make
+```
+
+Install the project and this is optional.
+
+```shell
+sudo make install
+```
+
+Uninstall the project and this is optional.
+
+```shell
+sudo make uninstall
+```
+
+Test the project and this is optional.
+
+```shell
+make test
+```
+
+Find the compiled library in CMake. 
+
+```cmake
+find_package(sx1268 REQUIRED)
+```
+
+### 3. SX1268
+
+#### 3.1 Command Instruction
 
 ​           sx1268 is a basic command which can test all sx1268 driver function:
 
@@ -56,7 +110,7 @@ make
 
 ​           -c wake_up  -lora       run sx1268 wake up function.
 
-#### 3.2 command example
+#### 3.2 Command Example
 
 ```shell
 ./sx1268 -i

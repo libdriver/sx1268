@@ -1,6 +1,6 @@
-### 1. chip
+### 1. Chip
 
-#### 1.1 chip info
+#### 1.1 Chip Info
 
 chip name : STM32F407ZGT6.
 
@@ -12,27 +12,27 @@ spi pin: SCK/MISO/MOSI/CS  PA5/PA6/PA7/PA4.
 
 rst pin: RST PB1.
 
-dio1 pin: DIO1 PB0
+dio1 pin: DIO1 PB0.
 
-busy pin: BUSY PA8
+busy pin: BUSY PA8.
 
-### 2. shell
+### 2. Shell
 
-#### 2.1 shell parameter
+#### 2.1 Shell Parameter
 
-baud rate: 115200
+baud rate: 115200.
 
-data bits : 8
+data bits : 8.
 
-stop bits: 1
+stop bits: 1.
 
-parity: none
+parity: none.
 
-flow control: none
+flow control: none.
 
-### 3. sx1268
+### 3. SX1268
 
-#### 3.1 command Instruction
+#### 3.1 Command Instruction
 
 ​           sx1268 is a basic command which can test all sx1268 driver function:
 
@@ -64,7 +64,7 @@ flow control: none
 
 ​           -c wake_up  -lora       run sx1268 wake up function.
 
-#### 3.2 command example
+#### 3.2 Command Example
 
 ```shell
 sx1268 -i
