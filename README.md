@@ -28,15 +28,15 @@ LibDriver SX1268 is the full function driver of SX1268 launched by LibDriver.It 
 
 /src includes LibDriver SX1268 source files.
 
-/interface includes LibDriver SX1268 SPI platform independent template。
+/interface includes LibDriver SX1268 SPI platform independent template.
 
-/test includes LibDriver SX1268 driver test code and this code can test the chip necessary function simply。
+/test includes LibDriver SX1268 driver test code and this code can test the chip necessary function simply.
 
 /example includes LibDriver SX1268 sample code.
 
 /doc includes LibDriver SX1268 offline document.
 
-/datasheet includes SX1268 datasheet。
+/datasheet includes SX1268 datasheet.
 
 /project includes the common Linux and MCU development board sample code. All projects use the shell script to debug the driver and the detail instruction can be found in each project's README.md.
 
@@ -51,6 +51,8 @@ Add /src, /interface and /example to your project.
 #### example basic sent
 
 ```C
+#include "driver_sx1268_lora.h"
+
 uint8_t (*g_gpio_irq)(void) = NULL;
 uint8_t res;
 static uint8_t gs_rx_done;
@@ -213,6 +215,8 @@ return 0;
 #### example basic receive
 
 ```c
+#include "driver_sx1268_lora.h"
+
 uint8_t (*g_gpio_irq)(void) = NULL;
 uint8_t res;
 uint32_t timeout;

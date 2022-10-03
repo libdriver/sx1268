@@ -51,6 +51,8 @@ LibDriver SX1268是LibDriver推出的SX1268全功能驅動，提供無線發送�
 #### example basic sent
 
 ```C
+#include "driver_sx1268_lora.h"
+
 uint8_t (*g_gpio_irq)(void) = NULL;
 uint8_t res;
 static uint8_t gs_rx_done;
@@ -214,6 +216,8 @@ return 0;
 #### example basic receive
 
 ```C
+#include "driver_sx1268_lora.h"
+
 uint8_t (*g_gpio_irq)(void) = NULL;
 uint8_t res;
 uint32_t timeout;
