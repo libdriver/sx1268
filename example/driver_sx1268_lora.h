@@ -54,7 +54,7 @@ extern "C"{
  * @brief sx1268 lora example default definition
  */
 #define SX1268_LORA_DEFAULT_STOP_TIMER_ON_PREAMBLE      SX1268_BOOL_FALSE                 /**< disable stop timer on preamble */
-#define SX1268_LORA_DEFAULT_REGULATOR_MODE              SX1268_REGULATOR_MODE_ONLY_LDO    /**< only ldo */
+#define SX1268_LORA_DEFAULT_REGULATOR_MODE              SX1268_REGULATOR_MODE_DC_DC_LDO   /**< only ldo */
 #define SX1268_LORA_DEFAULT_PA_CONFIG_DUTY_CYCLE        0x02                              /**< set +17dBm power */
 #define SX1268_LORA_DEFAULT_PA_CONFIG_HP_MAX            0x03                              /**< set +17dBm power */
 #define SX1268_LORA_DEFAULT_TX_DBM                      17                                /**< +17dBm */

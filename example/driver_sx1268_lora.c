@@ -97,7 +97,7 @@ uint8_t sx1268_lora_init(void (*callback)(uint16_t type, uint8_t *buf, uint16_t 
     }
     
     /* enter standby */
-    res = sx1268_set_standby(&gs_handle, SX1268_CLOCK_SOURCE_RC_13M);
+    res = sx1268_set_standby(&gs_handle, SX1268_CLOCK_SOURCE_XTAL_32MHZ);
     if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set standby failed.\n");
@@ -136,8 +136,8 @@ uint8_t sx1268_lora_init(void (*callback)(uint16_t type, uint8_t *buf, uint16_t 
         return 1;
     }
     
-    /* enter to stdby rc mode */
-    res = sx1268_set_rx_tx_fallback_mode(&gs_handle, SX1268_RX_TX_FALLBACK_MODE_STDBY_RC);
+    /* enter to stdby xosc mode */
+    res = sx1268_set_rx_tx_fallback_mode(&gs_handle, SX1268_RX_TX_FALLBACK_MODE_STDBY_XOSC);
     if (res != 0)
     {
         sx1268_interface_debug_print("sx1268: set rx tx fallback mode failed.\n");
@@ -549,7 +549,7 @@ uint8_t sx1268_lora_set_sent_mode(void)
 uint8_t sx1268_lora_sent(uint8_t *buf, uint16_t len)
 {
     /* sent the data */
-    if (sx1268_lora_transmit(&gs_handle, SX1268_CLOCK_SOURCE_RC_13M,
+    if (sx1268_lora_transmit(&gs_handle, SX1268_CLOCK_SOURCE_XTAL_32MHZ,
                              SX1268_LORA_DEFAULT_PREAMBLE_LENGTH, SX1268_LORA_DEFAULT_HEADER,
                              SX1268_LORA_DEFAULT_CRC_TYPE, SX1268_LORA_DEFAULT_INVERT_IQ,
                             (uint8_t *)buf, len, 0) != 0)
