@@ -293,11 +293,11 @@ typedef enum
  */
 typedef enum
 {
-    SX1268_GFSK_CRC_TYPE_OFF        = 0x00,        /**< no crc */
+    SX1268_GFSK_CRC_TYPE_OFF        = 0x01,        /**< no crc */
     SX1268_GFSK_CRC_TYPE_1_BYTE     = 0x00,        /**< crc computed on 1 byte */
-    SX1268_GFSK_CRC_TYPE_2_BYTE     = 0x00,        /**< crc computed on 2 byte */
-    SX1268_GFSK_CRC_TYPE_1_BYTE_INV = 0x00,        /**< crc computed on 1 byte and inverted */
-    SX1268_GFSK_CRC_TYPE_2_BYTE_INV = 0x00,        /**< crc computed on 2 byte and inverted */
+    SX1268_GFSK_CRC_TYPE_2_BYTE     = 0x02,        /**< crc computed on 2 byte */
+    SX1268_GFSK_CRC_TYPE_1_BYTE_INV = 0x04,        /**< crc computed on 1 byte and inverted */
+    SX1268_GFSK_CRC_TYPE_2_BYTE_INV = 0x06,        /**< crc computed on 2 byte and inverted */
 } sx1268_gfsk_crc_type_t;
 
 /**
