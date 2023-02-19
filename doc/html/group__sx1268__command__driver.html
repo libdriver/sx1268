@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>LibDriver SX1268: sx1268 command driver function</title>
+<title>LibDriver SYN6288: sx1268 command driver function</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,10 +26,10 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Logo" src="doxygen.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">LibDriver SX1268
+   <div id="projectname">LibDriver SYN6288
    &#160;<span id="projectnumber">1.0.0</span>
    </div>
-   <div id="projectbrief">SX1268 full function driver</div>
+   <div id="projectbrief">SYN6288 full function driver</div>
   </td>
  </tr>
  </tbody>
@@ -309,12 +309,12 @@ Enumerations</h2></td></tr>
 <tr class="memdesc:ga84663d9a22ba3a7d1a73cf7eef38f181"><td class="mdescLeft">&#160;</td><td class="mdescRight">sx1268 gfsk packet type enumeration definition  <a href="group__sx1268__command__driver.html#ga84663d9a22ba3a7d1a73cf7eef38f181">More...</a><br /></td></tr>
 <tr class="separator:ga84663d9a22ba3a7d1a73cf7eef38f181"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga51869fdaf7e05d1d14b1d3103bd4f2c8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1268__command__driver.html#ga51869fdaf7e05d1d14b1d3103bd4f2c8">sx1268_gfsk_crc_type_t</a> { <br />
-&#160;&#160;<a class="el" href="group__sx1268__command__driver.html#gga51869fdaf7e05d1d14b1d3103bd4f2c8a9aa581067a02755f21662c101b063c52">SX1268_GFSK_CRC_TYPE_OFF</a> = 0x00
+&#160;&#160;<a class="el" href="group__sx1268__command__driver.html#gga51869fdaf7e05d1d14b1d3103bd4f2c8a9aa581067a02755f21662c101b063c52">SX1268_GFSK_CRC_TYPE_OFF</a> = 0x01
 , <a class="el" href="group__sx1268__command__driver.html#gga51869fdaf7e05d1d14b1d3103bd4f2c8adeb7c4557a68ef9fd60627e3f3005582">SX1268_GFSK_CRC_TYPE_1_BYTE</a> = 0x00
-, <a class="el" href="group__sx1268__command__driver.html#gga51869fdaf7e05d1d14b1d3103bd4f2c8a37aae2f038f9f26cd9a4e8aa3785dd40">SX1268_GFSK_CRC_TYPE_2_BYTE</a> = 0x00
-, <a class="el" href="group__sx1268__command__driver.html#gga51869fdaf7e05d1d14b1d3103bd4f2c8ae4ca66983cf27be1b7482d5f7c6cceb4">SX1268_GFSK_CRC_TYPE_1_BYTE_INV</a> = 0x00
+, <a class="el" href="group__sx1268__command__driver.html#gga51869fdaf7e05d1d14b1d3103bd4f2c8a37aae2f038f9f26cd9a4e8aa3785dd40">SX1268_GFSK_CRC_TYPE_2_BYTE</a> = 0x02
+, <a class="el" href="group__sx1268__command__driver.html#gga51869fdaf7e05d1d14b1d3103bd4f2c8ae4ca66983cf27be1b7482d5f7c6cceb4">SX1268_GFSK_CRC_TYPE_1_BYTE_INV</a> = 0x04
 , <br />
-&#160;&#160;<a class="el" href="group__sx1268__command__driver.html#gga51869fdaf7e05d1d14b1d3103bd4f2c8a93ac34700e5dda3228b496c1ff07fc4c">SX1268_GFSK_CRC_TYPE_2_BYTE_INV</a> = 0x00
+&#160;&#160;<a class="el" href="group__sx1268__command__driver.html#gga51869fdaf7e05d1d14b1d3103bd4f2c8a93ac34700e5dda3228b496c1ff07fc4c">SX1268_GFSK_CRC_TYPE_2_BYTE_INV</a> = 0x06
 <br />
  }</td></tr>
 <tr class="memdesc:ga51869fdaf7e05d1d14b1d3103bd4f2c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">sx1268 gfsk crc type enumeration definition  <a href="group__sx1268__command__driver.html#ga51869fdaf7e05d1d14b1d3103bd4f2c8">More...</a><br /></td></tr>
@@ -348,7 +348,7 @@ Enumerations</h2></td></tr>
 <tr class="memitem:gadcda611d19d7de76173f623d3b63b56e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1268__command__driver.html#gadcda611d19d7de76173f623d3b63b56e">sx1268_fsk_rx_status_t</a> { <br />
 &#160;&#160;<a class="el" href="group__sx1268__command__driver.html#ggadcda611d19d7de76173f623d3b63b56ea8737d39a2de3937b6edb851eee096be6">SX1268_FSK_RX_STATUS_PREAMBLE_ERR</a> = (1 &lt;&lt; 7)
 , <a class="el" href="group__sx1268__command__driver.html#ggadcda611d19d7de76173f623d3b63b56ea70cdcecf202740c237feba8b1c13cccc">SX1268_FSK_RX_STATUS_SYNC_ERR</a> = (1 &lt;&lt; 6)
-, <a class="el" href="group__sx1268__command__driver.html#ggadcda611d19d7de76173f623d3b63b56ea81b8d92a2c08ce3b7fb4b17eb2d9986c">SX1268_FSK_RX_STATUS_ADRS_ERR</a> = (1 &lt;&lt; 5)
+, <a class="el" href="group__sx1268__command__driver.html#ggadcda611d19d7de76173f623d3b63b56eafa1dd2af483356df1a4a582c4ee2afd9">SX1268_FSK_RX_STATUS_ADDR_ERR</a> = (1 &lt;&lt; 5)
 , <a class="el" href="group__sx1268__command__driver.html#ggadcda611d19d7de76173f623d3b63b56eaa727479ea1cf6fbe2b73feb30c53714f">SX1268_FSK_RX_STATUS_CRC_ERR</a> = (1 &lt;&lt; 4)
 , <br />
 &#160;&#160;<a class="el" href="group__sx1268__command__driver.html#ggadcda611d19d7de76173f623d3b63b56ea83cb8cc0fcbd557eccdd51e09f313f27">SX1268_FSK_RX_STATUS_LENGTH_ERR</a> = (1 &lt;&lt; 3)
@@ -458,7 +458,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:gac1e6326ff71d1afa2d6469da96834f85"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the calibration settings  <a href="group__sx1268__command__driver.html#gac1e6326ff71d1afa2d6469da96834f85">More...</a><br /></td></tr>
 <tr class="separator:gac1e6326ff71d1afa2d6469da96834f85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5df9906ce021bcc06f86132242c20e9b"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1268__command__driver.html#ga5df9906ce021bcc06f86132242c20e9b">sx1268_set_calibration_image</a> (<a class="el" href="group__sx1268__command__driver.html#ga23efee9a8850a68b0455e9383ad53027">sx1268_handle_t</a> *handle, uint8_t freq1, uint8_t freq2)</td></tr>
-<tr class="memdesc:ga5df9906ce021bcc06f86132242c20e9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the calibration image frequence  <a href="group__sx1268__command__driver.html#ga5df9906ce021bcc06f86132242c20e9b">More...</a><br /></td></tr>
+<tr class="memdesc:ga5df9906ce021bcc06f86132242c20e9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the calibration image frequency  <a href="group__sx1268__command__driver.html#ga5df9906ce021bcc06f86132242c20e9b">More...</a><br /></td></tr>
 <tr class="separator:ga5df9906ce021bcc06f86132242c20e9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaebc945dc253d73750acb9d36adc752bf"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1268__command__driver.html#gaebc945dc253d73750acb9d36adc752bf">sx1268_set_pa_config</a> (<a class="el" href="group__sx1268__command__driver.html#ga23efee9a8850a68b0455e9383ad53027">sx1268_handle_t</a> *handle, uint8_t pa_duty_cycle, uint8_t hp_max)</td></tr>
 <tr class="memdesc:gaebc945dc253d73750acb9d36adc752bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the pa config  <a href="group__sx1268__command__driver.html#gaebc945dc253d73750acb9d36adc752bf">More...</a><br /></td></tr>
@@ -696,7 +696,7 @@ Functions</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadcda611d19d7de76173f623d3b63b56ea70cdcecf202740c237feba8b1c13cccc"></a>SX1268_FSK_RX_STATUS_SYNC_ERR&#160;</td><td class="fielddoc"><p>sync err </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggadcda611d19d7de76173f623d3b63b56ea81b8d92a2c08ce3b7fb4b17eb2d9986c"></a>SX1268_FSK_RX_STATUS_ADRS_ERR&#160;</td><td class="fielddoc"><p>adrs err </p>
+<tr><td class="fieldname"><a id="ggadcda611d19d7de76173f623d3b63b56eafa1dd2af483356df1a4a582c4ee2afd9"></a>SX1268_FSK_RX_STATUS_ADDR_ERR&#160;</td><td class="fielddoc"><p>addr err </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadcda611d19d7de76173f623d3b63b56eaa727479ea1cf6fbe2b73feb30c53714f"></a>SX1268_FSK_RX_STATUS_CRC_ERR&#160;</td><td class="fielddoc"><p>crc err </p>
 </td></tr>
@@ -1274,7 +1274,7 @@ Functions</h2></td></tr>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga44ceb2211fa08e1695ff90ba7ec3eee6a0d19c91a21bfa06776a2c9dad4b9d182"></a>SX1268_REGULATOR_MODE_ONLY_LDO&#160;</td><td class="fielddoc"><p>only ldo used for all modes </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga44ceb2211fa08e1695ff90ba7ec3eee6a5d3fd943040c0d840e233f68e8bd19ca"></a>SX1268_REGULATOR_MODE_DC_DC_LDO&#160;</td><td class="fielddoc"><p>dc_dc + ldo used for stby_xosc, fs, rx and rx modes </p>
+<tr><td class="fieldname"><a id="gga44ceb2211fa08e1695ff90ba7ec3eee6a5d3fd943040c0d840e233f68e8bd19ca"></a>SX1268_REGULATOR_MODE_DC_DC_LDO&#160;</td><td class="fielddoc"><p>dc_dc + ldo used for standby_xosc, fs, rx and rx modes </p>
 </td></tr>
 </table>
 
@@ -1298,9 +1298,9 @@ Functions</h2></td></tr>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggac80dc6a62756e36c8ba1a28fb1387ae9afa2d78b1e579c38ddff42eb0579bccc6"></a>SX1268_RX_TX_FALLBACK_MODE_FS&#160;</td><td class="fielddoc"><p>the radio goes into fs mode after tx or rx </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggac80dc6a62756e36c8ba1a28fb1387ae9ad38d6854187a953980fc3df3d723701b"></a>SX1268_RX_TX_FALLBACK_MODE_STDBY_XOSC&#160;</td><td class="fielddoc"><p>the radio goes into stdby_xosc mode after tx or rx </p>
+<tr><td class="fieldname"><a id="ggac80dc6a62756e36c8ba1a28fb1387ae9ad38d6854187a953980fc3df3d723701b"></a>SX1268_RX_TX_FALLBACK_MODE_STDBY_XOSC&#160;</td><td class="fielddoc"><p>the radio goes into standby_xosc mode after tx or rx </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggac80dc6a62756e36c8ba1a28fb1387ae9a9f19e106c50adc25693b225a141e8a04"></a>SX1268_RX_TX_FALLBACK_MODE_STDBY_RC&#160;</td><td class="fielddoc"><p>the radio goes into stdby_rc mode after tx or rx </p>
+<tr><td class="fieldname"><a id="ggac80dc6a62756e36c8ba1a28fb1387ae9a9f19e106c50adc25693b225a141e8a04"></a>SX1268_RX_TX_FALLBACK_MODE_STDBY_RC&#160;</td><td class="fielddoc"><p>the radio goes into standby_rc mode after tx or rx </p>
 </td></tr>
 </table>
 
@@ -1398,7 +1398,7 @@ Functions</h2></td></tr>
 <p>check the packet error </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">*enable</td><td>points to a bool buffer </td></tr>
   </table>
   </dd>
@@ -1434,7 +1434,7 @@ Functions</h2></td></tr>
 <p>clear the device errors </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
   </table>
   </dd>
 </dl>
@@ -1481,7 +1481,7 @@ Functions</h2></td></tr>
 <p>clear the irq status </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">clear_irq_param</td><td>is the irq mask </td></tr>
   </table>
   </dd>
@@ -1519,7 +1519,7 @@ Functions</h2></td></tr>
 <p>enter to the continuous receive mode </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
   </table>
   </dd>
 </dl>
@@ -1556,7 +1556,7 @@ Functions</h2></td></tr>
 <p>close the chip </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
   </table>
   </dd>
 </dl>
@@ -1612,7 +1612,7 @@ Functions</h2></td></tr>
 <p>convert the register raw data to the frequency </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">reg</td><td>is the register raw data </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">*freq</td><td>points to a frequency buffer </td></tr>
   </table>
@@ -1665,7 +1665,7 @@ Functions</h2></td></tr>
 <p>convert the frequency to the register raw data </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">freq</td><td>is the frequency </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">*reg</td><td>points to a register raw buffer </td></tr>
   </table>
@@ -1712,8 +1712,8 @@ Functions</h2></td></tr>
 <p>get the device errors </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*op_error</td><td>points to a op error buffer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">*op_error</td><td>points to an op error buffer </td></tr>
   </table>
   </dd>
 </dl>
@@ -1784,12 +1784,12 @@ Functions</h2></td></tr>
 <p>get the packet status in GFSK mode </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*rx_status</td><td>points to a rx status buffer </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*rssi_sync_raw</td><td>points to a rssi sync raw buffer </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*rssi_avg_raw</td><td>points to a rssi avg raw buffer </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*rssi_sync</td><td>points to a rssi sync buffer </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*rssi_avg</td><td>points to a rssi avg buffer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">*rx_status</td><td>points to an rx status buffer </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">*rssi_sync_raw</td><td>points to an rssi sync raw buffer </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">*rssi_avg_raw</td><td>points to an rssi avg raw buffer </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">*rssi_sync</td><td>points to an rssi sync buffer </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">*rssi_avg</td><td>points to an rssi avg buffer </td></tr>
   </table>
   </dd>
 </dl>
@@ -1842,9 +1842,9 @@ Functions</h2></td></tr>
 <p>get the instantaneous rssi </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*rssi_inst_raw</td><td>points to a rssi instantaneous raw buffer </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*rssi_inst</td><td>points to a rssi instantaneous buffer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">*rssi_inst_raw</td><td>points to an rssi instantaneous raw buffer </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">*rssi_inst</td><td>points to an rssi instantaneous buffer </td></tr>
   </table>
   </dd>
 </dl>
@@ -1891,7 +1891,7 @@ Functions</h2></td></tr>
 <p>get the irq status </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">*status</td><td>points to a status buffer </td></tr>
   </table>
   </dd>
@@ -1969,12 +1969,12 @@ Functions</h2></td></tr>
 <p>get the packet status in LoRa mode </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*rssi_pkt_raw</td><td>points to a rssi packet raw buffer </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*snr_pkt_raw</td><td>points to a snr packet raw buffer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">*rssi_pkt_raw</td><td>points to an rssi packet raw buffer </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">*snr_pkt_raw</td><td>points to an snr packet raw buffer </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">*signal_rssi_pkt_raw</td><td>points to a signal rssi packet raw buffer </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*rssi_pkt</td><td>points to a rssi packet buffer </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*snr_pkt</td><td>points to a snr packet buffer </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">*rssi_pkt</td><td>points to an rssi packet buffer </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">*snr_pkt</td><td>points to an snr packet buffer </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">*signal_rssi_pkt</td><td>points to a signal rssi packet buffer </td></tr>
   </table>
   </dd>
@@ -2022,7 +2022,7 @@ Functions</h2></td></tr>
 <p>get the packet type </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">*type</td><td>points to a packet type buffer </td></tr>
   </table>
   </dd>
@@ -2076,9 +2076,9 @@ Functions</h2></td></tr>
 <p>get the rx buffer status </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*payload_length_rx</td><td>points to a rx payload length buffer </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*rx_start_buffer_pointer</td><td>points to a rx start pointer buffer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">*payload_length_rx</td><td>points to an rx payload length buffer </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">*rx_start_buffer_pointer</td><td>points to an rx start pointer buffer </td></tr>
   </table>
   </dd>
 </dl>
@@ -2137,7 +2137,7 @@ Functions</h2></td></tr>
 <p>get the stats </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">*pkt_received</td><td>points to a packet received counter buffer </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">*pkt_crc_error</td><td>points to a packet crc error buffer </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">*pkt_length_header_error</td><td>points to a packet length header error buffer </td></tr>
@@ -2187,7 +2187,7 @@ Functions</h2></td></tr>
 <p>get the status </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">*status</td><td>points to a status buffer </td></tr>
   </table>
   </dd>
@@ -2241,7 +2241,7 @@ Functions</h2></td></tr>
 <p>convert the register raw data to the bit rate </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">reg</td><td>is the register raw data </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">*br</td><td>points to a bit rate buffer </td></tr>
   </table>
@@ -2294,7 +2294,7 @@ Functions</h2></td></tr>
 <p>convert the bit rate to the register raw data </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">br</td><td>is the bit rate </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">*reg</td><td>points to a register raw buffer </td></tr>
   </table>
@@ -2347,7 +2347,7 @@ Functions</h2></td></tr>
 <p>convert the register raw data to the frequency deviation </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">reg</td><td>is the register raw data </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">*freq</td><td>points to a frequency deviation buffer </td></tr>
   </table>
@@ -2400,7 +2400,7 @@ Functions</h2></td></tr>
 <p>convert the frequency deviation to the register raw data </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">freq</td><td>is the frequency deviation </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">*reg</td><td>points to a register raw buffer </td></tr>
   </table>
@@ -2437,7 +2437,7 @@ Functions</h2></td></tr>
 <p>get chip's information </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">*info</td><td>points to a sx1268 info structure </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">*info</td><td>points to an sx1268 info structure </td></tr>
   </table>
   </dd>
 </dl>
@@ -2471,7 +2471,7 @@ Functions</h2></td></tr>
 <p>initialize the chip </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
   </table>
   </dd>
 </dl>
@@ -2510,7 +2510,7 @@ Functions</h2></td></tr>
 <p>irq handler </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
   </table>
   </dd>
 </dl>
@@ -2556,8 +2556,8 @@ Functions</h2></td></tr>
 <p>run the cad </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*enable</td><td>points to a enable buffer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">*enable</td><td>points to an enable buffer </td></tr>
   </table>
   </dd>
 </dl>
@@ -2647,7 +2647,7 @@ Functions</h2></td></tr>
 <p>sent the lora data </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">standby_src</td><td>is the clock source </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">preamble_length</td><td>is the preamble length </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">header_type</td><td>is the header type </td></tr>
@@ -2717,7 +2717,7 @@ Functions</h2></td></tr>
 <p>read the buffer </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">offset</td><td>is the buffer offset </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">*buf</td><td>points to a data buffer </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>is the data length </td></tr>
@@ -2779,7 +2779,7 @@ Functions</h2></td></tr>
 <p>read the register </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">reg</td><td>is the register address </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">*buf</td><td>points to a data buffer </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>is the data length </td></tr>
@@ -2841,7 +2841,7 @@ Functions</h2></td></tr>
 <p>reset the stats </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">pkt_received</td><td>is the received packet counter mask </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">pkt_crc_error</td><td>is the packet crc error mask </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">pkt_length_header_error</td><td>is the packet length header error mask </td></tr>
@@ -2897,7 +2897,7 @@ Functions</h2></td></tr>
 <p>set the buffer base address </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">tx_base_addr</td><td>is the tx base address </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">rx_base_addr</td><td>is the rx base address </td></tr>
   </table>
@@ -2936,7 +2936,7 @@ Functions</h2></td></tr>
 <p>run the cad </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
   </table>
   </dd>
 </dl>
@@ -3007,7 +3007,7 @@ Functions</h2></td></tr>
 <p>set the cad params </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">num</td><td>is the cad symbol number </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">cad_det_peak</td><td>is the cad detection peak </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">cad_det_min</td><td>is the min cad detection peak </td></tr>
@@ -3059,7 +3059,7 @@ Functions</h2></td></tr>
 <p>set the calibration settings </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">settings</td><td>is the calibration param </td></tr>
   </table>
   </dd>
@@ -3110,12 +3110,12 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>set the calibration image frequence </p>
+<p>set the calibration image frequency </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">freq1</td><td>is the image frequence 1 </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">freq2</td><td>is the image frequence 2 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">freq1</td><td>is the image frequency 1 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">freq2</td><td>is the image frequency 2 </td></tr>
   </table>
   </dd>
 </dl>
@@ -3162,7 +3162,7 @@ Functions</h2></td></tr>
 <p>set dio2 as rf switch ctrl </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">enable</td><td>is a bool value </td></tr>
   </table>
   </dd>
@@ -3216,7 +3216,7 @@ Functions</h2></td></tr>
 <p>set dio3 as tcxo ctrl </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">voltage</td><td>is the tcxo voltage </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">delay</td><td>is the tcxo ctrl delay </td></tr>
   </table>
@@ -3283,7 +3283,7 @@ Functions</h2></td></tr>
 <p>set the dio irq params </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">irq_mask</td><td>is the irq mask </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">dio1_mask</td><td>is the dio1 mask </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">dio2_mask</td><td>is the dio2 mask </td></tr>
@@ -3324,7 +3324,7 @@ Functions</h2></td></tr>
 <p>enter to the frequency synthesis mode </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
   </table>
   </dd>
 </dl>
@@ -3389,7 +3389,7 @@ Functions</h2></td></tr>
 <p>set the modulation params in GFSK mode </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">br</td><td>is the bit rate </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">shape</td><td>is the pulse shape </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">bw</td><td>is the bandwidth </td></tr>
@@ -3482,7 +3482,7 @@ Functions</h2></td></tr>
 <p>set the packet params in GFSK mode </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">preamble_length</td><td>is the preamble length </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">detector_length</td><td>is the preamble detector length </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">sync_word_length</td><td>is the sync word length </td></tr>
@@ -3556,7 +3556,7 @@ Functions</h2></td></tr>
 <p>set the modulation params in LoRa mode </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">sf</td><td>is the spreading factor </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">bw</td><td>is the bandwidth </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">cr</td><td>is coding rate </td></tr>
@@ -3631,7 +3631,7 @@ Functions</h2></td></tr>
 <p>set the packet params in LoRa mode </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">preamble_length</td><td>is the preamble length </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">header_type</td><td>is the header type </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">payload_length</td><td>is the length of payload </td></tr>
@@ -3683,7 +3683,7 @@ Functions</h2></td></tr>
 <p>set the lora symbol number timeout </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">symb_num</td><td>is the symbol number </td></tr>
   </table>
   </dd>
@@ -3737,7 +3737,7 @@ Functions</h2></td></tr>
 <p>set the pa config </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">pa_duty_cycle</td><td>is the pa duty cycle </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">hp_max</td><td>is the max power </td></tr>
   </table>
@@ -3786,7 +3786,7 @@ Functions</h2></td></tr>
 <p>set the packet type </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>is the packet type </td></tr>
   </table>
   </dd>
@@ -3834,7 +3834,7 @@ Functions</h2></td></tr>
 <p>set the regulator_mode </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">mode</td><td>is the regulator mode </td></tr>
   </table>
   </dd>
@@ -3882,7 +3882,7 @@ Functions</h2></td></tr>
 <p>set the rf frequency </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">reg</td><td>is the rf frequency register data </td></tr>
   </table>
   </dd>
@@ -3930,7 +3930,7 @@ Functions</h2></td></tr>
 <p>enter to the rx mode </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">timeout</td><td>is the rx timeout </td></tr>
   </table>
   </dd>
@@ -3984,7 +3984,7 @@ Functions</h2></td></tr>
 <p>set the rx duty cycle </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">rx_period</td><td>is the rx period </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">sleep_period</td><td>is the sleep period </td></tr>
   </table>
@@ -4033,7 +4033,7 @@ Functions</h2></td></tr>
 <p>set the rx tx fallback mode </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">mode</td><td>is the rx tx fallback mode </td></tr>
   </table>
   </dd>
@@ -4087,7 +4087,7 @@ Functions</h2></td></tr>
 <p>enter to the sleep mode </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">mode</td><td>is the start mode </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">rtc_wake_up_enable</td><td>is a bool value </td></tr>
   </table>
@@ -4136,7 +4136,7 @@ Functions</h2></td></tr>
 <p>enter to the standby mode </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">src</td><td>is the clock source </td></tr>
   </table>
   </dd>
@@ -4184,7 +4184,7 @@ Functions</h2></td></tr>
 <p>stop timer on preamble </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">enable</td><td>is a bool value </td></tr>
   </table>
   </dd>
@@ -4232,7 +4232,7 @@ Functions</h2></td></tr>
 <p>enter to the tx mode </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">timeout</td><td>is the tx timeout </td></tr>
   </table>
   </dd>
@@ -4270,7 +4270,7 @@ Functions</h2></td></tr>
 <p>enter to the tx continuous wave mode </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
   </table>
   </dd>
 </dl>
@@ -4307,7 +4307,7 @@ Functions</h2></td></tr>
 <p>enter to the tx infinite preamble mode </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
   </table>
   </dd>
 </dl>
@@ -4360,7 +4360,7 @@ Functions</h2></td></tr>
 <p>set the tx params </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">dbm</td><td>is the rf power </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">t</td><td>is the ramp time </td></tr>
   </table>
@@ -4409,7 +4409,7 @@ Functions</h2></td></tr>
 <p>enter to the single receive mode </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">us</td><td>is the rx timeout </td></tr>
   </table>
   </dd>
@@ -4463,7 +4463,7 @@ Functions</h2></td></tr>
 <p>convert the register raw data to the timeout </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">reg</td><td>is the register raw data </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">*us</td><td>points to a us buffer </td></tr>
   </table>
@@ -4516,7 +4516,7 @@ Functions</h2></td></tr>
 <p>convert the timeout to the register raw data </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">us</td><td>is the timeout </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">*reg</td><td>points to a register raw buffer </td></tr>
   </table>
@@ -4575,7 +4575,7 @@ Functions</h2></td></tr>
 <p>write the buffer </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">offset</td><td>is the buffer offset </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">*buf</td><td>points to a data buffer </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>is the data length </td></tr>
@@ -4637,7 +4637,7 @@ Functions</h2></td></tr>
 <p>write the register </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to a sx1268 handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an sx1268 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">reg</td><td>is the register address </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">*buf</td><td>points to a data buffer </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>is the data length </td></tr>

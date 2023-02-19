@@ -55,7 +55,7 @@ var group__sx1268__command__driver =
     [ "sx1268_fsk_rx_status_t", "group__sx1268__command__driver.html#gadcda611d19d7de76173f623d3b63b56e", [
       [ "SX1268_FSK_RX_STATUS_PREAMBLE_ERR", "group__sx1268__command__driver.html#ggadcda611d19d7de76173f623d3b63b56ea8737d39a2de3937b6edb851eee096be6", null ],
       [ "SX1268_FSK_RX_STATUS_SYNC_ERR", "group__sx1268__command__driver.html#ggadcda611d19d7de76173f623d3b63b56ea70cdcecf202740c237feba8b1c13cccc", null ],
-      [ "SX1268_FSK_RX_STATUS_ADRS_ERR", "group__sx1268__command__driver.html#ggadcda611d19d7de76173f623d3b63b56ea81b8d92a2c08ce3b7fb4b17eb2d9986c", null ],
+      [ "SX1268_FSK_RX_STATUS_ADDR_ERR", "group__sx1268__command__driver.html#ggadcda611d19d7de76173f623d3b63b56eafa1dd2af483356df1a4a582c4ee2afd9", null ],
       [ "SX1268_FSK_RX_STATUS_CRC_ERR", "group__sx1268__command__driver.html#ggadcda611d19d7de76173f623d3b63b56eaa727479ea1cf6fbe2b73feb30c53714f", null ],
       [ "SX1268_FSK_RX_STATUS_LENGTH_ERR", "group__sx1268__command__driver.html#ggadcda611d19d7de76173f623d3b63b56ea83cb8cc0fcbd557eccdd51e09f313f27", null ],
       [ "SX1268_FSK_RX_STATUS_ABORT_ERR", "group__sx1268__command__driver.html#ggadcda611d19d7de76173f623d3b63b56eaa1bf3da18495a28f6be235f3044878be", null ],

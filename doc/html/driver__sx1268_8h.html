@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>LibDriver SX1268: src/driver_sx1268.h File Reference</title>
+<title>LibDriver SYN6288: src/driver_sx1268.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,10 +26,10 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Logo" src="doxygen.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">LibDriver SX1268
+   <div id="projectname">LibDriver SYN6288
    &#160;<span id="projectnumber">1.0.0</span>
    </div>
-   <div id="projectbrief">SX1268 full function driver</div>
+   <div id="projectbrief">SYN6288 full function driver</div>
   </td>
  </tr>
  </tbody>
@@ -357,12 +357,12 @@ Enumerations</h2></td></tr>
 <tr class="memdesc:ga84663d9a22ba3a7d1a73cf7eef38f181"><td class="mdescLeft">&#160;</td><td class="mdescRight">sx1268 gfsk packet type enumeration definition  <a href="group__sx1268__command__driver.html#ga84663d9a22ba3a7d1a73cf7eef38f181">More...</a><br /></td></tr>
 <tr class="separator:ga84663d9a22ba3a7d1a73cf7eef38f181"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga51869fdaf7e05d1d14b1d3103bd4f2c8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1268__command__driver.html#ga51869fdaf7e05d1d14b1d3103bd4f2c8">sx1268_gfsk_crc_type_t</a> { <br />
-&#160;&#160;<a class="el" href="group__sx1268__command__driver.html#gga51869fdaf7e05d1d14b1d3103bd4f2c8a9aa581067a02755f21662c101b063c52">SX1268_GFSK_CRC_TYPE_OFF</a> = 0x00
+&#160;&#160;<a class="el" href="group__sx1268__command__driver.html#gga51869fdaf7e05d1d14b1d3103bd4f2c8a9aa581067a02755f21662c101b063c52">SX1268_GFSK_CRC_TYPE_OFF</a> = 0x01
 , <a class="el" href="group__sx1268__command__driver.html#gga51869fdaf7e05d1d14b1d3103bd4f2c8adeb7c4557a68ef9fd60627e3f3005582">SX1268_GFSK_CRC_TYPE_1_BYTE</a> = 0x00
-, <a class="el" href="group__sx1268__command__driver.html#gga51869fdaf7e05d1d14b1d3103bd4f2c8a37aae2f038f9f26cd9a4e8aa3785dd40">SX1268_GFSK_CRC_TYPE_2_BYTE</a> = 0x00
-, <a class="el" href="group__sx1268__command__driver.html#gga51869fdaf7e05d1d14b1d3103bd4f2c8ae4ca66983cf27be1b7482d5f7c6cceb4">SX1268_GFSK_CRC_TYPE_1_BYTE_INV</a> = 0x00
+, <a class="el" href="group__sx1268__command__driver.html#gga51869fdaf7e05d1d14b1d3103bd4f2c8a37aae2f038f9f26cd9a4e8aa3785dd40">SX1268_GFSK_CRC_TYPE_2_BYTE</a> = 0x02
+, <a class="el" href="group__sx1268__command__driver.html#gga51869fdaf7e05d1d14b1d3103bd4f2c8ae4ca66983cf27be1b7482d5f7c6cceb4">SX1268_GFSK_CRC_TYPE_1_BYTE_INV</a> = 0x04
 , <br />
-&#160;&#160;<a class="el" href="group__sx1268__command__driver.html#gga51869fdaf7e05d1d14b1d3103bd4f2c8a93ac34700e5dda3228b496c1ff07fc4c">SX1268_GFSK_CRC_TYPE_2_BYTE_INV</a> = 0x00
+&#160;&#160;<a class="el" href="group__sx1268__command__driver.html#gga51869fdaf7e05d1d14b1d3103bd4f2c8a93ac34700e5dda3228b496c1ff07fc4c">SX1268_GFSK_CRC_TYPE_2_BYTE_INV</a> = 0x06
 <br />
  }</td></tr>
 <tr class="memdesc:ga51869fdaf7e05d1d14b1d3103bd4f2c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">sx1268 gfsk crc type enumeration definition  <a href="group__sx1268__command__driver.html#ga51869fdaf7e05d1d14b1d3103bd4f2c8">More...</a><br /></td></tr>
@@ -396,7 +396,7 @@ Enumerations</h2></td></tr>
 <tr class="memitem:gadcda611d19d7de76173f623d3b63b56e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1268__command__driver.html#gadcda611d19d7de76173f623d3b63b56e">sx1268_fsk_rx_status_t</a> { <br />
 &#160;&#160;<a class="el" href="group__sx1268__command__driver.html#ggadcda611d19d7de76173f623d3b63b56ea8737d39a2de3937b6edb851eee096be6">SX1268_FSK_RX_STATUS_PREAMBLE_ERR</a> = (1 &lt;&lt; 7)
 , <a class="el" href="group__sx1268__command__driver.html#ggadcda611d19d7de76173f623d3b63b56ea70cdcecf202740c237feba8b1c13cccc">SX1268_FSK_RX_STATUS_SYNC_ERR</a> = (1 &lt;&lt; 6)
-, <a class="el" href="group__sx1268__command__driver.html#ggadcda611d19d7de76173f623d3b63b56ea81b8d92a2c08ce3b7fb4b17eb2d9986c">SX1268_FSK_RX_STATUS_ADRS_ERR</a> = (1 &lt;&lt; 5)
+, <a class="el" href="group__sx1268__command__driver.html#ggadcda611d19d7de76173f623d3b63b56eafa1dd2af483356df1a4a582c4ee2afd9">SX1268_FSK_RX_STATUS_ADDR_ERR</a> = (1 &lt;&lt; 5)
 , <a class="el" href="group__sx1268__command__driver.html#ggadcda611d19d7de76173f623d3b63b56eaa727479ea1cf6fbe2b73feb30c53714f">SX1268_FSK_RX_STATUS_CRC_ERR</a> = (1 &lt;&lt; 4)
 , <br />
 &#160;&#160;<a class="el" href="group__sx1268__command__driver.html#ggadcda611d19d7de76173f623d3b63b56ea83cb8cc0fcbd557eccdd51e09f313f27">SX1268_FSK_RX_STATUS_LENGTH_ERR</a> = (1 &lt;&lt; 3)
@@ -506,7 +506,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:gac1e6326ff71d1afa2d6469da96834f85"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the calibration settings  <a href="group__sx1268__command__driver.html#gac1e6326ff71d1afa2d6469da96834f85">More...</a><br /></td></tr>
 <tr class="separator:gac1e6326ff71d1afa2d6469da96834f85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5df9906ce021bcc06f86132242c20e9b"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1268__command__driver.html#ga5df9906ce021bcc06f86132242c20e9b">sx1268_set_calibration_image</a> (<a class="el" href="group__sx1268__command__driver.html#ga23efee9a8850a68b0455e9383ad53027">sx1268_handle_t</a> *handle, uint8_t freq1, uint8_t freq2)</td></tr>
-<tr class="memdesc:ga5df9906ce021bcc06f86132242c20e9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the calibration image frequence  <a href="group__sx1268__command__driver.html#ga5df9906ce021bcc06f86132242c20e9b">More...</a><br /></td></tr>
+<tr class="memdesc:ga5df9906ce021bcc06f86132242c20e9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the calibration image frequency  <a href="group__sx1268__command__driver.html#ga5df9906ce021bcc06f86132242c20e9b">More...</a><br /></td></tr>
 <tr class="separator:ga5df9906ce021bcc06f86132242c20e9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaebc945dc253d73750acb9d36adc752bf"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1268__command__driver.html#gaebc945dc253d73750acb9d36adc752bf">sx1268_set_pa_config</a> (<a class="el" href="group__sx1268__command__driver.html#ga23efee9a8850a68b0455e9383ad53027">sx1268_handle_t</a> *handle, uint8_t pa_duty_cycle, uint8_t hp_max)</td></tr>
 <tr class="memdesc:gaebc945dc253d73750acb9d36adc752bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the pa config  <a href="group__sx1268__command__driver.html#gaebc945dc253d73750acb9d36adc752bf">More...</a><br /></td></tr>
@@ -614,7 +614,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga2beb2b5f11bdc58221ca422f2a46e9ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the whitening initial value in FSK mode  <a href="group__sx1268__register__driver.html#ga2beb2b5f11bdc58221ca422f2a46e9ab">More...</a><br /></td></tr>
 <tr class="separator:ga2beb2b5f11bdc58221ca422f2a46e9ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadd80c622657a776f4bc112217c47d7c4"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1268__register__driver.html#gadd80c622657a776f4bc112217c47d7c4">sx1268_set_fsk_crc_initical_value</a> (<a class="el" href="group__sx1268__command__driver.html#ga23efee9a8850a68b0455e9383ad53027">sx1268_handle_t</a> *handle, uint16_t value)</td></tr>
-<tr class="memdesc:gadd80c622657a776f4bc112217c47d7c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the crc initical value in FSK mode  <a href="group__sx1268__register__driver.html#gadd80c622657a776f4bc112217c47d7c4">More...</a><br /></td></tr>
+<tr class="memdesc:gadd80c622657a776f4bc112217c47d7c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the crc initial value in FSK mode  <a href="group__sx1268__register__driver.html#gadd80c622657a776f4bc112217c47d7c4">More...</a><br /></td></tr>
 <tr class="separator:gadd80c622657a776f4bc112217c47d7c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga382fc0049a359fccce6f08ccb2fbc355"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1268__register__driver.html#ga382fc0049a359fccce6f08ccb2fbc355">sx1268_get_fsk_crc_initical_value</a> (<a class="el" href="group__sx1268__command__driver.html#ga23efee9a8850a68b0455e9383ad53027">sx1268_handle_t</a> *handle, uint16_t *value)</td></tr>
 <tr class="memdesc:ga382fc0049a359fccce6f08ccb2fbc355"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the crc initical value in FSK mode  <a href="group__sx1268__register__driver.html#ga382fc0049a359fccce6f08ccb2fbc355">More...</a><br /></td></tr>
