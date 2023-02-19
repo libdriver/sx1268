@@ -40,6 +40,8 @@ LibDriver SX1268 ist der voll funktionsfähige Treiber von SX1268, der von LibDr
 
 /project enthält den allgemeinen Beispielcode für Linux- und MCU-Entwicklungsboards. Alle Projekte verwenden das Shell-Skript, um den Treiber zu debuggen, und die detaillierten Anweisungen finden Sie in der README.md jedes Projekts.
 
+/misra enthält die Ergebnisse des LibDriver MISRA Code Scans.
+
 ### Installieren
 
 Verweisen Sie auf eine plattformunabhängige SPI-Schnittstellenvorlage und stellen Sie Ihren Plattform-SPI-Treiber fertig.
@@ -389,13 +391,13 @@ return 0;
 
 ### Dokument
 
-Online-Dokumente: https://www.libdriver.com/docs/sx1268/index.html
+Online-Dokumente: [https://www.libdriver.com/docs/sx1268/index.html](https://www.libdriver.com/docs/sx1268/index.html).
 
-Offline-Dokumente: /doc/html/index.html
+Offline-Dokumente: /doc/html/index.html.
 
 ### Beitrag
 
-Bitte senden Sie eine E-Mail an lishifenging@outlook.com
+Bitte beachten Sie CONTRIBUTING.md.
 
 ### Lizenz
 
@@ -443,4 +445,4 @@ SOFTWARE.
 
 ### Kontaktieren Sie uns
 
-Bitte senden Sie eine E-Mail an lishifenging@outlook.com
+Bitte senden Sie eine E-Mail an lishifenging@outlook.com.

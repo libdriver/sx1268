@@ -89,7 +89,7 @@ typedef enum
 typedef enum
 {
     SX1268_REGULATOR_MODE_ONLY_LDO  = 0x00,        /**< only ldo used for all modes */
-    SX1268_REGULATOR_MODE_DC_DC_LDO = 0x01,        /**< dc_dc + ldo used for stby_xosc, fs, rx and rx modes */
+    SX1268_REGULATOR_MODE_DC_DC_LDO = 0x01,        /**< dc_dc + ldo used for standby_xosc, fs, rx and rx modes */
 } sx1268_regulator_mode_t;
 
 /**
@@ -129,8 +129,8 @@ typedef enum
 typedef enum
 {
     SX1268_RX_TX_FALLBACK_MODE_FS         = 0x40,        /**< the radio goes into fs mode after tx or rx */
-    SX1268_RX_TX_FALLBACK_MODE_STDBY_XOSC = 0x30,        /**< the radio goes into stdby_xosc mode after tx or rx */
-    SX1268_RX_TX_FALLBACK_MODE_STDBY_RC   = 0x20,        /**< the radio goes into stdby_rc mode after tx or rx */
+    SX1268_RX_TX_FALLBACK_MODE_STDBY_XOSC = 0x30,        /**< the radio goes into standby_xosc mode after tx or rx */
+    SX1268_RX_TX_FALLBACK_MODE_STDBY_RC   = 0x20,        /**< the radio goes into standby_rc mode after tx or rx */
 } sx1268_rx_tx_fallback_mode_t;
 
 /**
@@ -349,7 +349,7 @@ typedef enum
 {
     SX1268_FSK_RX_STATUS_PREAMBLE_ERR = (1 << 7),        /**< preamble err */
     SX1268_FSK_RX_STATUS_SYNC_ERR     = (1 << 6),        /**< sync err */
-    SX1268_FSK_RX_STATUS_ADRS_ERR     = (1 << 5),        /**< adrs err */
+    SX1268_FSK_RX_STATUS_ADDR_ERR     = (1 << 5),        /**< addr err */
     SX1268_FSK_RX_STATUS_CRC_ERR      = (1 << 4),        /**< crc err*/
     SX1268_FSK_RX_STATUS_LENGTH_ERR   = (1 << 3),        /**< length err */
     SX1268_FSK_RX_STATUS_ABORT_ERR    = (1 << 2),        /**< abort err */
@@ -430,7 +430,7 @@ typedef struct sx1268_info_s
 
 /**
  * @brief     initialize sx1268_handle_t structure
- * @param[in] HANDLE points to a sx1268 handle structure
+ * @param[in] HANDLE points to an sx1268 handle structure
  * @param[in] STRUCTURE is sx1268_handle_t
  * @note      none
  */
@@ -438,7 +438,7 @@ typedef struct sx1268_info_s
 
 /**
  * @brief     link spi_init function
- * @param[in] HANDLE points to a sx1268 handle structure
+ * @param[in] HANDLE points to an sx1268 handle structure
  * @param[in] FUC points to a spi_init function address
  * @note      none
  */
@@ -446,7 +446,7 @@ typedef struct sx1268_info_s
 
 /**
  * @brief     link spi_deinit function
- * @param[in] HANDLE points to a sx1268 handle structure
+ * @param[in] HANDLE points to an sx1268 handle structure
  * @param[in] FUC points to a spi_deinit function address
  * @note      none
  */
@@ -454,7 +454,7 @@ typedef struct sx1268_info_s
 
 /**
  * @brief     link spi_write_read function
- * @param[in] HANDLE points to a sx1268 handle structure
+ * @param[in] HANDLE points to an sx1268 handle structure
  * @param[in] FUC points to a spi_write_read function address
  * @note      none
  */
@@ -462,7 +462,7 @@ typedef struct sx1268_info_s
 
 /**
  * @brief     link reset_gpio_init function
- * @param[in] HANDLE points to a sx1268 handle structure
+ * @param[in] HANDLE points to an sx1268 handle structure
  * @param[in] FUC points to a reset_gpio_init function address
  * @note      none
  */
@@ -470,7 +470,7 @@ typedef struct sx1268_info_s
 
 /**
  * @brief     link reset_gpio_deinit function
- * @param[in] HANDLE points to a sx1268 handle structure
+ * @param[in] HANDLE points to an sx1268 handle structure
  * @param[in] FUC points to a reset_gpio_deinit function address
  * @note      none
  */
@@ -478,7 +478,7 @@ typedef struct sx1268_info_s
 
 /**
  * @brief     link reset_gpio_write function
- * @param[in] HANDLE points to a sx1268 handle structure
+ * @param[in] HANDLE points to an sx1268 handle structure
  * @param[in] FUC points to a reset_gpio_write function address
  * @note      none
  */
@@ -486,7 +486,7 @@ typedef struct sx1268_info_s
 
 /**
  * @brief     link busy_gpio_init function
- * @param[in] HANDLE points to a sx1268 handle structure
+ * @param[in] HANDLE points to an sx1268 handle structure
  * @param[in] FUC points to a busy_gpio_init function address
  * @note      none
  */
@@ -494,7 +494,7 @@ typedef struct sx1268_info_s
 
 /**
  * @brief     link busy_gpio_deinit function
- * @param[in] HANDLE points to a sx1268 handle structure
+ * @param[in] HANDLE points to an sx1268 handle structure
  * @param[in] FUC points to a busy_gpio_deinit function address
  * @note      none
  */
@@ -502,7 +502,7 @@ typedef struct sx1268_info_s
 
 /**
  * @brief     link busy_gpio_read function
- * @param[in] HANDLE points to a sx1268 handle structure
+ * @param[in] HANDLE points to an sx1268 handle structure
  * @param[in] FUC points to a busy_gpio_read function address
  * @note      none
  */
@@ -510,7 +510,7 @@ typedef struct sx1268_info_s
 
 /**
  * @brief     link delay_ms function
- * @param[in] HANDLE points to a sx1268 handle structure
+ * @param[in] HANDLE points to an sx1268 handle structure
  * @param[in] FUC points to a delay_ms function address
  * @note      none
  */
@@ -518,7 +518,7 @@ typedef struct sx1268_info_s
 
 /**
  * @brief     link debug_print function
- * @param[in] HANDLE points to a sx1268 handle structure
+ * @param[in] HANDLE points to an sx1268 handle structure
  * @param[in] FUC points to a debug_print function address
  * @note      none
  */
@@ -526,7 +526,7 @@ typedef struct sx1268_info_s
 
 /**
  * @brief     link receive_callback function
- * @param[in] HANDLE points to a sx1268 handle structure
+ * @param[in] HANDLE points to an sx1268 handle structure
  * @param[in] FUC points to a receive_callback function address
  * @note      none
  */
@@ -545,7 +545,7 @@ typedef struct sx1268_info_s
 
 /**
  * @brief      get chip's information
- * @param[out] *info points to a sx1268 info structure
+ * @param[out] *info points to an sx1268 info structure
  * @return     status code
  *             - 0 success
  *             - 2 handle is NULL
@@ -555,7 +555,7 @@ uint8_t sx1268_info(sx1268_info_t *info);
 
 /**
  * @brief     irq handler
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @return    status code
  *            - 0 success
  *            - 1 run failed
@@ -567,7 +567,7 @@ uint8_t sx1268_irq_handler(sx1268_handle_t *handle);
 
 /**
  * @brief     initialize the chip
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @return    status code
  *            - 0 success
  *            - 1 spi initialization failed
@@ -582,7 +582,7 @@ uint8_t sx1268_init(sx1268_handle_t *handle);
 
 /**
  * @brief     close the chip
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @return    status code
  *            - 0 success
  *            - 1 spi deinit failed
@@ -598,7 +598,7 @@ uint8_t sx1268_deinit(sx1268_handle_t *handle);
 
 /**
  * @brief     sent the lora data
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] standby_src is the clock source
  * @param[in] preamble_length is the preamble length
  * @param[in] header_type is the header type
@@ -625,8 +625,8 @@ uint8_t sx1268_lora_transmit(sx1268_handle_t *handle, sx1268_clock_source_t stan
 
 /**
  * @brief      run the cad
- * @param[in]  *handle points to a sx1268 handle structure
- * @param[out] *enable points to a enable buffer
+ * @param[in]  *handle points to an sx1268 handle structure
+ * @param[out] *enable points to an enable buffer
  * @return     status code
  *             - 0 success
  *             - 1 lora cad failed
@@ -640,7 +640,7 @@ uint8_t sx1268_lora_cad(sx1268_handle_t *handle, sx1268_bool_t *enable);
 
 /**
  * @brief     enter to the single receive mode
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] us is the rx timeout
  * @return    status code
  *            - 0 success
@@ -654,7 +654,7 @@ uint8_t sx1268_single_receive(sx1268_handle_t *handle, double us);
 
 /**
  * @brief     enter to the continuous receive mode
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @return    status code
  *            - 0 success
  *            - 1 lora continuous receive failed
@@ -667,7 +667,7 @@ uint8_t sx1268_continuous_receive(sx1268_handle_t *handle);
 
 /**
  * @brief     write the register
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] reg is the register address
  * @param[in] *buf points to a data buffer
  * @param[in] len is the data length
@@ -683,7 +683,7 @@ uint8_t sx1268_write_register(sx1268_handle_t *handle, uint16_t reg, uint8_t *bu
 
 /**
  * @brief      read the register
- * @param[in]  *handle points to a sx1268 handle structure
+ * @param[in]  *handle points to an sx1268 handle structure
  * @param[in]  reg is the register address
  * @param[out] *buf points to a data buffer
  * @param[in]  len is the data length
@@ -699,7 +699,7 @@ uint8_t sx1268_read_register(sx1268_handle_t *handle, uint16_t reg, uint8_t *buf
 
 /**
  * @brief     write the buffer
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] offset is the buffer offset
  * @param[in] *buf points to a data buffer
  * @param[in] len is the data length
@@ -715,7 +715,7 @@ uint8_t sx1268_write_buffer(sx1268_handle_t *handle, uint8_t offset, uint8_t *bu
 
 /**
  * @brief      read the buffer
- * @param[in]  *handle points to a sx1268 handle structure
+ * @param[in]  *handle points to an sx1268 handle structure
  * @param[in]  offset is the buffer offset
  * @param[out] *buf points to a data buffer
  * @param[in]  len is the data length
@@ -731,7 +731,7 @@ uint8_t sx1268_read_buffer(sx1268_handle_t *handle, uint8_t offset, uint8_t *buf
 
 /**
  * @brief      check the packet error
- * @param[in]  *handle points to a sx1268 handle structure
+ * @param[in]  *handle points to an sx1268 handle structure
  * @param[out] *enable points to a bool buffer
  * @return     status code
  *             - 0 success
@@ -743,7 +743,7 @@ uint8_t sx1268_check_packet_error(sx1268_handle_t *handle, sx1268_bool_t *enable
 
 /**
  * @brief     enter to the sleep mode
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] mode is the start mode
  * @param[in] rtc_wake_up_enable is a bool value
  * @return    status code
@@ -758,7 +758,7 @@ uint8_t sx1268_set_sleep(sx1268_handle_t *handle, sx1268_start_mode_t mode, sx12
 
 /**
  * @brief     enter to the standby mode
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] src is the clock source
  * @return    status code
  *            - 0 success
@@ -772,7 +772,7 @@ uint8_t sx1268_set_standby(sx1268_handle_t *handle, sx1268_clock_source_t src);
 
 /**
  * @brief     enter to the frequency synthesis mode
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @return    status code
  *            - 0 success
  *            - 1 set frequency synthesis failed
@@ -785,7 +785,7 @@ uint8_t sx1268_set_frequency_synthesis(sx1268_handle_t *handle);
 
 /**
  * @brief     enter to the tx mode
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] timeout is the tx timeout
  * @return    status code
  *            - 0 success
@@ -799,7 +799,7 @@ uint8_t sx1268_set_tx(sx1268_handle_t *handle, uint32_t timeout);
 
 /**
  * @brief     enter to the rx mode
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] timeout is the rx timeout
  * @return    status code
  *            - 0 success
@@ -814,7 +814,7 @@ uint8_t sx1268_set_rx(sx1268_handle_t *handle, uint32_t timeout);
 
 /**
  * @brief      convert the timeout to the register raw data
- * @param[in]  *handle points to a sx1268 handle structure
+ * @param[in]  *handle points to an sx1268 handle structure
  * @param[in]  us is the timeout
  * @param[out] *reg points to a register raw buffer
  * @return     status code
@@ -827,7 +827,7 @@ uint8_t sx1268_timeout_convert_to_register(sx1268_handle_t *handle, double us, u
 
 /**
  * @brief      convert the register raw data to the timeout
- * @param[in]  *handle points to a sx1268 handle structure
+ * @param[in]  *handle points to an sx1268 handle structure
  * @param[in]  reg is the register raw data
  * @param[out] *us points to a us buffer
  * @return     status code
@@ -840,7 +840,7 @@ uint8_t sx1268_timeout_convert_to_data(sx1268_handle_t *handle, uint32_t reg, do
 
 /**
  * @brief     stop timer on preamble
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] enable is a bool value
  * @return    status code
  *            - 0 success
@@ -854,7 +854,7 @@ uint8_t sx1268_set_stop_timer_on_preamble(sx1268_handle_t *handle, sx1268_bool_t
 
 /**
  * @brief     set the rx duty cycle
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] rx_period is the rx period
  * @param[in] sleep_period is the sleep period
  * @return    status code
@@ -869,7 +869,7 @@ uint8_t sx1268_set_rx_duty_cycle(sx1268_handle_t *handle, uint32_t rx_period, ui
 
 /**
  * @brief     run the cad
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @return    status code
  *            - 0 success
  *            - 1 set cad failed
@@ -882,7 +882,7 @@ uint8_t sx1268_set_cad(sx1268_handle_t *handle);
 
 /**
  * @brief     enter to the tx continuous wave mode
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @return    status code
  *            - 0 success
  *            - 1 set tx continuous wave failed
@@ -895,7 +895,7 @@ uint8_t sx1268_set_tx_continuous_wave(sx1268_handle_t *handle);
 
 /**
  * @brief     enter to the tx infinite preamble mode
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @return    status code
  *            - 0 success
  *            - 1 set tx infinite preamble failed
@@ -908,7 +908,7 @@ uint8_t sx1268_set_tx_infinite_preamble(sx1268_handle_t *handle);
 
 /**
  * @brief     set the regulator_mode
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] mode is the regulator mode
  * @return    status code
  *            - 0 success
@@ -922,7 +922,7 @@ uint8_t sx1268_set_regulator_mode(sx1268_handle_t *handle, sx1268_regulator_mode
 
 /**
  * @brief     set the calibration settings
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] settings is the calibration param
  * @return    status code
  *            - 0 success
@@ -935,10 +935,10 @@ uint8_t sx1268_set_regulator_mode(sx1268_handle_t *handle, sx1268_regulator_mode
 uint8_t sx1268_set_calibration(sx1268_handle_t *handle, uint8_t settings);
 
 /**
- * @brief     set the calibration image frequence
- * @param[in] *handle points to a sx1268 handle structure
- * @param[in] freq1 is the image frequence 1
- * @param[in] freq2 is the image frequence 2
+ * @brief     set the calibration image frequency
+ * @param[in] *handle points to an sx1268 handle structure
+ * @param[in] freq1 is the image frequency 1
+ * @param[in] freq2 is the image frequency 2
  * @return    status code
  *            - 0 success
  *            - 1 set calibration image failed
@@ -951,7 +951,7 @@ uint8_t sx1268_set_calibration_image(sx1268_handle_t *handle, uint8_t freq1, uin
 
 /**
  * @brief     set the pa config
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] pa_duty_cycle is the pa duty cycle
  * @param[in] hp_max is the max power
  * @return    status code
@@ -966,7 +966,7 @@ uint8_t sx1268_set_pa_config(sx1268_handle_t *handle, uint8_t pa_duty_cycle, uin
 
 /**
  * @brief     set the rx tx fallback mode
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] mode is the rx tx fallback mode
  * @return    status code
  *            - 0 success
@@ -980,7 +980,7 @@ uint8_t sx1268_set_rx_tx_fallback_mode(sx1268_handle_t *handle, sx1268_rx_tx_fal
 
 /**
  * @brief     set the dio irq params
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] irq_mask is the irq mask
  * @param[in] dio1_mask is the dio1 mask
  * @param[in] dio2_mask is the dio2 mask
@@ -998,7 +998,7 @@ uint8_t sx1268_set_dio_irq_params(sx1268_handle_t *handle, uint16_t irq_mask, ui
 
 /**
  * @brief      get the irq status
- * @param[in]  *handle points to a sx1268 handle structure
+ * @param[in]  *handle points to an sx1268 handle structure
  * @param[out] *status points to a status buffer
  * @return     status code
  *             - 0 success
@@ -1012,7 +1012,7 @@ uint8_t sx1268_get_irq_status(sx1268_handle_t *handle, uint16_t *status);
 
 /**
  * @brief     clear the irq status
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] clear_irq_param is the irq mask
  * @return    status code
  *            - 0 success
@@ -1026,7 +1026,7 @@ uint8_t sx1268_clear_irq_status(sx1268_handle_t *handle, uint16_t clear_irq_para
 
 /**
  * @brief     set dio2 as rf switch ctrl
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] enable is a bool value
  * @return    status code
  *            - 0 success
@@ -1040,7 +1040,7 @@ uint8_t sx1268_set_dio2_as_rf_switch_ctrl(sx1268_handle_t *handle, sx1268_bool_t
 
 /**
  * @brief     set dio3 as tcxo ctrl
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] voltage is the tcxo voltage
  * @param[in] delay is the tcxo ctrl delay
  * @return    status code
@@ -1055,7 +1055,7 @@ uint8_t sx1268_set_dio3_as_tcxo_ctrl(sx1268_handle_t *handle, sx1268_tcxo_voltag
 
 /**
  * @brief      convert the frequency to the register raw data
- * @param[in]  *handle points to a sx1268 handle structure
+ * @param[in]  *handle points to an sx1268 handle structure
  * @param[in]  freq is the frequency
  * @param[out] *reg points to a register raw buffer
  * @return     status code
@@ -1068,7 +1068,7 @@ uint8_t sx1268_frequency_convert_to_register(sx1268_handle_t *handle, uint32_t f
 
 /**
  * @brief      convert the register raw data to the frequency
- * @param[in]  *handle points to a sx1268 handle structure
+ * @param[in]  *handle points to an sx1268 handle structure
  * @param[in]  reg is the register raw data
  * @param[out] *freq points to a frequency buffer
  * @return     status code
@@ -1081,7 +1081,7 @@ uint8_t sx1268_frequency_convert_to_data(sx1268_handle_t *handle, uint32_t reg, 
 
 /**
  * @brief     set the rf frequency
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] reg is the rf frequency register data
  * @return    status code
  *            - 0 success
@@ -1095,7 +1095,7 @@ uint8_t sx1268_set_rf_frequency(sx1268_handle_t *handle, uint32_t reg);
 
 /**
  * @brief     set the packet type
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] type is the packet type
  * @return    status code
  *            - 0 success
@@ -1109,7 +1109,7 @@ uint8_t sx1268_set_packet_type(sx1268_handle_t *handle, sx1268_packet_type_t typ
 
 /**
  * @brief      get the packet type
- * @param[in]  *handle points to a sx1268 handle structure
+ * @param[in]  *handle points to an sx1268 handle structure
  * @param[out] *type points to a packet type buffer
  * @return     status code
  *             - 0 success
@@ -1123,7 +1123,7 @@ uint8_t sx1268_get_packet_type(sx1268_handle_t *handle, sx1268_packet_type_t *ty
 
 /**
  * @brief     set the tx params
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] dbm is the rf power 
  * @param[in] t is the ramp time
  * @return    status code
@@ -1138,7 +1138,7 @@ uint8_t sx1268_set_tx_params(sx1268_handle_t *handle, int8_t dbm, sx1268_ramp_ti
 
 /**
  * @brief     set the modulation params in GFSK mode
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] br is the bit rate
  * @param[in] shape is the pulse shape
  * @param[in] bw is the bandwidth
@@ -1156,7 +1156,7 @@ uint8_t sx1268_set_gfsk_modulation_params(sx1268_handle_t *handle, uint32_t br, 
 
 /**
  * @brief      convert the bit rate to the register raw data
- * @param[in]  *handle points to a sx1268 handle structure
+ * @param[in]  *handle points to an sx1268 handle structure
  * @param[in]  br is the bit rate
  * @param[out] *reg points to a register raw buffer
  * @return     status code
@@ -1169,7 +1169,7 @@ uint8_t sx1268_gfsk_bit_rate_convert_to_register(sx1268_handle_t *handle, uint32
 
 /**
  * @brief      convert the register raw data to the bit rate
- * @param[in]  *handle points to a sx1268 handle structure
+ * @param[in]  *handle points to an sx1268 handle structure
  * @param[in]  reg is the register raw data
  * @param[out] *br points to a bit rate buffer
  * @return     status code
@@ -1182,7 +1182,7 @@ uint8_t sx1268_gfsk_bit_rate_convert_to_data(sx1268_handle_t *handle, uint32_t r
 
 /**
  * @brief      convert the frequency deviation to the register raw data
- * @param[in]  *handle points to a sx1268 handle structure
+ * @param[in]  *handle points to an sx1268 handle structure
  * @param[in]  freq is the frequency deviation
  * @param[out] *reg points to a register raw buffer
  * @return     status code
@@ -1195,7 +1195,7 @@ uint8_t sx1268_gfsk_frequency_deviation_convert_to_register(sx1268_handle_t *han
 
 /**
  * @brief      convert the register raw data to the frequency deviation
- * @param[in]  *handle points to a sx1268 handle structure
+ * @param[in]  *handle points to an sx1268 handle structure
  * @param[in]  reg is the register raw data
  * @param[out] *freq points to a frequency deviation buffer
  * @return     status code
@@ -1208,7 +1208,7 @@ uint8_t sx1268_gfsk_frequency_deviation_convert_to_data(sx1268_handle_t *handle,
 
 /**
  * @brief     set the modulation params in LoRa mode
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] sf is the spreading factor
  * @param[in] bw is the bandwidth
  * @param[in] cr is coding rate
@@ -1226,7 +1226,7 @@ uint8_t sx1268_set_lora_modulation_params(sx1268_handle_t *handle, sx1268_lora_s
 
 /**
  * @brief     set the packet params in GFSK mode
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] preamble_length is the preamble length
  * @param[in] detector_length is the preamble detector length
  * @param[in] sync_word_length is the sync word length
@@ -1252,7 +1252,7 @@ uint8_t sx1268_set_gfsk_packet_params(sx1268_handle_t *handle, uint16_t preamble
 
 /**
  * @brief     set the packet params in LoRa mode
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] preamble_length is the preamble length
  * @param[in] header_type is the header type
  * @param[in] payload_length is the length of payload
@@ -1272,7 +1272,7 @@ uint8_t sx1268_set_lora_packet_params(sx1268_handle_t *handle, uint16_t preamble
 
 /**
  * @brief     set the cad params
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] num is the cad symbol number
  * @param[in] cad_det_peak is the cad detection peak
  * @param[in] cad_det_min is the min cad detection peak 
@@ -1292,7 +1292,7 @@ uint8_t sx1268_set_cad_params(sx1268_handle_t *handle, sx1268_lora_cad_symbol_nu
 
 /**
  * @brief     set the buffer base address
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] tx_base_addr is the tx base address
  * @param[in] rx_base_addr is the rx base address
  * @return    status code
@@ -1307,7 +1307,7 @@ uint8_t sx1268_set_buffer_base_address(sx1268_handle_t *handle, uint8_t tx_base_
 
 /**
  * @brief     set the lora symbol number timeout
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] symb_num is the symbol number
  * @return    status code
  *            - 0 success
@@ -1321,7 +1321,7 @@ uint8_t sx1268_set_lora_symb_num_timeout(sx1268_handle_t *handle, uint8_t symb_n
 
 /**
  * @brief      get the status
- * @param[in]  *handle points to a sx1268 handle structure
+ * @param[in]  *handle points to an sx1268 handle structure
  * @param[out] *status points to a status buffer
  * @return     status code
  *             - 0 success
@@ -1335,9 +1335,9 @@ uint8_t sx1268_get_status(sx1268_handle_t *handle, uint8_t *status);
 
 /**
  * @brief      get the rx buffer status
- * @param[in]  *handle points to a sx1268 handle structure
- * @param[out] *payload_length_rx points to a rx payload length buffer
- * @param[out] *rx_start_buffer_pointer points to a rx start pointer buffer
+ * @param[in]  *handle points to an sx1268 handle structure
+ * @param[out] *payload_length_rx points to an rx payload length buffer
+ * @param[out] *rx_start_buffer_pointer points to an rx start pointer buffer
  * @return     status code
  *             - 0 success
  *             - 1 get rx buffer status failed
@@ -1350,12 +1350,12 @@ uint8_t sx1268_get_rx_buffer_status(sx1268_handle_t *handle, uint8_t *payload_le
 
 /**
  * @brief      get the packet status in GFSK mode
- * @param[in]  *handle points to a sx1268 handle structure
- * @param[out] *rx_status points to a rx status buffer
- * @param[out] *rssi_sync_raw points to a rssi sync raw buffer
- * @param[out] *rssi_avg_raw points to a rssi avg raw buffer
- * @param[out] *rssi_sync points to a rssi sync buffer
- * @param[out] *rssi_avg points to a rssi avg buffer
+ * @param[in]  *handle points to an sx1268 handle structure
+ * @param[out] *rx_status points to an rx status buffer
+ * @param[out] *rssi_sync_raw points to an rssi sync raw buffer
+ * @param[out] *rssi_avg_raw points to an rssi avg raw buffer
+ * @param[out] *rssi_sync points to an rssi sync buffer
+ * @param[out] *rssi_avg points to an rssi avg buffer
  * @return     status code
  *             - 0 success
  *             - 1 get gfsk packet status failed
@@ -1369,12 +1369,12 @@ uint8_t sx1268_get_gfsk_packet_status(sx1268_handle_t *handle, uint8_t *rx_statu
 
 /**
  * @brief      get the packet status in LoRa mode
- * @param[in]  *handle points to a sx1268 handle structure
- * @param[out] *rssi_pkt_raw points to a rssi packet raw buffer
- * @param[out] *snr_pkt_raw points to a snr packet raw buffer
+ * @param[in]  *handle points to an sx1268 handle structure
+ * @param[out] *rssi_pkt_raw points to an rssi packet raw buffer
+ * @param[out] *snr_pkt_raw points to an snr packet raw buffer
  * @param[out] *signal_rssi_pkt_raw points to a signal rssi packet raw buffer
- * @param[out] *rssi_pkt points to a rssi packet buffer
- * @param[out] *snr_pkt points to a snr packet buffer
+ * @param[out] *rssi_pkt points to an rssi packet buffer
+ * @param[out] *snr_pkt points to an snr packet buffer
  * @param[out] *signal_rssi_pkt points to a signal rssi packet buffer
  * @return     status code
  *             - 0 success
@@ -1389,9 +1389,9 @@ uint8_t sx1268_get_lora_packet_status(sx1268_handle_t *handle, uint8_t *rssi_pkt
 
 /**
  * @brief      get the instantaneous rssi
- * @param[in]  *handle points to a sx1268 handle structure
- * @param[out] *rssi_inst_raw points to a rssi instantaneous raw buffer
- * @param[out] *rssi_inst points to a rssi instantaneous buffer
+ * @param[in]  *handle points to an sx1268 handle structure
+ * @param[out] *rssi_inst_raw points to an rssi instantaneous raw buffer
+ * @param[out] *rssi_inst points to an rssi instantaneous buffer
  * @return     status code
  *             - 0 success
  *             - 1 get instantaneous rssi failed
@@ -1404,7 +1404,7 @@ uint8_t sx1268_get_instantaneous_rssi(sx1268_handle_t *handle, uint8_t *rssi_ins
 
 /**
  * @brief      get the stats
- * @param[in]  *handle points to a sx1268 handle structure
+ * @param[in]  *handle points to an sx1268 handle structure
  * @param[out] *pkt_received points to a packet received counter buffer
  * @param[out] *pkt_crc_error points to a packet crc error buffer
  * @param[out] *pkt_length_header_error points to a packet length header error buffer
@@ -1420,7 +1420,7 @@ uint8_t sx1268_get_stats(sx1268_handle_t *handle, uint16_t *pkt_received, uint16
 
 /**
  * @brief     reset the stats
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] pkt_received is the received packet counter mask
  * @param[in] pkt_crc_error is the packet crc error mask
  * @param[in] pkt_length_header_error is the packet length header error mask
@@ -1436,8 +1436,8 @@ uint8_t sx1268_reset_stats(sx1268_handle_t *handle, uint16_t pkt_received, uint1
 
 /**
  * @brief      get the device errors
- * @param[in]  *handle points to a sx1268 handle structure
- * @param[out] *op_error points to a op error buffer
+ * @param[in]  *handle points to an sx1268 handle structure
+ * @param[out] *op_error points to an op error buffer
  * @return     status code
  *             - 0 success
  *             - 1 get device errors failed
@@ -1450,7 +1450,7 @@ uint8_t sx1268_get_device_errors(sx1268_handle_t *handle, uint16_t *op_error);
 
 /**
  * @brief     clear the device errors
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @return    status code
  *            - 0 success
  *            - 1 clear device errors failed
@@ -1474,7 +1474,7 @@ uint8_t sx1268_clear_device_errors(sx1268_handle_t *handle);
 
 /**
  * @brief     set the whitening initial value in FSK mode
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] value is the set value
  * @return    status code
  *            - 0 success
@@ -1488,7 +1488,7 @@ uint8_t sx1268_set_fsk_whitening_initial_value(sx1268_handle_t *handle, uint16_t
 
 /**
  * @brief      get the whitening initial value in FSK mode
- * @param[in]  *handle points to a sx1268 handle structure
+ * @param[in]  *handle points to an sx1268 handle structure
  * @param[out] *value points to a value buffer
  * @return     status code
  *             - 0 success
@@ -1501,12 +1501,12 @@ uint8_t sx1268_set_fsk_whitening_initial_value(sx1268_handle_t *handle, uint16_t
 uint8_t sx1268_get_fsk_whitening_initial_value(sx1268_handle_t *handle, uint16_t *value);
 
 /**
- * @brief     set the crc initical value in FSK mode
- * @param[in] *handle points to a sx1268 handle structure
+ * @brief     set the crc initial value in FSK mode
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] value is the set value
  * @return    status code
  *            - 0 success
- *            - 1 set fsk crc initical value failed
+ *            - 1 set fsk crc initial value failed
  *            - 2 handle is NULL
  *            - 3 handle is not initialized
  *            - 4 chip is busy
@@ -1516,7 +1516,7 @@ uint8_t sx1268_set_fsk_crc_initical_value(sx1268_handle_t *handle, uint16_t valu
 
 /**
  * @brief      get the crc initical value in FSK mode
- * @param[in]  *handle points to a sx1268 handle structure
+ * @param[in]  *handle points to an sx1268 handle structure
  * @param[out] *value points to a value buffer
  * @return     status code
  *             - 0 success
@@ -1530,7 +1530,7 @@ uint8_t sx1268_get_fsk_crc_initical_value(sx1268_handle_t *handle, uint16_t *val
 
 /**
  * @brief     set the crc polynomial value in FSK mode
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] value is the set value
  * @return    status code
  *            - 0 success
@@ -1544,7 +1544,7 @@ uint8_t sx1268_set_fsk_crc_polynomial_value(sx1268_handle_t *handle, uint16_t va
 
 /**
  * @brief      get the crc polynomial value in FSK mode
- * @param[in]  *handle points to a sx1268 handle structure
+ * @param[in]  *handle points to an sx1268 handle structure
  * @param[out] *value points to a value buffer
  * @return     status code
  *             - 0 success
@@ -1558,7 +1558,7 @@ uint8_t sx1268_get_fsk_crc_polynomial_value(sx1268_handle_t *handle, uint16_t *v
 
 /**
  * @brief     set the sync word in FSK mode
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] *sync_word points to sync word buffer
  * @return    status code
  *            - 0 success
@@ -1572,7 +1572,7 @@ uint8_t sx1268_set_fsk_sync_word(sx1268_handle_t *handle, uint8_t sync_word[8]);
 
 /**
  * @brief      get the sync word in FSK mode
- * @param[in]  *handle points to a sx1268 handle structure
+ * @param[in]  *handle points to an sx1268 handle structure
  * @param[out] *sync_word points to sync word buffer
  * @return     status code
  *             - 0 success
@@ -1586,7 +1586,7 @@ uint8_t sx1268_get_fsk_sync_word(sx1268_handle_t *handle, uint8_t sync_word[8]);
 
 /**
  * @brief     set the node address in FSK mode
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] addr is the node address
  * @return    status code
  *            - 0 success
@@ -1600,7 +1600,7 @@ uint8_t sx1268_set_fsk_node_address(sx1268_handle_t *handle, uint8_t addr);
 
 /**
  * @brief      get the node address in FSK mode
- * @param[in]  *handle points to a sx1268 handle structure
+ * @param[in]  *handle points to an sx1268 handle structure
  * @param[out] *addr points to a node address buffer
  * @return     status code
  *             - 0 success
@@ -1614,7 +1614,7 @@ uint8_t sx1268_get_fsk_node_address(sx1268_handle_t *handle, uint8_t *addr);
 
 /**
  * @brief     set the broadcast address in FSK mode
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] addr is the broadcast address
  * @return    status code
  *            - 0 success
@@ -1628,7 +1628,7 @@ uint8_t sx1268_set_fsk_broadcast_address(sx1268_handle_t *handle, uint8_t addr);
 
 /**
  * @brief      get the broadcast address in FSK mode
- * @param[in]  *handle points to a sx1268 handle structure
+ * @param[in]  *handle points to an sx1268 handle structure
  * @param[out] *addr points to a broadcast address buffer
  * @return     status code
  *             - 0 success
@@ -1642,7 +1642,7 @@ uint8_t sx1268_get_fsk_broadcast_address(sx1268_handle_t *handle, uint8_t *addr)
 
 /**
  * @brief     set the iq polarity
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] setup is the settings
  * @return    status code
  *            - 0 success
@@ -1656,7 +1656,7 @@ uint8_t sx1268_set_iq_polarity(sx1268_handle_t *handle, uint8_t setup);
 
 /**
  * @brief      get the iq polarity
- * @param[in]  *handle points to a sx1268 handle structure
+ * @param[in]  *handle points to an sx1268 handle structure
  * @param[out] *setup points to a settings buffer
  * @return     status code
  *             - 0 success
@@ -1670,7 +1670,7 @@ uint8_t sx1268_get_iq_polarity(sx1268_handle_t *handle, uint8_t *setup);
 
 /**
  * @brief     set the lora sync word
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] sync_word is the sync word
  * @return    status code
  *            - 0 success
@@ -1684,8 +1684,8 @@ uint8_t sx1268_set_lora_sync_word(sx1268_handle_t *handle, uint16_t sync_word);
 
 /**
  * @brief      get the lora sync word
- * @param[in]  *handle points to a sx1268 handle structure
- * @param[out] *sync_word points to a sync word buffer
+ * @param[in]  *handle points to an sx1268 handle structure
+ * @param[out] *sync_word points to an sync word buffer
  * @return     status code
  *             - 0 success
  *             - 1 get lora sync word failed
@@ -1698,7 +1698,7 @@ uint8_t sx1268_get_lora_sync_word(sx1268_handle_t *handle, uint16_t *sync_word);
 
 /**
  * @brief      get the random number
- * @param[in]  *handle points to a sx1268 handle structure
+ * @param[in]  *handle points to an sx1268 handle structure
  * @param[out] *r points to a random number buffer
  * @return     status code
  *             - 0 success
@@ -1712,7 +1712,7 @@ uint8_t sx1268_get_random_number(sx1268_handle_t *handle, uint32_t *r);
 
 /**
  * @brief     set the tx modulation
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] modulation is the tx modulation
  * @return    status code
  *            - 0 success
@@ -1726,7 +1726,7 @@ uint8_t sx1268_set_tx_modulation(sx1268_handle_t *handle, uint8_t modulation);
 
 /**
  * @brief      get the tx modulation
- * @param[in]  *handle points to a sx1268 handle structure
+ * @param[in]  *handle points to an sx1268 handle structure
  * @param[out] *modulation points to a tx modulation buffer
  * @return     status code
  *             - 0 success
@@ -1740,7 +1740,7 @@ uint8_t sx1268_get_tx_modulation(sx1268_handle_t *handle, uint8_t *modulation);
 
 /**
  * @brief     set the rx gain
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] gain is the rx gain
  * @return    status code
  *            - 0 success
@@ -1754,8 +1754,8 @@ uint8_t sx1268_set_rx_gain(sx1268_handle_t *handle, uint8_t gain);
 
 /**
  * @brief      get the rx gain
- * @param[in]  *handle points to a sx1268 handle structure
- * @param[out] *gain points to a rx gain buffer
+ * @param[in]  *handle points to an sx1268 handle structure
+ * @param[out] *gain points to an rx gain buffer
  * @return     status code
  *             - 0 success
  *             - 1 get rx gain failed
@@ -1768,7 +1768,7 @@ uint8_t sx1268_get_rx_gain(sx1268_handle_t *handle, uint8_t *gain);
 
 /**
  * @brief     set the tx clamp config
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] config is the tx clamp config
  * @return    status code
  *            - 0 success
@@ -1782,7 +1782,7 @@ uint8_t sx1268_set_tx_clamp_config(sx1268_handle_t *handle, uint8_t config);
 
 /**
  * @brief      get the tx clamp config
- * @param[in]  *handle points to a sx1268 handle structure
+ * @param[in]  *handle points to an sx1268 handle structure
  * @param[out] *config points to a tx clamp config buffer
  * @return     status code
  *             - 0 success
@@ -1796,7 +1796,7 @@ uint8_t sx1268_get_tx_clamp_config(sx1268_handle_t *handle, uint8_t *config);
 
 /**
  * @brief     set the ocp
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] ocp is the over current protection level
  * @return    status code
  *            - 0 success
@@ -1810,8 +1810,8 @@ uint8_t sx1268_set_ocp(sx1268_handle_t *handle, uint8_t ocp);
 
 /**
  * @brief      get the ocp
- * @param[in]  *handle points to a sx1268 handle structure
- * @param[out] *ocp points to a over current protection level buffer
+ * @param[in]  *handle points to an sx1268 handle structure
+ * @param[out] *ocp points to an over current protection level buffer
  * @return     status code
  *             - 0 success
  *             - 1 get ocp failed
@@ -1824,7 +1824,7 @@ uint8_t sx1268_get_ocp(sx1268_handle_t *handle, uint8_t *ocp);
 
 /**
  * @brief     set the rtc control
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] control is the rtc control
  * @return    status code
  *            - 0 success
@@ -1838,8 +1838,8 @@ uint8_t sx1268_set_rtc_control(sx1268_handle_t *handle, uint8_t control);
 
 /**
  * @brief      get the rtc control
- * @param[in]  *handle points to a sx1268 handle structure
- * @param[out] *control points to a rtc control buffer
+ * @param[in]  *handle points to an sx1268 handle structure
+ * @param[out] *control points to an rtc control buffer
  * @return     status code
  *             - 0 success
  *             - 1 get rtc control failed
@@ -1852,7 +1852,7 @@ uint8_t sx1268_get_rtc_control(sx1268_handle_t *handle, uint8_t *control);
 
 /**
  * @brief     set the xta trim
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] trim is the xta trim
  * @return    status code
  *            - 0 success
@@ -1866,8 +1866,8 @@ uint8_t sx1268_set_xta_trim(sx1268_handle_t *handle, uint8_t trim);
 
 /**
  * @brief      get the xta trim
- * @param[in]  *handle points to a sx1268 handle structure
- * @param[out] *trim points to a xta trim buffer
+ * @param[in]  *handle points to an sx1268 handle structure
+ * @param[out] *trim points to an xta trim buffer
  * @return     status code
  *             - 0 success
  *             - 1 get xta trim failed
@@ -1880,7 +1880,7 @@ uint8_t sx1268_get_xta_trim(sx1268_handle_t *handle, uint8_t *trim);
 
 /**
  * @brief     set the xtb trim
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] trim is the xtb trim
  * @return    status code
  *            - 0 success
@@ -1894,8 +1894,8 @@ uint8_t sx1268_set_xtb_trim(sx1268_handle_t *handle, uint8_t trim);
 
 /**
  * @brief      get the xtb trim
- * @param[in]  *handle points to a sx1268 handle structure
- * @param[out] *trim points to a xtb trim buffer
+ * @param[in]  *handle points to an sx1268 handle structure
+ * @param[out] *trim points to an xtb trim buffer
  * @return     status code
  *             - 0 success
  *             - 1 get xtb trim failed
@@ -1908,7 +1908,7 @@ uint8_t sx1268_get_xtb_trim(sx1268_handle_t *handle, uint8_t *trim);
 
 /**
  * @brief     set the dio3 output
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] control is the dio3 output control
  * @return    status code
  *            - 0 success
@@ -1922,7 +1922,7 @@ uint8_t sx1268_set_dio3_output_control(sx1268_handle_t *handle, uint8_t control)
 
 /**
  * @brief      get the dio3 output
- * @param[in]  *handle points to a sx1268 handle structure
+ * @param[in]  *handle points to an sx1268 handle structure
  * @param[out] *control points to a dio3 output control buffer
  * @return     status code
  *             - 0 success
@@ -1936,7 +1936,7 @@ uint8_t sx1268_get_dio3_output_control(sx1268_handle_t *handle, uint8_t *control
 
 /**
  * @brief     set the event mask
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] mask is the event mask
  * @return    status code
  *            - 0 success
@@ -1950,8 +1950,8 @@ uint8_t sx1268_set_event_mask(sx1268_handle_t *handle, uint8_t mask);
 
 /**
  * @brief      get the event mask
- * @param[in]  *handle points to a sx1268 handle structure
- * @param[out] *mask points to a event mask buffer
+ * @param[in]  *handle points to an sx1268 handle structure
+ * @param[out] *mask points to an event mask buffer
  * @return     status code
  *             - 0 success
  *             - 1 get event mask failed
@@ -1964,7 +1964,7 @@ uint8_t sx1268_get_event_mask(sx1268_handle_t *handle, uint8_t *mask);
 
 /**
  * @brief     set the dio output enable
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] enable is the enable settings
  * @return    status code
  *            - 0 success
@@ -1978,8 +1978,8 @@ uint8_t sx1268_set_dio_output_enable(sx1268_handle_t *handle, uint8_t enable);
 
 /**
  * @brief      get the dio output enable
- * @param[in]  *handle points to a sx1268 handle structure
- * @param[out] *enable points to a enable settings buffer
+ * @param[in]  *handle points to an sx1268 handle structure
+ * @param[out] *enable points to an enable settings buffer
  * @return     status code
  *             - 0 success
  *             - 1 get dio output enable failed
@@ -1992,7 +1992,7 @@ uint8_t sx1268_get_dio_output_enable(sx1268_handle_t *handle, uint8_t *enable);
 
 /**
  * @brief     set the dio input enable
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] enable is the enable settings
  * @return    status code
  *            - 0 success
@@ -2006,8 +2006,8 @@ uint8_t sx1268_set_dio_input_enable(sx1268_handle_t *handle, uint8_t enable);
 
 /**
  * @brief      get the dio input enable
- * @param[in]  *handle points to a sx1268 handle structure
- * @param[out] *enable points to a enable settings buffer
+ * @param[in]  *handle points to an sx1268 handle structure
+ * @param[out] *enable points to an enable settings buffer
  * @return     status code
  *             - 0 success
  *             - 1 get dio input enable failed
@@ -2020,7 +2020,7 @@ uint8_t sx1268_get_dio_input_enable(sx1268_handle_t *handle, uint8_t *enable);
 
 /**
  * @brief     set the pull up control
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] control is the pull up control
  * @return    status code
  *            - 0 success
@@ -2034,7 +2034,7 @@ uint8_t sx1268_set_pull_up_control(sx1268_handle_t *handle, uint8_t control);
 
 /**
  * @brief      get the pull up control
- * @param[in]  *handle points to a sx1268 handle structure
+ * @param[in]  *handle points to an sx1268 handle structure
  * @param[out] *control points to a pull up control buffer
  * @return     status code
  *             - 0 success
@@ -2048,7 +2048,7 @@ uint8_t sx1268_get_pull_up_control(sx1268_handle_t *handle, uint8_t *control);
 
 /**
  * @brief     set the pull down control
- * @param[in] *handle points to a sx1268 handle structure
+ * @param[in] *handle points to an sx1268 handle structure
  * @param[in] control is the pull down control
  * @return    status code
  *            - 0 success
@@ -2062,7 +2062,7 @@ uint8_t sx1268_set_pull_down_control(sx1268_handle_t *handle, uint8_t control);
 
 /**
  * @brief      get the pull down control
- * @param[in]  *handle points to a sx1268 handle structure
+ * @param[in]  *handle points to an sx1268 handle structure
  * @param[out] *control points to a pull down control buffer
  * @return     status code
  *             - 0 success
@@ -2087,10 +2087,10 @@ uint8_t sx1268_get_pull_down_control(sx1268_handle_t *handle, uint8_t *control);
 
 /**
  * @brief      write and read register
- * @param[in]  *handle points to a sx1268 handle structure
- * @param[in]  *in_buf points to a input buffer
+ * @param[in]  *handle points to an sx1268 handle structure
+ * @param[in]  *in_buf points to an input buffer
  * @param[in]  in_len is the input length
- * @param[out] *out_buf points to a output buffer
+ * @param[out] *out_buf points to an output buffer
  * @param[in]  out_len is the output length
  * @return     status code
  *             - 0 success

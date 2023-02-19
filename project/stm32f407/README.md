@@ -2,67 +2,121 @@
 
 #### 1.1 Chip Info
 
-chip name : STM32F407ZGT6.
+Chip Name: STM32F407ZGT6.
 
-extern oscillator : 8MHz.
+Extern Oscillator: 8MHz.
 
-uart pin: TX/RX PA9/PA10.
+UART Pin: TX/RX PA9/PA10.
 
-spi pin: SCK/MISO/MOSI/CS  PA5/PA6/PA7/PA4.
+SPI Pin: SCK/MISO/MOSI/CS  PA5/PA6/PA7/PA4.
 
-rst pin: RST PB1.
+RESET Pin: RST PB1.
 
-dio1 pin: DIO1 PB0.
+DIO1 Pin: DIO1 PB0.
 
-busy pin: BUSY PA8.
+BUSY Pin: BUSY PA8.
 
-### 2. Shell
+### 2. Development and Debugging
 
-#### 2.1 Shell Parameter
+#### 2.1 Integrated Development Environment
 
-baud rate: 115200.
+LidDriver provides both Keil and IAR integrated development environment projects.
 
-data bits : 8.
+MDK is the Keil ARM project and your Keil version must be 5 or higher.Keil ARM project needs STMicroelectronics STM32F4 Series Device Family Pack and you can download from https://www.keil.com/dd2/stmicroelectronics/stm32f407zgtx.
 
-stop bits: 1.
+EW is the IAR ARM project and your IAR version must be 9 or higher.
 
-parity: none.
+#### 2.2 Serial Port Parameter
 
-flow control: none.
+Baud Rate: 115200.
+
+Data Bits : 8.
+
+Stop Bits: 1.
+
+Parity: None.
+
+Flow Control: None.
+
+#### 2.3 Serial Port Assistant
+
+We use '\n' to wrap lines.If your serial port assistant displays exceptions (e.g. the displayed content does not divide lines), please modify the configuration of your serial port assistant or replace one that supports '\n' parsing.
 
 ### 3. SX1268
 
 #### 3.1 Command Instruction
 
-​           sx1268 is a basic command which can test all sx1268 driver function:
+1. Show sx1268 chip and driver information.
 
-​           -i        show sx1268 chip and driver information.
+   ```shell
+   sx1268 (-i | --information)
+   ```
 
-​           -h       show sx1268 help.
+2. Show sx1268 help.
 
-​           -p       show sx1268 pin connections of the current board.
+   ```shell
+   sx1268 (-h | --help)
+   ```
 
-​           -t (reg | sent -lora | receive -lora <timeout> | cad -lora)
+3. Show sx1268 pin connections of the current board.
 
-​           -t  reg        run sx1268 register test.
+   ```shell
+   sx1268 (-p | --port)
+   ```
 
-​           -t sent -lora      run sx1268 sent test.
+4. Run sx1268 register test.
 
-​           -t receive -lora <timeout>        run sx1268 receive test. timeout is the received timeout in second. 
+   ```shell
+   sx1268 (-t reg | --test=reg)
+   ```
 
-​           -t cad -lora       run sx1268 cad test.
+5. Run sx1268 sent test.
 
-​           -c (sent -lora <data> | receive  -lora <timeout>| cad -lora | sleep -lora | wake_up -lora)
+   ```shell
+   sx1268 (-t lora-sent | --test=lora-sent)
+   ```
 
-​           -c sent -lora <data>        run sx1268  sent function. data is the send data.
+6. Run sx1268 receive test, time is the received timeout in second. 
 
-​           -c receive  -lora <timeout>        run sx1268 receive function. timeout is the received timeout in second. 
+   ```shell
+   sx1268 (-t lora-receive | --test=lora-receive) [--timeout=<time>]
+   ```
 
-​           -c cad -lora       run sx1268 cad function.
+7. Run sx1268 cad test.
 
-​           -c sleep -lora       run sx1268 sleep function.
+   ```shell
+   sx1268 (-t lora-cad | --test=lora-cad)
+   ```
 
-​           -c wake_up  -lora       run sx1268 wake up function.
+8. Run sx1268  sent function, str is the send data.
+
+   ```shell
+   sx1268 (-e lora-sent | --example=lora-sent) [--data=<str>]
+   ```
+
+9. Run sx1268 receive function, time is the received timeout in second. 
+
+   ```shell
+   sx1268 (-e lora-receive | --example=lora-receive) [--timeout=<time>]
+   ```
+
+10. Run sx1268 cad function.
+
+    ```shell
+    sx1268 (-e lora-cad | --example=lora-cad)
+    ```
+
+11. Run sx1268 sleep function.
+
+    ```shell
+    sx1268 (-e lora-sleep | --example=lora-sleep)
+    ```
+
+12. Run sx1268 wake up function.
+
+    ```shell
+    sx1268 (-e lora-wake-up | --example=lora-wake-up)
+    ```
 
 #### 3.2 Command Example
 
@@ -87,7 +141,7 @@ sx1268: SCK connected to GPIOA PIN5.
 sx1268: MISO connected to GPIOA PIN6.
 sx1268: MOSI connected to GPIOA PIN7.
 sx1268: CS connected to GPIOA PIN4.
-sx1268: RST connected to GPIOB PIN1.
+sx1268: RESET connected to GPIOB PIN1.
 sx1268: DIO1 connected to GPIOB PIN0.
 sx1268: BUSY connected to GPIOA PIN8.
 ```
@@ -153,7 +207,7 @@ sx1268: sx1268_set_lora_sync_word/sx1268_get_lora_sync_word test.
 sx1268: set lora sync word 0xAC72.
 sx1268: check lora sync word ok.
 sx1268: sx1268_get_random_number test.
-sx1268: random number is 0xA1A88922.
+sx1268: random number is 0xA652A94A.
 sx1268: sx1268_set_tx_modulation/sx1268_get_tx_modulation test.
 sx1268: set tx modulation 0x04.
 sx1268: check tx modulation ok.
@@ -197,7 +251,7 @@ sx1268: finish register test.
 ```
 
 ```shell
-sx1268 -t sent -lora  
+sx1268 -t lora-sent
 
 sx1268: start sent test.
 sx1268: irq tx done.
@@ -205,62 +259,61 @@ sx1268: finish sent test.
 ```
 
 ```shell
-sx1268 -t receive -lora 100
+sx1268 -t lora-receive --timeout=1000
 
 sx1268: start receive test.
 sx1268: start receiving...
 sx1268: irq preamble detected.
 sx1268: irq valid header.
 sx1268: irq rx done.
-sx1268: rssi is -23.0.
-sx1268: snr is 10.50.
-sx1268: signal rssi is -23.0.
+sx1268: rssi is -53.0.
+sx1268: snr is 11.50.
+sx1268: signal rssi is -51.0.
 0x00 0x01 0x02 0x03 0x04 0x05 0x06 0x07 0x08 0x09 0x0A 0x0B 0x0C 0x0D 0x0E 0x0F 0x10 0x11 0x12 0x13 0x14 0x15 0x16 0x17 0x18 0x19 0x1A 0x1B 0x1C 0x1D 0x1E 0x1F 0x20 0x21 0x22 0x23 0x24 0x25 0x26 0x27 0x28 0x29 0x2A 0x2B 0x2C 0x2D 0x2E 0x2F 0x30 0x31 0x32 0x33 0x34 0x35 0x36 0x37 0x38 0x39 0x3A 0x3B 0x3C 0x3D 0x3E 0x3F 0x40 0x41 0x42 0x43 0x44 0x45 0x46 0x47 0x48 0x49 0x4A 0x4B 0x4C 0x4D 0x4E 0x4F 0x50 0x51 0x52 0x53 0x54 0x55 0x56 0x57 0x58 0x59 0x5A 0x5B 0x5C 0x5D 0x5E 0x5F 0x60 0x61 0x62 0x63 0x64 0x65 0x66 0x67 0x68 0x69 0x6A 0x6B 0x6C 0x6D 0x6E 0x6F 0x70 0x71 0x72 0x73 0x74 0x75 0x76 0x77 0x78 0x79 0x7A 0x7B 0x7C 0x7D 0x7E 0x7F 0x80 0x81 0x82 0x83 0x84 0x85 0x86 0x87 0x88 0x89 0x8A 0x8B 0x8C 0x8D 0x8E 0x8F 0x90 0x91 0x92 0x93 0x94 0x95 0x96 0x97 0x98 0x99 0x9A 0x9B 0x9C 0x9D 0x9E 0x9F 0xA0 0xA1 0xA2 0xA3 0xA4 0xA5 0xA6 0xA7 0xA8 0xA9 0xAA 0xAB 0xAC 0xAD 0xAE 0xAF 0xB0 0xB1 0xB2 0xB3 0xB4 0xB5 0xB6 0xB7 0xB8 0xB9 0xBA 0xBB 0xBC 0xBD 0xBE 0xBF 
 sx1268: finish receive test.
 ```
 
 ```shell
-sx1268 -t cad -lora
+sx1268 -t lora-cad
 
 sx1268: start cad test.
 sx1268: irq cad done.
-sx1268: irq cad detected.
-sx1268: cad detected.
+sx1268: cad not detected.
 sx1268: finish cad test.
 ```
 
 ```shell
-sx1268 -c sent -lora libdriver
+sx1268 -e lora-sent --data=LibDriver
 
-sx1268: sent libdriver.
+sx1268: sent LibDriver.
 sx1268: irq tx done.
 ```
 
 ```shell
-sx1268 -c receive -lora 100
+sx1268 -e lora-receive --timeout=100
 
 sx1268: start receiving...
 sx1268: irq rx done.
-sx1268: rssi is -17.0.
-sx1268: snr is 10.50.
-libdriver
+sx1268: rssi is -53.0.
+sx1268: snr is 10.25.
+LibDriver
 ```
 
 ```shell
-sx1268 -c cad -lora   
+sx1268 -e lora-cad
 
 sx1268: irq cad done.
 sx1268: cad not detected.
 ```
 
 ```shell
-sx1268 -c sleep -lora
+sx1268 -e lora-sleep
 
 sx1268: sleep.
 ```
 
 ```shell
-sx1268 -c wake_up -lora   
+sx1268 -e lora-wake-up
 
 sx1268: wake up.
 ```
@@ -268,29 +321,30 @@ sx1268: wake up.
 ```shell
 sx1268 -h
 
-sx1268 -i
-	show sx1268 chip and driver information.
-sx1268 -h
-	show sx1268 help.
-sx1268 -p
-	show sx1268 pin connections of the current board.
-sx1268 -t reg
-	run sx1268 register test.
-sx1268 -t sent -lora
-	run sx1268 sent test.
-sx1268 -t receive -lora <timeout>
-	run sx1268 receive test.timeout is the received timeout in second.
-sx1268 -t cad -lora
-	run sx1268 cad test.
-sx1268 -c sent -lora <data>
-	run sx1268 sent function.data is the send data.
-sx1268 -c receive -lora <timeout>
-	run sx1268 receive function.timeout is the received timeout in second.
-sx1268 -c cad -lora
-	run sx1268 cad function.
-sx1268 -c sleep -lora
-	run sx1268 sleep function.
-sx1268 -c wake_up -lora
-	run sx1268 wake up function.
+Usage:
+  sx1268 (-i | --information)
+  sx1268 (-h | --help)
+  sx1268 (-p | --port)
+  sx1268 (-t reg | --test=reg)
+  sx1268 (-t lora-sent | --test=lora-sent)
+  sx1268 (-t lora-receive | --test=lora-receive) [--timeout=<time>]
+  sx1268 (-t lora-cad | --test=lora-cad)
+  sx1268 (-e lora-sent | --example=lora-sent) [--data=<str>]
+  sx1268 (-e lora-receive | --example=lora-receive) [--timeout=<time>]
+  sx1268 (-e lora-cad | --example=lora-cad)
+  sx1268 (-e lora-sleep | --example=lora-sleep)
+  sx1268 (-e lora-wake-up | --example=lora-wake-up)
+
+Options:
+      --data=<str>            Set the send data.([default: LibDriver])
+  -e <lora-sent | lora-receive | lora-cad | lora-sleep | lora-wake-up>, --example=<lora-sent
+     | lora-receive | lora-cad | lora-sleep | lora-wake-up>
+                              Run the driver example.
+  -h, --help                  Show the help.
+  -i, --information           Show the chip information.
+  -p, --port                  Display the pin connections of the current board.
+  -t <reg | lora-sent | lora-receive | lora-cad>, --test=<reg | lora-sent | lora-receive | lora-cad>
+                              Run the driver test.
+      --timeout=<time>        Set the timeout in ms.([default: 1000])
 ```
 

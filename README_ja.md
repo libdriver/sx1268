@@ -40,6 +40,8 @@ LibDriver SX1268は、LibDriverによって起動されたSX1268の全機能ド�
 
 / projectディレクトリには、一般的に使用されるLinuxおよびマイクロコントローラー開発ボードのプロジェクトサンプルが含まれています。 すべてのプロジェクトは、デバッグ方法としてシェルスクリプトを使用しています。詳細については、各プロジェクトのREADME.mdを参照してください。
 
+/ misraはLibDriver misraコードスキャン結果を含む。
+
 ### インストール
 
 / interfaceディレクトリにあるプラットフォームに依存しないSPIバステンプレートを参照して、指定したプラットフォームのSPIバスドライバを完成させます。
@@ -389,13 +391,13 @@ return 0;
 
 ### ドキュメント
 
-オンラインドキュメント: https://www.libdriver.com/docs/sx1268/index.html
+オンラインドキュメント: [https://www.libdriver.com/docs/sx1268/index.html](https://www.libdriver.com/docs/sx1268/index.html)。
 
-オフラインドキュメント: /doc/html/index.html
+オフラインドキュメント: /doc/html/index.html。
 
 ### 貢献
 
-お問い合わせくださいlishifenging@outlook.com
+CONTRIBUTING.mdを参照してください。
 
 ### 著作権
 
@@ -411,4 +413,4 @@ MITライセンス（MIT）
 
 ### 連絡して
 
-お問い合わせくださいlishifenging@outlook.com
+お問い合わせくださいlishifenging@outlook.com。
