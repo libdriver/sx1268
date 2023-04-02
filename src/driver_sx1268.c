@@ -1265,7 +1265,7 @@ uint8_t sx1268_lora_transmit(sx1268_handle_t *handle, sx1268_clock_source_t stan
     {
         return 0;                                                                                          /* success return 0 */
     }
-    else if ((ms == 0) & (handle->tx_done == 0))                                                           /* check the result */
+    else if ((ms == 0) && (handle->tx_done == 0))                                                          /* check the result */
     {
         handle->debug_print("sx1268: sent timeout.\n");                                                    /* sent timeout */
        
