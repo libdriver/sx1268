@@ -691,7 +691,7 @@ uint8_t sx1268_init(sx1268_handle_t *handle)
         
         return 6;                                                                          /* return error */ 
     }
-    handle->delay_ms(5);                                                                   /* delay 5 ms */
+    handle->delay_ms(1);                                                                   /* delay 5 ms */
     if (handle->reset_gpio_write(0) != 0)                                                  /* set low */
     {
         handle->debug_print("sx1268: reset chip failed.\n");                               /* reset chip failed */
@@ -701,7 +701,7 @@ uint8_t sx1268_init(sx1268_handle_t *handle)
         
         return 6;                                                                          /* return error */ 
     }
-    handle->delay_ms(10);                                                                  /* delay 5 ms */
+    handle->delay_ms(1);                                                                  /* delay 5 ms */
     if (handle->reset_gpio_write(1) != 0)                                                  /* set high */
     {
         handle->debug_print("sx1268: reset chip failed.\n");                               /* reset chip failed */
@@ -722,16 +722,17 @@ uint8_t sx1268_init(sx1268_handle_t *handle)
         
         return 6;                                                                          /* return error */
     }
-    prev = 0x00;
-    if (a_sx1268_spi_write(handle, SX1268_COMMAND_SET_STANDBY, (uint8_t *)&prev, 1) != 0)  /* write command */
+    
+    if(buf[0] & SX1268_CHIP_MODE_MASK != SX1268_CHIP_MODE_STDBY_RC)
     {
-        handle->debug_print("sx1268: set standby failed.\n");                              /* set standby failed */
+        handle->debug_print("sx1268: reset failed.\n");                                    /* reset failed */
         (void)handle->spi_deinit();                                                        /* spi deinit */
         (void)handle->reset_gpio_deinit();                                                 /* reset gpio deinit */
         (void)handle->busy_gpio_deinit();                                                  /* busy gpio deinit */
         
-        return 6;                                                                          /* return error */
+        return 7;                                                                          /* return error */
     }
+
     handle->inited = 1;                                                                    /* flag finish initialization */
     
     return 0;                                                                              /* success return 0 */
