@@ -57,6 +57,18 @@ extern "C"{
  */
 
 /**
+ * @brief sx1268 chip mode mask definition
+ * 
+ */
+#define SX1268_CHIP_MODE_MASK 0xF0
+
+/**
+ * @brief sx1268 chip mode definition
+ * 
+ */
+#define SX1268_CHIP_MODE_STDBY_RC 0x20
+
+/**
  * @brief sx1268 bool enumeration definition
  */
 typedef enum
