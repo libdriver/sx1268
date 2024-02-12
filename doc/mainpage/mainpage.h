@@ -1,6 +1,6 @@
 /**
  * @mainpage  LibDriver SX1268
- * @brief     libdriver sx1268 is a full function driver of sx1268 and it can run in both MCU and Linux platform.
+ * @brief     LibDriver SX1268 is a full function driver of SX1268 and it can run in both MCU and Linux platform.
  * @version   1.0.0
  * @author    Shifeng Li
  *
