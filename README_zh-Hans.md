@@ -8,7 +8,7 @@
 
 [![MISRA](https://img.shields.io/badge/misra-compliant-brightgreen.svg)](/misra/README.md) [![API](https://img.shields.io/badge/api-reference-blue.svg)](https://www.libdriver.com/docs/sx1268/index.html) [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](/LICENSE)
 
-SX1268 sub-GHz 无线电收发器是远程无线应用的理想器件。它专为延长电池寿命而设计，有效接收电流消耗仅为 4.2 mA。 SX1268 可以通过高效集成功率放大器在 490 MHz 时传输高达 +22 dBm。在 780 MHz 时，SX1268 在其天线端口传输 +10 dBm 信号的功耗不到 20 mA。SX1268 支持用于 LPWAN 用例的 LoRa 调制(G)FSK 调制用于传统用例。它具有高度可配置性，可利用 LoRaWANTM 标准或专有协议满足不同的应用要求。该设备旨在符合 LoRa AllianceTM 发布的 LoRaWANTM 规范的物理层要求。该无线电适用于以符合无线电法规为目标的系统，包括但不限于中国监管要求和 ETSI EN 300 220 (434 MHz)。从 410 MHz 到 810 MHz 的连续频率覆盖允许支持 490 和 780 MHz 中国低功耗短距离设备频段。SX1268 可用于智能电表、供应链与物流、楼宇自动化等。
+SX1268 sub-GHz 无线电收发器是远程无线应用的理想器件。它专为延长电池寿命而设计，有效接收电流消耗仅为 4.2mA。 SX1268可以通过高效集成功率放大器在490MHz 时传输高达+22dBm信号。在780 MHz时，SX1268在其天线端口传输+10dBm信号的功耗不到20mA。SX1268支持用于LPWAN用例的LoRa调制(G)、FSK 调制用于传统用例。它具有高度可配置性，可利用 LoRaWANTM 标准或专有协议满足不同的应用要求。该设备旨在符合 LoRa AllianceTM 发布的 LoRaWANTM 规范的物理层要求。该无线电适用于以符合无线电法规为目标的系统，包括但不限于中国监管要求和 ETSI EN 300 220 (434 MHz)。从 410 MHz 到 810 MHz 的连续频率覆盖允许支持 490 和 780 MHz 中国低功耗短距离设备频段。SX1268 可用于智能电表、供应链与物流、楼宇自动化等。
 
 LibDriver SX1268是LibDriver推出的SX1268全功能驱动，提供无线发送、无线接收、cad等功能并且它符合MISRA标准。
 
