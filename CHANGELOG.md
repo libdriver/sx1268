@@ -2,7 +2,7 @@
 
 ## Bug Fixes
 
-- docs: update doxygen html.
+- docs: update doxygen html
 
 ## 1.0.2 (2024-08-13)
 
