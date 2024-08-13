@@ -250,9 +250,9 @@ typedef enum
 typedef enum
 {
     SX1268_LORA_CR_4_5 = 0x01,        /**< cr 4/5 */
-    SX1268_LORA_CR_4_6 = 0x01,        /**< cr 4/6 */
-    SX1268_LORA_CR_4_7 = 0x01,        /**< cr 4/7 */
-    SX1268_LORA_CR_4_8 = 0x01,        /**< cr 4/8 */
+    SX1268_LORA_CR_4_6 = 0x02,        /**< cr 4/6 */
+    SX1268_LORA_CR_4_7 = 0x03,        /**< cr 4/7 */
+    SX1268_LORA_CR_4_8 = 0x04,        /**< cr 4/8 */
 } sx1268_lora_cr_t;
 
 /**
