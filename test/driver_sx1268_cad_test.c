@@ -58,7 +58,7 @@ uint8_t sx1268_cad_test_irq_handler(void)
 }
 
 /**
- * @brief  sent test
+ * @brief  send test
  * @return status code
  *         - 0 success
  *         - 1 test failed

@@ -10,6 +10,6 @@ var searchData=
   ['driver_5fsx1268_5flora_2eh_483',['driver_sx1268_lora.h',['../driver__sx1268__lora_8h.html',1,'']]],
   ['driver_5fsx1268_5fregister_5ftest_2ec_484',['driver_sx1268_register_test.c',['../driver__sx1268__register__test_8c.html',1,'']]],
   ['driver_5fsx1268_5fregister_5ftest_2eh_485',['driver_sx1268_register_test.h',['../driver__sx1268__register__test_8h.html',1,'']]],
-  ['driver_5fsx1268_5fsent_5freceive_5ftest_2ec_486',['driver_sx1268_sent_receive_test.c',['../driver__sx1268__sent__receive__test_8c.html',1,'']]],
-  ['driver_5fsx1268_5fsent_5freceive_5ftest_2eh_487',['driver_sx1268_sent_receive_test.h',['../driver__sx1268__sent__receive__test_8h.html',1,'']]]
+  ['driver_5fsx1268_5fsend_5freceive_5ftest_2ec_486',['driver_sx1268_send_receive_test.c',['../driver__sx1268__send__receive__test_8c.html',1,'']]],
+  ['driver_5fsx1268_5fsend_5freceive_5ftest_2eh_487',['driver_sx1268_send_receive_test.h',['../driver__sx1268__send__receive__test_8h.html',1,'']]]
 ];

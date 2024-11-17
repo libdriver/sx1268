@@ -17,7 +17,7 @@ LibDriver SX1268是LibDriver推出的SX1268全功能驱动，提供无线发送�
   - [说明](#说明)
   - [安装](#安装)
   - [使用](#使用)
-    - [example basic sent](#example-basic-sent)
+    - [example basic send](#example-basic-send)
     - [example basic receive](#example-basic-receive)
   - [文档](#文档)
   - [贡献](#贡献)
@@ -52,7 +52,7 @@ LibDriver SX1268是LibDriver推出的SX1268全功能驱动，提供无线发送�
 
 您可以参考/example目录下的编程范例完成适合您的驱动，如果您想要使用默认的编程范例，以下是它们的使用方法。
 
-#### example basic sent
+#### example basic send
 
 ```C
 #include "driver_sx1268_lora.h"
@@ -178,8 +178,8 @@ if (res != 0)
     return 1;
 }
 
-/* set sent mode */
-res = sx1268_lora_set_sent_mode();
+/* set send mode */
+res = sx1268_lora_set_send_mode();
 if (res != 0)
 {
     (void)sx1268_lora_deinit();
@@ -189,10 +189,10 @@ if (res != 0)
     return 1;
 }
 
-sx1268_interface_debug_print("sx1268: sent %s.\n", "123");
+sx1268_interface_debug_print("sx1268: send %s.\n", "123");
 
-/* sent data */
-res = sx1268_lora_sent((uint8_t *)"123", strlen("123"));
+/* send data */
+res = sx1268_lora_send((uint8_t *)"123", strlen("123"));
 if (res != 0)
 {
     (void)sx1268_lora_deinit();

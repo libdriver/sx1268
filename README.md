@@ -10,14 +10,14 @@
 
 The SX1268 sub-GHz radio transceiver is the ideal device for long range wireless applications. It is designed for long battery life with just 4.2 mA of active receive current consumption. The SX1268 can transmit up to +22 dBm at 490 MHz with highly efficient integrated power amplifiers.At 780 MHz, the SX1268 consumes less than 20 mA to transmit a +10 dBm signal at its antenna port.SX1268 supports LoRa modulation for LPWAN use cases and (G)FSK modulation for legacy use cases. It is highly configurable to meet different application requirements utilizing the LoRaWANTM standard or proprietary protocols.The device is designed to comply with the physical layer requirements of the LoRaWANTM specification released by the LoRa AllianceTM.The radio is suitable for systems targeting compliance with radio regulations including but not limited to China regulatory requirements and ETSI EN 300 220 (434 MHz).Continuous frequency coverage from 410 MHz to 810 MHz allows the support of the 490 and 780 MHz Chinese low-power short-range device bands.SX1268 can be used in smart meters, supply chain and logistics, building automation and so on.
 
-LibDriver SX1268 is the full function driver of SX1268 launched by LibDriver.It provides functions of wireless senting, wireless receiving, cad, etc. LibDriver is MISRA compliant.
+LibDriver SX1268 is the full function driver of SX1268 launched by LibDriver.It provides functions of wireless sending, wireless receiving, cad, etc. LibDriver is MISRA compliant.
 
 ### Table of Contents
 
   - [Instruction](#Instruction)
   - [Install](#Install)
   - [Usage](#Usage)
-    - [example basic sent](#example-basic-sent)
+    - [example basic send](#example-basic-send)
     - [example basic receive](#example-basic-receive)
   - [Document](#Document)
   - [Contributing](#Contributing)
@@ -52,7 +52,7 @@ Add the /src directory, the interface driver for your platform, and your own dri
 
 You can refer to the examples in the /example directory to complete your own driver. If you want to use the default programming examples, here's how to use them.
 
-#### example basic sent
+#### example basic send
 
 ```C
 #include "driver_sx1268_lora.h"
@@ -178,8 +178,8 @@ if (res != 0)
     return 1;
 }
 
-/* set sent mode */
-res = sx1268_lora_set_sent_mode();
+/* set send mode */
+res = sx1268_lora_set_send_mode();
 if (res != 0)
 {
     (void)sx1268_lora_deinit();
@@ -189,10 +189,10 @@ if (res != 0)
     return 1;
 }
 
-sx1268_interface_debug_print("sx1268: sent %s.\n", "123");
+sx1268_interface_debug_print("sx1268: send %s.\n", "123");
 
-/* sent data */
-res = sx1268_lora_sent((uint8_t *)"123", strlen("123"));
+/* send data */
+res = sx1268_lora_send((uint8_t *)"123", strlen("123"));
 if (res != 0)
 {
     (void)sx1268_lora_deinit();
@@ -216,9 +216,10 @@ g_gpio_irq = NULL;
 
 return 0;
 ```
+
 #### example basic receive
 
-```c
+```C
 #include "driver_sx1268_lora.h"
 
 uint8_t (*g_gpio_irq)(void) = NULL;

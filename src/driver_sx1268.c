@@ -1060,7 +1060,7 @@ uint8_t sx1268_check_packet_error(sx1268_handle_t *handle, sx1268_bool_t *enable
 }
 
 /**
- * @brief     sent the lora data
+ * @brief     send the lora data
  * @param[in] *handle points to an sx1268 handle structure
  * @param[in] standby_src is the clock source
  * @param[in] preamble_length is the preamble length
@@ -1072,11 +1072,11 @@ uint8_t sx1268_check_packet_error(sx1268_handle_t *handle, sx1268_bool_t *enable
  * @param[in] us is the timeout
  * @return    status code
  *            - 0 success
- *            - 1 sent failed
+ *            - 1 send failed
  *            - 2 handle is NULL
  *            - 3 handle is not initialized
  *            - 4 chip is busy
- *            - 5 sent timeout
+ *            - 5 send timeout
  *            - 6 irq timeout
  *            - 7 unknown result
  * @note      none
@@ -1267,7 +1267,7 @@ uint8_t sx1268_lora_transmit(sx1268_handle_t *handle, sx1268_clock_source_t stan
     }
     else if ((ms == 0) && (handle->tx_done == 0))                                                          /* check the result */
     {
-        handle->debug_print("sx1268: sent timeout.\n");                                                    /* sent timeout */
+        handle->debug_print("sx1268: send timeout.\n");                                                    /* send timeout */
        
         return 5;                                                                                          /* return error */
     }

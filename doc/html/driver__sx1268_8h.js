@@ -40,7 +40,7 @@ var driver__sx1268_8h =
       [ "SX1268_FSK_RX_STATUS_LENGTH_ERR", "group__sx1268__command__driver.html#ggadcda611d19d7de76173f623d3b63b56ea83cb8cc0fcbd557eccdd51e09f313f27", null ],
       [ "SX1268_FSK_RX_STATUS_ABORT_ERR", "group__sx1268__command__driver.html#ggadcda611d19d7de76173f623d3b63b56eaa1bf3da18495a28f6be235f3044878be", null ],
       [ "SX1268_FSK_RX_STATUS_PKT_RECEIVED", "group__sx1268__command__driver.html#ggadcda611d19d7de76173f623d3b63b56ea531496dc46e195aa46f08db764809938", null ],
-      [ "SX1268_FSK_RX_STATUS_PKT_SENT", "group__sx1268__command__driver.html#ggadcda611d19d7de76173f623d3b63b56ea97913ee15f1881b41e0d69c83767c98b", null ]
+      [ "SX1268_FSK_RX_STATUS_PKT_SEND", "group__sx1268__command__driver.html#ggadcda611d19d7de76173f623d3b63b56ea692efeca13c3dcac40cda806dc610943", null ]
     ] ],
     [ "sx1268_gfsk_addr_filter_t", "group__sx1268__command__driver.html#ga87a14f7748fb9b2f5604c93a0811080c", [
       [ "SX1268_GFSK_ADDR_FILTER_DISABLE", "group__sx1268__command__driver.html#gga87a14f7748fb9b2f5604c93a0811080ca64adf7077bf6ccf39144788229c4b876", null ],

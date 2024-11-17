@@ -17,7 +17,7 @@ LibDriver SX1268 ist der voll funktionsfähige Treiber von SX1268, der von LibDr
   - [Anweisung](#Anweisung)
   - [Installieren](#Installieren)
   - [Nutzung](#Nutzung)
-    - [example basic sent](#example-basic-sent)
+    - [example basic send](#example-basic-send)
     - [example basic receive](#example-basic-receive)
   - [Dokument](#Dokument)
   - [Beitrag](#Beitrag)
@@ -52,7 +52,7 @@ Fügen Sie das Verzeichnis /src, den Schnittstellentreiber für Ihre Plattform u
 
 Sie können auf die Beispiele im Verzeichnis /example zurückgreifen, um Ihren eigenen Treiber zu vervollständigen. Wenn Sie die Standardprogrammierbeispiele verwenden möchten, erfahren Sie hier, wie Sie diese verwenden.
 
-#### example basic sent
+#### example basic send
 
 ```C
 #include "driver_sx1268_lora.h"
@@ -178,8 +178,8 @@ if (res != 0)
     return 1;
 }
 
-/* set sent mode */
-res = sx1268_lora_set_sent_mode();
+/* set send mode */
+res = sx1268_lora_set_send_mode();
 if (res != 0)
 {
     (void)sx1268_lora_deinit();
@@ -189,10 +189,10 @@ if (res != 0)
     return 1;
 }
 
-sx1268_interface_debug_print("sx1268: sent %s.\n", "123");
+sx1268_interface_debug_print("sx1268: send %s.\n", "123");
 
-/* sent data */
-res = sx1268_lora_sent((uint8_t *)"123", strlen("123"));
+/* send data */
+res = sx1268_lora_send((uint8_t *)"123", strlen("123"));
 if (res != 0)
 {
     (void)sx1268_lora_deinit();
@@ -219,7 +219,7 @@ return 0;
 
 #### example basic receive
 
-```c
+```C
 #include "driver_sx1268_lora.h"
 
 uint8_t (*g_gpio_irq)(void) = NULL;

@@ -35,7 +35,7 @@
  */
 
 #include "driver_sx1268_register_test.h"
-#include "driver_sx1268_sent_receive_test.h"
+#include "driver_sx1268_send_receive_test.h"
 #include "driver_sx1268_cad_test.h"
 #include "driver_sx1268_lora.h"
 #include "shell.h"
@@ -245,11 +245,11 @@ uint8_t sx12682(uint8_t argc, char **argv)
             sx1268_interface_debug_print("sx1268 -h\n\tshow sx1268 help.\n");
             sx1268_interface_debug_print("sx1268 -p\n\tshow sx1268 pin connections of the current board.\n");
             sx1268_interface_debug_print("sx1268 -t reg\n\trun sx1268 register test.\n");
-            sx1268_interface_debug_print("sx1268 -t sent -lora\n\trun sx1268 sent test.\n");
+            sx1268_interface_debug_print("sx1268 -t send -lora\n\trun sx1268 send test.\n");
             sx1268_interface_debug_print("sx1268 -t receive -lora <timeout>\n\trun sx1268 receive test."
                                          "timeout is the received timeout in second.\n");
             sx1268_interface_debug_print("sx1268 -t cad -lora\n\trun sx1268 cad test.\n");
-            sx1268_interface_debug_print("sx1268 -c sent -lora <data>\n\trun sx1268 sent function.data is the send data.\n");
+            sx1268_interface_debug_print("sx1268 -c send -lora <data>\n\trun sx1268 send function.data is the send data.\n");
             sx1268_interface_debug_print("sx1268 -c receive -lora <timeout>\n\trun sx1268 receive function."
                                          "timeout is the received timeout in second.\n");
             sx1268_interface_debug_print("sx1268 -c cad -lora\n\trun sx1268 cad function.\n");
@@ -299,8 +299,8 @@ uint8_t sx12682(uint8_t argc, char **argv)
         /* run test */
         if (strcmp("-t", argv[1]) == 0)
         {
-            /* sent test */
-            if (strcmp("sent", argv[2]) == 0)
+            /* send test */
+            if (strcmp("send", argv[2]) == 0)
             {
                 /* lora type */
                 if (strcmp("-lora", argv[3]) == 0)
@@ -313,7 +313,7 @@ uint8_t sx12682(uint8_t argc, char **argv)
                         return 1;
                     }
                     g_gpio_irq = sx1268_interrupt_test_irq_handler;
-                    res = sx1268_sent_test();
+                    res = sx1268_send_test();
                     if (res != 0)
                     {
                         (void)gpio_interrupt_deinit();
@@ -570,8 +570,8 @@ uint8_t sx12682(uint8_t argc, char **argv)
         /* run function */
         else if (strcmp("-c", argv[1]) == 0)
         {
-            /* sent function */
-            if (strcmp("sent", argv[2]) == 0)
+            /* send function */
+            if (strcmp("send", argv[2]) == 0)
             {
                 /* lora type */
                 if (strcmp("-lora", argv[3]) == 0)
@@ -596,8 +596,8 @@ uint8_t sx12682(uint8_t argc, char **argv)
                         return 1;
                     }
                     
-                    /* set sent mode */
-                    res = sx1268_lora_set_sent_mode();
+                    /* set send mode */
+                    res = sx1268_lora_set_send_mode();
                     if (res != 0)
                     {
                         (void)sx1268_lora_deinit();
@@ -607,10 +607,10 @@ uint8_t sx12682(uint8_t argc, char **argv)
                         return 1;
                     }
                     
-                    sx1268_interface_debug_print("sx1268: sent %s.\n", argv[4]);
+                    sx1268_interface_debug_print("sx1268: send %s.\n", argv[4]);
                     
-                    /* sent data */
-                    res = sx1268_lora_sent((uint8_t *)argv[4], (uint16_t)strlen(argv[4]));
+                    /* send data */
+                    res = sx1268_lora_send((uint8_t *)argv[4], (uint16_t)strlen(argv[4]));
                     if (res != 0)
                     {
                         (void)sx1268_lora_deinit();
@@ -884,7 +884,7 @@ uint8_t sx1268(uint8_t argc, char **argv)
         
         return 0;
     }
-    else if (strcmp("t_lora-sent", type) == 0)
+    else if (strcmp("t_lora-send", type) == 0)
     {
         uint8_t res;
         
@@ -898,8 +898,8 @@ uint8_t sx1268(uint8_t argc, char **argv)
         /* set gpio irq */
         g_gpio_irq = sx1268_interrupt_test_irq_handler;
         
-        /* run sent test */
-        res = sx1268_sent_test();
+        /* run send test */
+        res = sx1268_send_test();
         if (res != 0)
         {
             (void)gpio_interrupt_deinit();
@@ -974,7 +974,7 @@ uint8_t sx1268(uint8_t argc, char **argv)
         
         return 0;
     }
-    else if (strcmp("e_lora-sent", type) == 0)
+    else if (strcmp("e_lora-send", type) == 0)
     {
         uint8_t res;
         
@@ -998,8 +998,8 @@ uint8_t sx1268(uint8_t argc, char **argv)
             return 1;
         }
         
-        /* set sent mode */
-        res = sx1268_lora_set_sent_mode();
+        /* set send mode */
+        res = sx1268_lora_set_send_mode();
         if (res != 0)
         {
             (void)sx1268_lora_deinit();
@@ -1010,10 +1010,10 @@ uint8_t sx1268(uint8_t argc, char **argv)
         }
         
         /* output */
-        sx1268_interface_debug_print("sx1268: sent %s.\n", data);
+        sx1268_interface_debug_print("sx1268: send %s.\n", data);
         
-        /* sent data */
-        res = sx1268_lora_sent((uint8_t *)data, (uint16_t)strlen(data));
+        /* send data */
+        res = sx1268_lora_send((uint8_t *)data, (uint16_t)strlen(data));
         if (res != 0)
         {
             (void)sx1268_lora_deinit();
@@ -1231,10 +1231,10 @@ uint8_t sx1268(uint8_t argc, char **argv)
         sx1268_interface_debug_print("  sx1268 (-h | --help)\n");
         sx1268_interface_debug_print("  sx1268 (-p | --port)\n");
         sx1268_interface_debug_print("  sx1268 (-t reg | --test=reg)\n");
-        sx1268_interface_debug_print("  sx1268 (-t lora-sent | --test=lora-sent)\n");
+        sx1268_interface_debug_print("  sx1268 (-t lora-send | --test=lora-send)\n");
         sx1268_interface_debug_print("  sx1268 (-t lora-receive | --test=lora-receive) [--timeout=<time>]\n");
         sx1268_interface_debug_print("  sx1268 (-t lora-cad | --test=lora-cad)\n");
-        sx1268_interface_debug_print("  sx1268 (-e lora-sent | --example=lora-sent) [--data=<str>]\n");
+        sx1268_interface_debug_print("  sx1268 (-e lora-send | --example=lora-send) [--data=<str>]\n");
         sx1268_interface_debug_print("  sx1268 (-e lora-receive | --example=lora-receive) [--timeout=<time>]\n");
         sx1268_interface_debug_print("  sx1268 (-e lora-cad | --example=lora-cad)\n");
         sx1268_interface_debug_print("  sx1268 (-e lora-sleep | --example=lora-sleep)\n");
@@ -1242,13 +1242,13 @@ uint8_t sx1268(uint8_t argc, char **argv)
         sx1268_interface_debug_print("\n");
         sx1268_interface_debug_print("Options:\n");
         sx1268_interface_debug_print("      --data=<str>            Set the send data.([default: LibDriver])\n");
-        sx1268_interface_debug_print("  -e <lora-sent | lora-receive | lora-cad | lora-sleep | lora-wake-up>, --example=<lora-sent\n");
+        sx1268_interface_debug_print("  -e <lora-send | lora-receive | lora-cad | lora-sleep | lora-wake-up>, --example=<lora-send\n");
         sx1268_interface_debug_print("     | lora-receive | lora-cad | lora-sleep | lora-wake-up>\n");
         sx1268_interface_debug_print("                              Run the driver example.\n");
         sx1268_interface_debug_print("  -h, --help                  Show the help.\n");
         sx1268_interface_debug_print("  -i, --information           Show the chip information.\n");
         sx1268_interface_debug_print("  -p, --port                  Display the pin connections of the current board.\n");
-        sx1268_interface_debug_print("  -t <reg | lora-sent | lora-receive | lora-cad>, --test=<reg | lora-sent | lora-receive | lora-cad>\n");
+        sx1268_interface_debug_print("  -t <reg | lora-send | lora-receive | lora-cad>, --test=<reg | lora-send | lora-receive | lora-cad>\n");
         sx1268_interface_debug_print("                              Run the driver test.\n");
         sx1268_interface_debug_print("      --timeout=<time>        Set the timeout in ms.([default: 1000])\n");
 
