@@ -10,7 +10,7 @@
 
 The SX1268 sub-GHz radio transceiver is the ideal device for long range wireless applications. It is designed for long battery life with just 4.2 mA of active receive current consumption. The SX1268 can transmit up to +22 dBm at 490 MHz with highly efficient integrated power amplifiers.At 780 MHz, the SX1268 consumes less than 20 mA to transmit a +10 dBm signal at its antenna port.SX1268 supports LoRa modulation for LPWAN use cases and (G)FSK modulation for legacy use cases. It is highly configurable to meet different application requirements utilizing the LoRaWANTM standard or proprietary protocols.The device is designed to comply with the physical layer requirements of the LoRaWANTM specification released by the LoRa AllianceTM.The radio is suitable for systems targeting compliance with radio regulations including but not limited to China regulatory requirements and ETSI EN 300 220 (434 MHz).Continuous frequency coverage from 410 MHz to 810 MHz allows the support of the 490 and 780 MHz Chinese low-power short-range device bands.SX1268 can be used in smart meters, supply chain and logistics, building automation and so on.
 
-LibDriver SX1268 is the full function driver of SX1268 launched by LibDriver.It provides functions of wireless sending, wireless receiving, cad, etc. LibDriver is MISRA compliant.
+LibDriver SX1268 is a full-featured driver of SX1268 launched by LibDriver.It provides functions of wireless sending, wireless receiving, cad, etc. LibDriver is MISRA compliant.
 
 ### Table of Contents
 
