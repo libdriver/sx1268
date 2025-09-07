@@ -107,7 +107,7 @@ var driver__sx1268_8c =
     [ "sx1268_get_instantaneous_rssi", "group__sx1268__command__driver.html#gaa252cc9e8a82c494bb8e0d418c3f548e", null ],
     [ "sx1268_get_iq_polarity", "group__sx1268__register__driver.html#gac1226347f7b791abf2c766071e5cc72c", null ],
     [ "sx1268_get_irq_status", "group__sx1268__command__driver.html#ga16d1ee1a576742957a7d46c9f29d3216", null ],
-    [ "sx1268_get_lora_packet_status", "group__sx1268__command__driver.html#ga6d5661664b32becbd55d0fff94d2b98d", null ],
+    [ "sx1268_get_lora_packet_status", "group__sx1268__command__driver.html#gacb8d75b54e9ab8eb3522b8ca721bdda6", null ],
     [ "sx1268_get_lora_sync_word", "group__sx1268__register__driver.html#gaf4a9ee588c61c916f755909e338e8ee2", null ],
     [ "sx1268_get_ocp", "group__sx1268__register__driver.html#ga15f1cd40ab2bf2dc0f8a7ab2a0ce0127", null ],
     [ "sx1268_get_packet_type", "group__sx1268__command__driver.html#ga0fe6da52608f9eb8de50c20956110025", null ],
