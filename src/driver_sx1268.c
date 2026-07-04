@@ -488,7 +488,7 @@ uint8_t sx1268_irq_handler(sx1268_handle_t *handle)
         uint8_t mask;
         
         control = 0x00;
-        res = a_sx1268_spi_write_register(handle, SX1268_REG_DIO3_OUTPUT_CONTROL, (uint8_t *)&control, 1);     /* write register */
+        res = a_sx1268_spi_write_register(handle, SX1268_REG_RTC_CONTROL, (uint8_t *)&control, 1);             /* write register */
         if (res != 0)                                                                                          /* check result */
         {
             handle->debug_print("sx1268: write register failed.\n");                                           /* write register failed */
